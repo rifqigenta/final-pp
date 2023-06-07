@@ -34,8 +34,8 @@ $routes->get('/', 'Home::index');
 // ROUTES TAMPILAN KASIR
 $routes->get('kasir', 'Kasir\Home::index');
 
-
 // ROUTES TAMPILAN ADMIN
+$routes->get('admin', 'Admin\Home::index');
 
 // ROUTES PROSES KASIR
 
