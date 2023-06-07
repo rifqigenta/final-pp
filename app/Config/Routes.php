@@ -37,6 +37,8 @@ $routes->get('kasir/pembayaran', 'Kasir\Home::payment');
 
 // ROUTES TAMPILAN ADMIN
 $routes->get('admin', 'Admin\Home::index');
+$routes->get('admin/info-toko', 'Admin\Home::infoToko');
+
 
 // ROUTES PROSES KASIR
 

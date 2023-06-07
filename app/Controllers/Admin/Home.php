@@ -12,4 +12,11 @@ class Home extends BaseController{
         . view("admin/home")
         . view("admin/main/footer");
     }
+
+    public function infoToko(){
+        $data['title'] = "Info Toko";
+        return view("admin/main/header", $data)
+        . view("admin/info-toko")
+        . view("admin/main/footer");
+    }
 }
