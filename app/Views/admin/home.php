@@ -24,7 +24,7 @@
           <div class="row no-gutters align-items-center">
             <div class="col mr-2">
               <div class="text-xs font-weight-bold text-success text-uppercase mb-1" style="font-size:14px">
-                Total Penjualan (Hari)
+                Total Penjualan (Hari) percobaan nih bosss
               </div>
               <div class="h5 mb-0 font-weight-bold text-gray-800">10</div>
             </div>
