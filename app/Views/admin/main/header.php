@@ -40,6 +40,9 @@
                                 <li class="nav-item">
 									<a class="nav-link" id="linkProduk" href="/admin/produk"><i class="fa-sharp fa-solid fa-leaf"></i> Produk</a>
 								</li>
+								<li class="nav-item">
+									<a class="nav-link" id="linkPromo" href="/admin/promo"><i class="fa-solid fa-tag"></i> Promo</a>
+								</li>
                                 <li class="nav-item">
 									<a class="nav-link" id="linkKaryawan" href="/admin/karyawan"><i class="fa-solid fa-users"></i> Karyawan</a>
 								</li>

@@ -40,6 +40,8 @@ $routes->get('admin', 'Admin\Home::index');
 $routes->get('admin/info-toko', 'Admin\Home::infoToko');
 $routes->get('admin/karyawan', 'Admin\Home::karyawan');
 $routes->get('admin/produk', 'Admin\Home::produk');
+$routes->get('admin/promo', 'Admin\Home::promo');
+
 
 
 // ROUTES PROSES KASIR
