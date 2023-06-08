@@ -99,6 +99,7 @@
 
 <script>
   $(document).ready(function(){
+		$('#linkKaryawan').addClass("active");
     $('#tableKaryawan').DataTable();
   });
 
