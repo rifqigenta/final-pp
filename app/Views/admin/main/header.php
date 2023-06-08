@@ -34,12 +34,6 @@
 						</div>
 						<div class="offcanvas-body">
 							<ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
-							<li class="nav-item">
-									<a class="nav-link" id="linkMenu" href="/admin/menu-utama"><i class="fa-solid fa-gauge"></i> Menu Utama</a>
-								</li>
-								<li class="nav-item">
-									<a class="nav-link" id="linkPembayaran" href="/admin/pembayaran"><i class="fa-solid fa-money-bill-transfer"></i> Pembayaran</a>
-								</li>
                                 <li class="nav-item">
 									<a class="nav-link" id="linkLaporan" href="/admin/laporan"><i class="fa-solid fa-book"></i> Laporan</a>
 								</li>
