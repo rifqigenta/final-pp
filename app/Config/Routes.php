@@ -39,6 +39,7 @@ $routes->get('kasir/pembayaran', 'Kasir\Home::payment');
 $routes->get('admin', 'Admin\Home::index');
 $routes->get('admin/info-toko', 'Admin\Home::infoToko');
 $routes->get('admin/karyawan', 'Admin\Home::karyawan');
+$routes->get('admin/produk', 'Admin\Home::produk');
 
 
 // ROUTES PROSES KASIR
