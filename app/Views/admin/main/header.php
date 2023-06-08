@@ -49,6 +49,9 @@
                                 <li class="nav-item">
 									<a class="nav-link" id="linkToko" href="/admin/info-toko"><i class="fa-solid fa-store"></i> Info Toko</a>
 								</li>
+								<li class="nav-item">
+									<a class="nav-link" id="linkKomplain" href="/admin/komplain"><i class="fa-solid fa-triangle-exclamation"></i> Komplain</a>
+								</li>
 							</ul>
 						</div>
 					</div>
