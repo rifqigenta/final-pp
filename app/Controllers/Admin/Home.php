@@ -27,6 +27,13 @@ class Home extends BaseController{
         . view("admin/main/footer");
     }
 
+    public function laporan(){
+        $data['title'] = "Daftar Laporan";
+        return view("admin/main/header", $data)
+        . view("admin/laporan")
+        . view("admin/main/footer");
+    }
+
     public function produk(){
         $data['title'] = "Daftar Produk";
         return view("admin/main/header", $data)
