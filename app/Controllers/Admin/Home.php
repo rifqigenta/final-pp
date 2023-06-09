@@ -54,4 +54,11 @@ class Home extends BaseController{
         . view("admin/info-toko")
         . view("admin/main/footer");
     }
+
+    function laporanPenjualan(){
+        $data['title'] = "Laporan Penjualan";
+        return view("admin/main/header", $data)
+        . view("admin/laporan-penjualan")
+        . view("admin/main/footer");
+    }
 }
