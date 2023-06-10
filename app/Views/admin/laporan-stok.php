@@ -32,26 +32,28 @@
 
   <div class="row">
     <div class="col-md-12">
-      <table class="table bg-white rounded-3">
-        <thead>
-          <tr>
-            <th scope="col">Kode Barang</th>
-            <th scope="col">Nama Produk</th>
-            <th scope="col">Kategori</th>
-            <th scope="col">Stok</th>
-            <th scope="col">Nilai</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td scope="row">BRG-001</td>
-            <td>Sayuran Daun Hijau</td>
-            <td>Sayur</td>
-            <td>20</td>
-            <td>Rp. 20.000</td>
-          </tr>
-        </tbody>
-      </table>
+      <div style="overflow-x:auto;">
+        <table class="table bg-white rounded-3">
+          <thead>
+            <tr>
+              <th scope="col">Kode Barang</th>
+              <th scope="col">Nama Produk</th>
+              <th scope="col">Kategori</th>
+              <th scope="col">Stok</th>
+              <th scope="col">Nilai</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td scope="row">BRG-001</td>
+              <td>Sayuran Daun Hijau</td>
+              <td>Sayur</td>
+              <td>20</td>
+              <td>Rp. 20.000</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
 
     <div class="col-md-6 col-xs-6">

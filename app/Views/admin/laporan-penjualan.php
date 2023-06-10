@@ -31,24 +31,26 @@
   </div>
   <div class="row">
     <div class="col-md-12">
-      <table class="table bg-white rounded-3">
-        <thead>
-          <tr>
-            <th scope="col">Invoice</th>
-            <th scope="col">Waktu Pembelian</th>
-            <th scope="col">Total</th>
-            <th scope="col">Detail</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td scope="row">#123456</td>
-            <td>01-05-2023 10:11:03</td>
-            <td>Rp.8.000.00</td>
-            <td><button type="button" class="btn btn-primary" onclick="lihatDetail(123456)"><i class="fa-solid fa-eye"></i> Lihat</button></td>
-          </tr>
-        </tbody>
-      </table>
+      <div style="overflow-x:auto;">
+        <table class="table bg-white rounded-3">
+          <thead>
+            <tr>
+              <th scope="col">Invoice</th>
+              <th scope="col">Waktu Pembelian</th>
+              <th scope="col">Total</th>
+              <th scope="col">Detail</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td scope="row">#123456</td>
+              <td>01-05-2023 10:11:03</td>
+              <td>Rp.8.000.00</td>
+              <td><button type="button" class="btn btn-primary" onclick="lihatDetail(123456)"><i class="fa-solid fa-eye"></i> Lihat</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
 
     <div class="col-md-6 col-xs-6">
@@ -84,28 +86,30 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <table class="table">
-          <thead>
-            <tr>
-              <th scope="col">Nama Produk</th>
-              <th scope="col">Harga</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <th scope="row">Sawi</th>
-              <td>2.000</td>
-            </tr>
-            <tr>
-              <th scope="row">Jagung</th>
-              <td>4.000</td>
-            </tr>
-            <tr>
-              <th scope="row">Bayam</th>
-              <td>2.000</td>
-            </tr>
-          </tbody>
-        </table>
+        <div style="overflow-x:auto;">
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Nama Produk</th>
+                <th scope="col">Harga</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">Sawi</th>
+                <td>2.000</td>
+              </tr>
+              <tr>
+                <th scope="row">Jagung</th>
+                <td>4.000</td>
+              </tr>
+              <tr>
+                <th scope="row">Bayam</th>
+                <td>2.000</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
