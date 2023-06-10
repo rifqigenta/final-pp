@@ -1,7 +1,8 @@
 <div class="container" style="margin-top: 5rem;">
   <div class="row mb-3">
-    <div class="col-md-12">
+    <div class="col-md-12 col-xs-12">
       <label style="font-size:18px; font-weight:600">Daftar Produk</label>
+      <button type="button" class="btn btn-primary" style="float: right;" onclick="tambahProduk()"><i class="fa-solid fa-plus"></i> Tambah</button>
     </div>
   </div>
   <div class="row">
@@ -33,24 +34,35 @@
   </div>
   <div class="row">
     <div class="col-md-12">
-      <table class="table bg-white rounded-3">
-        <thead>
-          <tr>
-            <th scope="col">Invoice</th>
-            <th scope="col">Waktu Pembelian</th>
-            <th scope="col">Total</th>
-            <th scope="col">Detail</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td scope="row">#123456</td>
-            <td>01-05-2023 10:11:03</td>
-            <td>Rp.8.000.00</td>
-            <td><button type="button" class="btn btn-primary" onclick="lihatDetail(123456)"><i class="fa-solid fa-eye"></i> Lihat</button></td>
-          </tr>
-        </tbody>
-      </table>
+      <div style="overflow-x:auto;">
+        <table class="table bg-white rounded-3">
+          <thead>
+            <tr>
+              <th scope="col">Kode Produk</th>
+              <th scope="col">Nama Produk</th>
+              <th scope="col">Kuantitas</th>
+              <th scope="col">Harga</th>
+              <th scope="col">Gambar</th>
+              <th scope="col"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td scope="row">KD-BRG1</td>
+              <td>Bayam</td>
+              <td>10</td>
+              <td>Rp. 10.000</td>
+              <td>
+                <button type="button" class="btn btn-success" onclick="lihatGambar('Nama Gambar', 'url')"><i class="fa-solid fa-eye"></i> Gambar</button>
+              </td>
+              <td>
+                <button type="button" class="btn btn-outline-warning mt-1" onclick="editProduk(123456, 'Sayuran')"><i class="fa-solid fa-pencil"></i></button>
+                <button type="button" class="btn btn-outline-danger mt-1" onclick="deleteProduk(123456)"><i class="fa-solid fa-trash"></i></button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
 
     <div class="col-md-12 col-xs-12">
@@ -73,50 +85,129 @@
   </div>
 </div>
 
-<!-- Modal Lihat Detail -->
-<div class="modal fade" id="modalDetail" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<!-- Modal Tambah -->
+<div class="modal fade" id="modalTambah" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="titleDetailPembelian"></h5>
+        <h5 class="modal-title">Tambah Produk</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form>
+        <div class="modal-body">
+          <div class="mb-3">
+            <label for="nama" class="form-label">Nama Produk</label>
+            <input type="text" class="form-control" id="nama" name="nama" required>
+          </div>
+          <div class="mb-3">
+            <label for="harga" class="form-label">Harga</label>
+            <input type="number" min="1" class="form-control" id="harga" name="harga" required>
+          </div>
+          <div class="mb-3">
+            <label for="gambar" class="form-label">Gambar</label>
+            <input type="file" class="form-control" id="gambar" name="gambar" accept=".jpg, .jpeg, .png" required>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal"><i class="fa-solid fa-plus"></i> Tambah</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Edit -->
+<div class="modal fade" id="modalEdit" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalEditProduk"></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form>
+        <div class="modal-body">
+          <div class="mb-3">
+            <label for="editNama" class="form-label">Nama Produk</label>
+            <input type="text" class="form-control" id="editNama" name="editNama" required>
+          </div>
+          <div class="mb-3">
+            <label for="editHarga" class="form-label">Harga</label>
+            <input type="number" min="1" class="form-control" id="editHarga" name="editHarga" required>
+          </div>
+          <div class="mb-3">
+            <label for="editGambar" class="form-label">Gambar</label>
+            <input type="file" class="form-control" id="editGambar" name="editGambar" accept=".jpg, .jpeg, .png" required>
+            <div class="form-text" style="font-size:10px;">*Upload gambar untuk update.</div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-warning text-white" data-bs-dismiss="modal"><i class="fa-solid fa-pencil"></i> Edit</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Gambar -->
+<div class="modal fade" id="modalGambar" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="titleModalGambar"></h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <table class="table">
-          <thead>
-            <tr>
-              <th scope="col">Nama Produk</th>
-              <th scope="col">Harga</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <th scope="row">Sawi</th>
-              <td>2.000</td>
-            </tr>
-            <tr>
-              <th scope="row">Jagung</th>
-              <td>4.000</td>
-            </tr>
-            <tr>
-              <th scope="row">Bayam</th>
-              <td>2.000</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        ...
       </div>
     </div>
   </div>
 </div>
 
 <script>
-  function lihatDetail(invoice) {
-    $('#titleDetailPembelian').html(`#${invoice}`);
-    $('#modalDetail').modal('show');
+  // Lihat Gambar
+  function lihatGambar(nama, gambar) {
+    $('#titleModalGambar').html(`Gambar ${nama}`);
+    $('#modalGambar').modal('show');
   }
+
+  // Model Edit
+  function editProduk(id, nama) {
+    // AJAX
+
+    // END AJAX
+
+    $('#modalEditProduk').html(`Edit Produk ${nama}`)
+    $('#modalEdit').modal('show');
+  }
+
+  // Model Tambah
+  function tambahProduk() {
+    $('#modalTambah').modal('show');
+  }
+
+  // Delete Produk
+  function deleteProduk(id) {
+    Swal.fire({
+      title: 'Yakin?',
+      text: "Data tidak bisa dikembalikan!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Ya, Hapus!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire(
+          'Deleted!',
+          'Your file has been deleted.',
+          'success'
+        )
+      }
+    });
+  }
+
   $(document).ready(function(){
     $('#linkProduk').addClass("active");
   });
