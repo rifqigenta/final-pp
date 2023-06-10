@@ -21,8 +21,8 @@
               <tD scope="row">Sayuran</tD>
               <td>20-08-2020</td>
               <td>
-                <button type="button" class="btn btn-outline-warning" onclick="editKategori(1)"><i class="fa-solid fa-pencil"></i></button>
-                <button type="button" class="btn btn-outline-danger" onclick="deleteKategori(1)"><i class="fa-solid fa-trash"></i></button>
+                <button type="button" class="btn btn-outline-warning mt-1" onclick="editKategori(1)"><i class="fa-solid fa-pencil"></i></button>
+                <button type="button" class="btn btn-outline-danger mt-1" onclick="deleteKategori(1)"><i class="fa-solid fa-trash"></i></button>
               </td>
             </tr>
           </tbody>

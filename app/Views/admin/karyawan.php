@@ -87,8 +87,8 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-warning"><i class="fa-solid fa-pencil"></i> Update</button>
+          <button type="button" class="btn btn-secondary mt-1" data-bs-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-warning mt-1"><i class="fa-solid fa-pencil"></i> Update</button>
         </div>
       </form>
     </div>
