@@ -42,7 +42,8 @@ $routes->get('admin/karyawan', 'Admin\Home::karyawan');
 $routes->get('admin/produk', 'Admin\Home::produk');
 $routes->get('admin/promo', 'Admin\Home::promo');
 $routes->get('admin/laporan', 'Admin\Home::laporan');
-$routes->get('admin/laporan-penjualan', 'Admin\Home::laporanPenjualan');
+$routes->get('admin/laporan/penjualan', 'Admin\Home::laporanPenjualan');
+$routes->get('admin/laporan/stok', 'Admin\Home::laporanStok');
 $routes->get('admin/komplain', 'Admin\Home::komplain');
 
 
