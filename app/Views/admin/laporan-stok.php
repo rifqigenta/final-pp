@@ -58,7 +58,7 @@
       <button type="button" class="btn btn-success" title="Ekspor Excel"><i class="fa-solid fa-file-export"></i> Ekspor</button>
     </div>
     
-    <div class="col-md-6">
+    <div class="col-md-6 col-xs-6">
       <nav aria-label="..." style="float:right;">
         <ul class="pagination">
           <li class="page-item disabled">
