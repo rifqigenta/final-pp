@@ -45,6 +45,7 @@ $routes->get('admin/laporan', 'Admin\Home::laporan');
 $routes->get('admin/laporan/penjualan', 'Admin\Home::laporanPenjualan');
 $routes->get('admin/laporan/stok', 'Admin\Home::laporanStok');
 $routes->get('admin/komplain', 'Admin\Home::komplain');
+$routes->get('admin/kategori', 'Admin\Home::kategori');
 
 
 // ROUTES PROSES KASIR
