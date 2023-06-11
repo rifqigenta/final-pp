@@ -18,4 +18,8 @@ class Home extends BaseController{
 		. view("kasir/main/pembayaran")
 		. view("kasir/main/footer");
 	}
+	public function loginKasir(){
+		$data['title'] = "Login";
+		return view("kasir/main/login", $data);
+	}
 }
