@@ -25,17 +25,14 @@
     background-color: #ffffff02;
     backdrop-filter: blur(15px);
     border-color: #FFFFFF;
-    box-shadow: #038373 20px 16px 26px 16px;
+    /* box-shadow: #038373 20px 16px 26px 16px; */
+    box-shadow: #038373 18px 16px 14px;
     box-shadow: blur;
   }
 </style>
 </head>
 
 <body style="display: flex; justify-content: center; align-items: center; width: 100%; height: 100vh;">
-
-<div class="hehe"> 
-
-</div>
 
     <div class="container">
 
