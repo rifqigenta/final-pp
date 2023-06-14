@@ -1,4 +1,14 @@
-<div class="container" style="margin-top: 5rem;">
+<?= $this->extend('admin/main/bodyContent') ?>
+<?= $this->section('content') ?>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-5 fw-semibold invisible">
+      <form class="d-flex p-3" role="search">
+        <input class="form-control" type="search" placeholder="Search" aria-label="Search" />
+        <button class="btn btn-outline-success ms-5" type="submit"></button>
+      </form>
+    </div>
+  </div>
   <div class="row mb-3">
     <div class="col-md-12 col-xs-12">
       <label style="font-size:18px; font-weight:600">Daftar Produk</label>
@@ -208,7 +218,8 @@
     });
   }
 
-  $(document).ready(function(){
+  $(document).ready(function() {
     $('#linkProduk').addClass("active");
   });
 </script>
+<?= $this->endSection() ?>

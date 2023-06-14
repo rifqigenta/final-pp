@@ -1,4 +1,14 @@
-<div class="container" style="margin-top: 5rem;">
+<?= $this->extend('admin/main/bodyContent') ?>
+<?= $this->section('content') ?>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-5 fw-semibold invisible">
+      <form class="d-flex p-3" role="search">
+        <input class="form-control" type="search" placeholder="Search" aria-label="Search" />
+        <button class="btn btn-outline-success ms-5" type="submit"></button>
+      </form>
+    </div>
+  </div>
   <div class="row mb-3">
     <div class="col-md-12">
       <label style="font-size:18px; font-weight:600">Daftar Karyawan</label>
@@ -8,9 +18,9 @@
   <div class="row">
     <div class="col-md-12">
       <div style="overflow-x:auto;">
-        <table class="table bg-white rounded-3 border-light-subtle" id="tableKaryawan" >
+        <table class="table bg-white rounded-3 border-light-subtle" id="tableKaryawan">
           <thead>
-            <tr class="text-white" style="background-color:#04BEB3" >
+            <tr class="text-white" style="background-color:#04BEB3">
               <th scope="col">Nama/ID</th>
               <th scope="col">Username</th>
               <th scope="col">Alamat</th>
@@ -98,8 +108,8 @@
 
 
 <script>
-  $(document).ready(function(){
-		$('#linkKaryawan').addClass("active");
+  $(document).ready(function() {
+    $('#linkKaryawan').addClass("active");
     $('#tableKaryawan').DataTable();
   });
 
@@ -123,7 +133,7 @@
     });
   }
 
-  function editKaryawan(id) {    
+  function editKaryawan(id) {
     // AJAX
 
     // END AJAX
@@ -131,7 +141,8 @@
     $('#modalEditKaryawan').modal('show');
   };
 
-  $('#tambahKaryawan').click(function(){
+  $('#tambahKaryawan').click(function() {
     $('#modalTambahKaryawan').modal('show');
   });
 </script>
+<?= $this->endSection() ?>

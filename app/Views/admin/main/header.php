@@ -1,63 +1,116 @@
-<!DOCTYPE html>
-<html lang="en">
-	<head>
-		<meta charset="UTF-8">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title><?= $title;?></title>
-		<!-- CSS & JS -->
-		<link href="/assets/css/bootstrap.min.css" rel="stylesheet"/>
-		<script src="/assets/js/bootstrap.bundle.min.js"></script>
-		<script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+<ul class="navbar-nav sidebar sidebar-dark accordion" style="background-color: #00CC88;" id="accordionSidebar">
+	<!-- Sidebar - Brand -->
+	<a class="sidebar-brand d-flex align-items-center justify-content-center" href="#">
+		<div class="sidebar-brand-icon">
+			<i class="fas fa-circle-user"></i> <!-- or fa-seedling-->
+		</div>
+		<div class="sidebar-brand-text mx-3">Admin <sup>1</sup></div>
+	</a>
+	<!-- Divider -->
+	<hr class="sidebar-divider my-0">
+	<!-- Nav Item - Dashboard -->
+	<li class="nav-item" id="linkLaporan">
+		<a class="nav-link" href="/admin/laporan">
+			<i class="fas fa-fw fa-salad"></i>
+			<span>Laporan</span></a>
+	</li>
+	
+	<hr class="sidebar-divider">
+	
+	<li class="nav-item" id="linkProduk">
+		<a class="nav-link" href="/admin/produk">
+			<i class="fas fa-fw fa-salad"></i>
+			<span>Produk</span></a>
+	</li>
+	<hr class="sidebar-divider">
 
-		<!-- Datatable -->
-		<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
-		<link rel="stylesheet" href="//cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css"/>
+	<li class="nav-item" id="linkKategori">
+		<a class="nav-link" href="/admin/kategori">
+			<i class="fas fa-fw fa-salad"></i>
+			<span>Kategori</span></a>
+	</li>
+	<hr class="sidebar-divider">
 
-		<!-- SWAL -->
-		<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-	</head>
-	<body>
-		<header>
-			<nav class="navbar fixed-top" style="background-color: #98fb98;">
-				<div class="container-fluid">
-          <button class="navbar-toggler" style="border: unset;" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon" style="color: #FFFFFF;"></span>
-          </button>
-					<a class="navbar-brand" style="color: black; font-weight: bold;" href="<?= base_url();?>">Sayur Kuy</a>
-					<div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel" style="background-color: #98fb98;">
-						<div class="offcanvas-header">
-							<h5 class="offcanvas-title" style="font-weight: bold;" id="offcanvasNavbarLabel">USER #</h5>
-							<button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-						</div>
-						<div class="offcanvas-body">
-							<ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
-                                <li class="nav-item">
-									<a class="nav-link" id="linkLaporan" href="/admin/laporan"><i class="fa-solid fa-book"></i> Laporan</a>
-								</li>
-                                <li class="nav-item">
-									<a class="nav-link" id="linkProduk" href="/admin/produk"><i class="fa-sharp fa-solid fa-leaf"></i> Produk</a>
-								</li>
-								<li class="nav-item">
-									<a class="nav-link" id="linkKategori" href="/admin/kategori"><i class="fa-solid fa-boxes-stacked"></i> Kategori</a>
-								</li>
-								<li class="nav-item">
-									<a class="nav-link" id="linkPromo" href="/admin/promo"><i class="fa-solid fa-tag"></i> Promo</a>
-								</li>
-                                <li class="nav-item">
-									<a class="nav-link" id="linkKaryawan" href="/admin/karyawan"><i class="fa-solid fa-users"></i> Karyawan</a>
-								</li>
-                                <li class="nav-item">
-									<a class="nav-link" id="linkToko" href="/admin/info-toko"><i class="fa-solid fa-store"></i> Info Toko</a>
-								</li>
-								<li class="nav-item">
-									<a class="nav-link" id="linkKomplain" href="/admin/komplain"><i class="fa-solid fa-triangle-exclamation"></i> Komplain</a>
-								</li>
-							</ul>
-						</div>
-					</div>
-				</div>
-			</nav>
-		</header>
+	<li class="nav-item" id="linkPromo">
+		<a class="nav-link" href="/admin/promo">
+			<i class="fas fa-fw fa-salad"></i>
+			<span>Promo</span></a>
+	</li>
+	<hr class="sidebar-divider">
+
+	<li class="nav-item" id="linkKaryawan">
+		<a class="nav-link" href="/admin/karyawan">
+			<i class="fas fa-fw fa-salad"></i>
+			<span>Karyawan</span></a>
+	</li>
+	<hr class="sidebar-divider">
+
+	<li class="nav-item" id="linkToko">
+		<a class="nav-link" href="/admin/info-toko">
+			<i class="fas fa-fw fa-salad"></i>
+			<span>Info Toko</span></a>
+	</li>
+	<hr class="sidebar-divider">
+
+	<li class="nav-item" id="linkKomplain">
+		<a class="nav-link" href="/admin/komplain">
+			<i class="fas fa-fw fa-salad"></i>
+			<span>Komplain</span></a>
+	</li>
+	<!-- <li class="nav-item">
+        <a class="nav-link" id="linkMenuUtama" href="/kasir"><i class="fas fa-fw fa-salad"></i>Menu</a>
+    </li> -->
+	<!-- Divider -->
+	<!-- <hr class="sidebar-divider"> -->
+	<!-- Nav Item - Tables -->
+	<!-- <li class="nav-item" id="linkPembayaran">
+		<a class="nav-link" href="/kasir/pembayaran">
+			<i class="fas fa-sharp fa-fw fa-cart-shopping"></i>
+			<span>Pembayaran</span></a>
+	</li> -->
+	<!-- <li class="nav-item">
+		<a class="nav-link" id="linkLaporan" href="/admin/laporan"><i class="fa-solid fa-book"></i> Laporan</a>
+	</li>
+	
+	<hr class="sidebar-divider">
+
+	<li class="nav-item">
+		<a class="nav-link" id="linkProduk" href="/admin/produk"><i class="fa-sharp fa-solid fa-leaf"></i> Produk</a>
+	</li>
+	
+	<hr class="sidebar-divider">
+
+	<li class="nav-item">
+		<a class="nav-link" id="linkKategori" href="/admin/kategori"><i class="fa-solid fa-boxes-stacked"></i> Kategori</a>
+	</li>
+	
+	<hr class="sidebar-divider">
+
+	<li class="nav-item">
+		<a class="nav-link" id="linkPromo" href="/admin/promo"><i class="fa-solid fa-tag"></i> Promo</a>
+	</li>
+
+	<hr class="sidebar-divider">
+
+	<li class="nav-item">
+		<a class="nav-link" id="linkKaryawan" href="/admin/karyawan"><i class="fa-solid fa-users"></i> Karyawan</a>
+	</li>
+
+	<hr class="sidebar-divider">
+
+	<li class="nav-item">
+		<a class="nav-link" id="linkToko" href="/admin/info-toko"><i class="fa-solid fa-store"></i> Info Toko</a>
+	</li>
+
+	<hr class="sidebar-divider">
+
+	<li class="nav-item">
+		<a class="nav-link" id="linkKomplain" href="/admin/komplain"><i class="fa-solid fa-triangle-exclamation"></i> Komplain</a>
+	</li> -->
+	<!-- Divider -->
+	<hr class="sidebar-divider d-none d-md-block">
+	<!-- Sidebar Toggler (Sidebar) -->
+	<div class="text-center d-none d-md-inline">
+		<button class="rounded-circle border-0" id="sidebarToggle"></button>
+	</div>
+</ul>
