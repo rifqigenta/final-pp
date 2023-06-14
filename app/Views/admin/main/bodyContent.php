@@ -107,7 +107,6 @@
             </div>
         </div>
         <!-- Bootstrap core JavaScript-->
-        <script src="<?= base_url('/newAssets/vendor/jquery/jquery.min.js') ?>"></script>
         <script src="<?= base_url('/newAssets/vendor/bootstrap/js/bootstrap.bundle.min.js') ?>"></script>
         <!-- Core plugin JavaScript-->
         <script src="<?= base_url('/newAssets/vendor/jquery-easing/jquery.easing.min.js') ?>"></script>

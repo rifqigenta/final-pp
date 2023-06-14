@@ -104,6 +104,10 @@
     $('#linkPromo').addClass("active");
   });
 
+  function lihatTransaksi(invoice) {
+    window.location.href = `<?= base_url();?>/riwayat/transaksi/${invoice}`;
+  }
+
   function validatePromo(event) {
     var key = event.key;
 
