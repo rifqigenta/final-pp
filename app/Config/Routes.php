@@ -51,7 +51,12 @@ $routes->get('admin/kategori', 'Admin\Home::kategori');
 
 // ROUTES PROSES KASIR
 
+
 // ROUTES PROSES ADMIN
+$routes->POST('admin/proses/kategori/tambah', 'Admin\ProsesKategori::tambah');
+$routes->POST('admin/proses/kategori/update', 'Admin\ProsesKategori::update');
+
+
 
 /*
  * --------------------------------------------------------------------

@@ -3,8 +3,14 @@
 namespace App\Controllers\Admin;
 
 use App\Controllers\BaseController;
+use App\Models\Admin\KategoriModel;
 
 class Home extends BaseController{
+
+    protected $kategoriModel;
+	public function __construct() {
+		$this->kategoriModel 	= new KategoriModel();
+	}
 
     public function index(){
         $data['title'] = "Dashboard Admin";
@@ -70,7 +76,8 @@ class Home extends BaseController{
     }
 
     function kategori(){
-        $data['title'] = "Daftar Kategori";
+        $data['title']  = "Daftar Kategori";
+        $data['detail'] = $this->kategoriModel->select("*")->where("status", "1")->get()->getResultArray();
         return view("admin/kategori", $data);
         // . view("admin/kategori")
         // . view("admin/main/footer");
