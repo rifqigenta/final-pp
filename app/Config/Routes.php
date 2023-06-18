@@ -55,6 +55,8 @@ $routes->get('admin/kategori', 'Admin\Home::kategori');
 // ROUTES PROSES ADMIN
 $routes->POST('admin/proses/kategori/tambah', 'Admin\ProsesKategori::tambah');
 $routes->POST('admin/proses/kategori/update', 'Admin\ProsesKategori::update');
+$routes->POST('admin/proses/promo/tambah', 'Admin\ProsesPromo::tambah');
+$routes->POST('admin/proses/promo/update', 'Admin\ProsesPromo::update');
 
 
 

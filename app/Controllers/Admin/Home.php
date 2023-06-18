@@ -4,12 +4,15 @@ namespace App\Controllers\Admin;
 
 use App\Controllers\BaseController;
 use App\Models\Admin\KategoriModel;
+use App\Models\Admin\PromoModel;
 
 class Home extends BaseController{
 
-    protected $kategoriModel;
+    protected $kategoriModel, $promoModel;
 	public function __construct() {
 		$this->kategoriModel 	= new KategoriModel();
+		$this->promoModel = new PromoModel();
+
 	}
 
     public function index(){
@@ -28,6 +31,7 @@ class Home extends BaseController{
 
     public function promo(){
         $data['title'] = "Daftar Promo";
+        $data['detail'] = $this->promoModel->select("*")->where("status <", "2")->get()->getResultArray();
         return view("admin/promo", $data);
         // . view("admin/promo")
         // . view("admin/main/footer");
