@@ -18,8 +18,28 @@ class Home extends BaseController{
 		// . view("kasir/main/pembayaran")
 		// . view("kasir/main/footer");
 	}
-	public function login(){
-		$data['title'] = "Login";
-		return view("kasir/login", $data);
-	}
+	// public function index()
+	// {
+	// 	$data['title'] = 'Dashboard Kasir';
+	// 	return view('kasir/menu_utama')
+	// }
+	// public function __construct() 
+    // {
+    //     $this->session = session();
+    // }
+
+    // public function index(){
+    //     // $data['title'] = "Dashboard Admin";
+    //     // return view("admin/home", $data);
+    //     // . view("admin/home")
+    //     // . view("admin/main/footer");
+    //     if(!$this->session->has('isLogin')){
+    //         return redirect()->to('/login');
+    //     }
+
+    //     if($this->session->get('level') !=1){
+    //         return redirect()->to('/login');
+    //     }
+    //     return view('/kasir');
+    // }
 }

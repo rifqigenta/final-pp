@@ -21,22 +21,27 @@
         <table class="table bg-white rounded-3 border-light-subtle" id="tableKaryawan">
           <thead>
             <tr class="text-white" style="background-color:#04BEB3">
-              <th scope="col">Nama/ID</th>
+              <th scope="col">Role Kode</th>
               <th scope="col">Username</th>
               <th scope="col">Alamat</th>
+              <th scope="col">Email</th>
               <th scope="col">Action</th>
             </tr>
           </thead>
           <tbody>
+            <?php foreach($detail as $row){?>
             <tr>
-              <tD scope="row">Fetrus jari/01</tD>
-              <td>@fetrusjari</td>
-              <td>Sleman</td>
+              <td scope="row"><?= $row['role_kode'];?></td>
+              <td><?= $row['nama']; ?></td>
+              <td><?= $row['alamat']; ?></td>
+              <td><?= $row['email']; ?></td>
+              <td><?= $row['password']; ?></td>
               <td>
                 <button type="button" class="btn btn-outline-warning" onclick="editKaryawan(1)"><i class="fa-solid fa-pencil"></i></button>
                 <button type="button" class="btn btn-outline-danger" onclick="deleteKaryawan(1)"><i class="fa-solid fa-trash"></i></button>
               </td>
             </tr>
+            <?php } ?>
           </tbody>
         </table>
       </div>
@@ -52,11 +57,20 @@
         <h5 class="modal-title">Tambah Karyawan</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <form action="#" method="POST">
+      <?= form_open('admin/proses/karyawan/tambah') ?>
+      <?= csrf_field() ?>
         <div class="modal-body">
+          <div class="mb-3">
+            <label for="role_kode" class="form-label">Role Kode</label>
+            <input type="text" class="form-control" id="role_kode" name="role_kode" required>
+          </div>
           <div class="mb-3">
             <label for="nama" class="form-label">Nama</label>
             <input type="text" class="form-control" id="nama" name="nama" required>
+          </div>
+          <div class="mb-3">
+            <label for="alamat" class="form-label">Alamat</label>
+            <input type="text" class="form-control" id="alamat" name="alamat" required>
           </div>
           <div class="mb-3">
             <label for="email" class="form-label">Email</label>
@@ -84,11 +98,13 @@
         <h5 class="modal-title">Edit Karyawan [Fetrus]</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <form action="#" method="POST">
+      <?= form_open('admin/proses/karyawan/update') ?>
+      <?= csrf_field() ?>
+      <input type="hidden" name="idUpdate" id="idUpdate"/>
         <div class="modal-body">
           <div class="mb-3">
-            <label for="namaEdit" class="form-label">Nama</label>
-            <input type="text" class="form-control" id="namaEdit" name="namaEdit" required>
+            <label for="namaEditKaryawan" class="form-label">Nama</label>
+            <input type="text" class="form-control" id="namaEdit" name="namaEdit" value="<?= old('namaEditKaryawan');?>" style="border-color:<?= (validation_show_error('namaEditKaryawan')!=null)?'red':'';?>" required>
           </div>
           <div class="mb-3">
             <label for="passwordEdit" class="form-label">Password</label>
@@ -108,6 +124,9 @@
 
 
 <script>
+  var csrfName = "<?= csrf_token(); ?>";
+  var csrfHash = "<?= csrf_hash(); ?>";
+
   $(document).ready(function() {
     $('#linkKaryawan').addClass("active");
     $('#tableKaryawan').DataTable();

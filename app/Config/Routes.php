@@ -29,24 +29,24 @@ $routes->set404Override();
 
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
-$routes->get('/', 'Home::index');
+$routes->get('/login', 'Login::index');
 
 // ROUTES TAMPILAN KASIR
-$routes->get('kasir', 'Kasir\Home::index');
-$routes->get('kasir/pembayaran', 'Kasir\Home::payment');
-$routes->get('kasir/login', 'Kasir\Home::login');
+$routes->get('kasir', 'Kasir\Home::index', ['filter' => 'AuthKasir']);
+$routes->get('kasir/pembayaran', 'Kasir\Home::payment', ['filter' => 'AuthKasir']);
+// $routes->get('kasir/login', 'Kasir\Home::login');
 
 // ROUTES TAMPILAN ADMIN
-$routes->get('admin', 'Admin\Home::index');
-$routes->get('admin/info-toko', 'Admin\Home::infoToko');
-$routes->get('admin/karyawan', 'Admin\Home::karyawan');
-$routes->get('admin/produk', 'Admin\Home::produk');
-$routes->get('admin/promo', 'Admin\Home::promo');
-$routes->get('admin/laporan', 'Admin\Home::laporan');
-$routes->get('admin/laporan/penjualan', 'Admin\Home::laporanPenjualan');
-$routes->get('admin/laporan/stok', 'Admin\Home::laporanStok');
-$routes->get('admin/komplain', 'Admin\Home::komplain');
-$routes->get('admin/kategori', 'Admin\Home::kategori');
+$routes->get('admin', 'Admin\Home::index', ['filter' => 'AuthAdmin']);
+$routes->get('admin/info-toko', 'Admin\Home::infoToko', ['filter' => 'AuthAdmin']);
+$routes->get('admin/karyawan', 'Admin\Home::karyawan', ['filter' => 'AuthAdmin']);
+$routes->get('admin/produk', 'Admin\Home::produk', ['filter' => 'AuthAdmin']);
+$routes->get('admin/promo', 'Admin\Home::promo', ['filter' => 'AuthAdmin']);
+$routes->get('admin/laporan', 'Admin\Home::laporan', ['filter' => 'AuthAdmin']);
+$routes->get('admin/laporan/penjualan', 'Admin\Home::laporanPenjualan', ['filter' => 'AuthAdmin']);
+$routes->get('admin/laporan/stok', 'Admin\Home::laporanStok', ['filter' => 'AuthAdmin']);
+$routes->get('admin/komplain', 'Admin\Home::komplain', ['filter' => 'AuthAdmin']);
+$routes->get('admin/kategori', 'Admin\Home::kategori', ['filter' => 'AuthAdmin']);
 
 
 // ROUTES PROSES KASIR
@@ -59,6 +59,9 @@ $routes->POST('admin/proses/promo/tambah', 'Admin\ProsesPromo::tambah');
 $routes->POST('admin/proses/promo/update', 'Admin\ProsesPromo::update');
 
 
+// ROUTES PROSES LOGIN
+$routes->POST('login/proses', 'LoginProcess::login');
+$routes->GET('login/logout', 'LoginProcess::logout');
 
 /*
  * --------------------------------------------------------------------

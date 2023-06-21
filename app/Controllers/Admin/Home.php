@@ -5,13 +5,15 @@ namespace App\Controllers\Admin;
 use App\Controllers\BaseController;
 use App\Models\Admin\KategoriModel;
 use App\Models\Admin\PromoModel;
+use App\Models\Admin\KaryawanModel;
 
 class Home extends BaseController{
 
-    protected $kategoriModel, $promoModel;
+    protected $kategoriModel, $promoModel, $karyawanModel;
 	public function __construct() {
 		$this->kategoriModel 	= new KategoriModel();
 		$this->promoModel = new PromoModel();
+		$this->karyawanModel = new KaryawanModel();
 
 	}
 
@@ -24,6 +26,7 @@ class Home extends BaseController{
 
     public function karyawan(){
         $data['title'] = "Daftar Karyawan";
+        $data['detail'] = $this->karyawanModel->select("*")->where("status", "1")->get()->getResultArray();
         return view("admin/karyawan", $data);
         // . view("admin/karyawan")
         // . view("admin/main/footer");
@@ -31,7 +34,7 @@ class Home extends BaseController{
 
     public function promo(){
         $data['title'] = "Daftar Promo";
-        $data['detail'] = $this->promoModel->select("*")->where("status <", "2")->get()->getResultArray();
+        $data['detail'] = $this->promoModel->select("*")->get()->getResultArray();
         return view("admin/promo", $data);
         // . view("admin/promo")
         // . view("admin/main/footer");

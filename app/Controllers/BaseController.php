@@ -55,7 +55,8 @@ abstract class BaseController extends Controller
 
         // E.g.: $this->session = \Config\Services::session();
         session();
-        $this->validation = \Config\Services::validation();
-        $this->request = \Config\Services::request();
+		$this->validation = \Config\Services::validation();
+		$this->request = \Config\Services::request();
+		// $this->uri = new \Codeigniter\HTTP\URI(current_url(true));
     }
 }

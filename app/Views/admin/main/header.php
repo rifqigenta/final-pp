@@ -57,6 +57,11 @@
 			<i class="fas fa-fw fa-salad"></i>
 			<span>Komplain</span></a>
 	</li>
+	<li class="nav-item" id="logout">
+		<a class="nav-link" href="/login/logout/">
+			<i class="fas fa-fw fa-salad"></i>
+			<span>Logout</span></a>
+	</li>
 	<!-- <li class="nav-item">
         <a class="nav-link" id="linkMenuUtama" href="/kasir"><i class="fas fa-fw fa-salad"></i>Menu</a>
     </li> -->

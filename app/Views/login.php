@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?= $title; ?></title>
+    <title>Login</title>
     <!-- CSS & JS -->
     <link href="/assets/css/bootstrap.min.css" rel="stylesheet" />
     <script src="/assets/js/bootstrap.bundle.min.js"></script>
@@ -47,20 +47,29 @@
                                 <div class="text-center">
                                     <h1 class="h4 text-white mb-4">Selamat Datang!</h1>
                                 </div>
-                                <form class="user" style="padding-top: 5%;">
+                                <form class="user" method="post" action="/login/proses" style="padding-top: 5%;">
+                                    <?= csrf_field() ?>
+
+                                    <?php if (session()->getFlashdata('msgLogin')) { ?>
+                                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                            <i class="bi bi-exclamation-diamond"></i>
+                                            <?= session()->getFlashdata('msgLogin'); ?>
+                                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                        </div>
+                                    <?php } ?>
                                     <div class="form-group mb-3">
-                                        <input type="email" class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Username">
-                                    </div>
+											<label for="uname" class="form-label text-white">Username / Email</label>
+											<div class="input-group has-validation">
+												<input type="text" class="form-control" autofocus name="uname" id="uname" placeholder="email" style="border-color:<?= ($validation->hasError('uname'))?'red':'';?>" required>
+											</div>
+											<span style="font-size:small; color:red;"><?= $validation->getError('uname');?></span>
+										</div>
                                     <div class="form-group mb-3">
-                                        <input type="password" class="form-control form-control-user" id="exampleInputPassword" placeholder="Password">
-                                    </div>
-                                    <!-- <div class="form-group mb-3">
-                                            <div class="custom-control custom-checkbox small">
-                                                <input type="checkbox" class="custom-control-input m-0" id="customCheck">
-                                                <label class="custom-control-label text-white align-top" for="customCheck">Remember
-                                                    Me</label>
-                                            </div>
-                                        </div>   -->
+											<label for="pass" class="form-label text-white">Password</label>
+                                            <input type="password" class="form-control" name="pass" id="pass" placeholder="password" style="border-color:<?= ($validation->hasError('pass'))?'red':'';?>" required>
+											<span style="font-size:small; color:red;"><?= $validation->getError('pass');?></span>
+										</div>
+                                    
                                     <div class="form-group mb-3">
                                         <input class="form-check-input" type="checkbox" id="customCheck" onclick="showPassword()">
                                         <label class="form-check-label text-white" for="customCheck">
@@ -68,9 +77,10 @@
                                         </label>
                                     </div>
                                     <div class="d-flex" style="justify-content: center; align-items: center;">
-                                        <button href="" class="btn btn-primary" type="button" style="width: 30%">
+                                        <button class="btn btn-primary" type="submit" style="width: 30%">
                                             Login
-                                        </button>
+                                            
+                                        </button>  <!-- Button login masih error karena belum terdapat aksi logout -->
                                     </div>
                                 </form>
                             </div>
@@ -82,7 +92,7 @@
     </div>
     <script>
         function showPassword() {
-            var password = document.getElementById('exampleInputPassword');
+            var password = document.getElementById('pass');
 
             if (password.type === "password") {
                 password.type = "text";
