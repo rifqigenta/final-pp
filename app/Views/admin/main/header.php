@@ -57,6 +57,7 @@
 			<i class="fas fa-fw fa-salad"></i>
 			<span>Komplain</span></a>
 	</li>
+	<hr>
 	<li class="nav-item" id="logout">
 		<a class="nav-link" href="/login/logout/">
 			<i class="fas fa-fw fa-salad"></i>

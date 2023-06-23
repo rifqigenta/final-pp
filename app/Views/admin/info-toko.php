@@ -10,7 +10,7 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-12 mb-2">
       <div class="px-3 py-3 rounded-3 fw-semibold text-white" style="background-color: #98fb98;">Profil Toko</div>
     </div>
   </div>
@@ -18,15 +18,22 @@
     <div class="col-md-6 col-xs-12">
       <div class="col-md-12">
         <div style="text-align:center">
-          <img src="<?= base_url(); ?>/assets/img/cabai/cabaihijaubesar.jpg" class="m-3" width="200">
+          <img src="<?= base_url(); ?>gambar/<?= $detail['gambar_utama'];?>" id="previewImage" class="m-3" width="200" height="200">
         </div>
       </div>
-      <div class="col-md-12">
-        <div style="text-align:center">
-          <input type="file" id="myFile" name="filename"><br>
-          <div class="text-muted" style="font-size:12px;">*Input gambar untuk mengubah gambar utama</div>
+      <?= form_open_multipart('admin/proses/info-situs/update-gambar') ?>
+        <?= csrf_field(); ?>
+        <div class="col-md-12 mb-2">
+          <div class="text-center">
+            <input type="file" id="gambarUtama" name="gambarUtama" accept="image/png, image/jpeg" onchange="preview(event)" required><br>
+          </div>
         </div>
-      </div>
+        <div class="col-md-12 mb-2">
+          <div class="text-center">
+            <button type="submit" class="btn btn-primary btn-sm text-white" id="btnUpdateGambar" style="display:none;"><i class="fa-sharp fa-solid fa-pen"></i> Update Gambar</button>
+          </div>
+        </div>
+      </form>
       <div class="col-md-12">
         <table class="table h-3">
           <tbody>
@@ -74,5 +81,14 @@
   $(document).ready(function() {
     $('#linkToko').addClass("active");
   });
+
+  var preview = function(event) {
+    var output = document.getElementById('previewImage');
+    output.src = URL.createObjectURL(event.target.files[0]);
+    output.onload = function() {
+      URL.revokeObjectURL(output.src)
+    }
+    $('#btnUpdateGambar').css("display", "block");
+  }
 </script>
 <?= $this->endSection() ?>

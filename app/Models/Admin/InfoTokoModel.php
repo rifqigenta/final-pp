@@ -13,7 +13,7 @@ class InfoTokoModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['nama_toko', 'alamat', 'no_wa', 'deskripsi_toko'];
+    protected $allowedFields    = ['nama_toko', 'alamat', 'no_wa', 'deskripsi_toko', 'gambar_utama'];
 
     // Dates
     protected $useTimestamps = false;
