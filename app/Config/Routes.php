@@ -53,10 +53,12 @@ $routes->get('admin/kategori', 'Admin\Home::kategori', ['filter' => 'AuthAdmin']
 
 
 // ROUTES PROSES ADMIN
-$routes->POST('admin/proses/kategori/tambah', 'Admin\ProsesKategori::tambah');
-$routes->POST('admin/proses/kategori/update', 'Admin\ProsesKategori::update');
-$routes->POST('admin/proses/promo/tambah', 'Admin\ProsesPromo::tambah');
-$routes->POST('admin/proses/promo/update', 'Admin\ProsesPromo::update');
+$routes->POST('admin/proses/kategori/tambah', 'Admin\ProsesKategori::tambah', ['filter' => 'AuthAdmin']);
+$routes->POST('admin/proses/kategori/update', 'Admin\ProsesKategori::update', ['filter' => 'AuthAdmin']);
+$routes->POST('admin/proses/promo/tambah', 'Admin\ProsesPromo::tambah', ['filter' => 'AuthAdmin']);
+$routes->POST('admin/proses/promo/update', 'Admin\ProsesPromo::update', ['filter' => 'AuthAdmin']);
+$routes->POST('admin/proses/info-situs/update', 'Admin\InfoTokoProses::update', ['filter' => 'AuthAdmin']);
+
 
 
 // ROUTES PROSES LOGIN

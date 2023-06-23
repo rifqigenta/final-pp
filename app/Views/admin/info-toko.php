@@ -11,7 +11,7 @@
   </div>
   <div class="row">
     <div class="col-md-12">
-      <div class="px-3 py-3 rounded-3 fw-semibold" style="background-color: #98fb98;">Profil Toko</div>
+      <div class="px-3 py-3 rounded-3 fw-semibold text-white" style="background-color: #98fb98;">Profil Toko</div>
     </div>
   </div>
   <div class="row bg-white px-3 rounded-3" style="padding-top: 15px;">
@@ -41,27 +41,30 @@
       </div>
     </div>
     <div class="col-md-6 col-xs-12">
-      <div class="mb-3">
-        <label for="namaToko" class="form-label">Nama Toko</label>
-        <input type="text" class="form-control" id="namaToko" name="namaToko" placeholder="Nama Toko" required>
-      </div>
-      <div class="mb-3">
-        <label for="alamat" class="form-label">Alamat</label>
-        <textarea class="form-control" id="alamat" name="alamat" rows="3" required></textarea>
-      </div>
-      <div class="mb-3">
-        <label for="noWA" class="form-label">Nomor WhatsApp</label>
-        <input type="text" class="form-control" id="noWA" name="noWA" required>
-      </div>
-      <div class="mb-3">
-        <label for="deskripsi" class="form-label">Deskripsi Toko</label>
-        <textarea class="form-control" id="deskripsi" name="deskripsi" rows="3" required></textarea>
-      </div>
-      <div class="mb-3">
-        <label for="namaToko" class="form-label">Nama Toko</label>
-        <input type="text" class="form-control" id="namaToko" name="namaToko" placeholder="Nama Toko" required>
-      </div>
-      <button type="submit" class="btn btn-success text-white"><i class="fa-sharp fa-solid fa-pen"></i> Update</button>
+      <?= form_open('admin/proses/info-situs/update') ?>
+        <?= csrf_field(); ?>
+        <div class="mb-3">
+          <label for="namaToko" class="form-label">Nama Toko</label>
+          <input type="text" class="form-control" id="namaToko" name="namaToko" placeholder="Nama Toko" style="border-color:<?= (validation_show_error('namaToko'))?'red':'';?>" value="<?= (old('namaToko')) ? old('namaToko'):$detail['nama_toko'];?>" required>
+          <span style="font-size:small; color:red;"><?= validation_show_error('namaToko');?></span>
+        </div>
+        <div class="mb-3">
+          <label for="alamat" class="form-label">Alamat</label>
+          <textarea class="form-control" id="alamat" name="alamat" rows="3" placeholder="Alamat Toko Anda" style="border-color:<?= (validation_show_error('alamat'))?'red':'';?>" required><?= (old('alamat')) ? old('alamat'):$detail['alamat'];?></textarea>
+          <span style="font-size:small; color:red;"><?= validation_show_error('alamat');?></span>
+        </div>
+        <div class="mb-3">
+          <label for="noWA" class="form-label">Nomor WhatsApp</label>
+          <input type="text" class="form-control" id="noWA" name="noWA" placeholder="Nomor Whatsapp" style="border-color:<?= (validation_show_error('noWA'))?'red':'';?>" value="<?= (old('noWA')) ? old('noWA'):$detail['no_wa'];?>" required>
+          <span style="font-size:small; color:red;"><?= validation_show_error('noWA');?></span>
+        </div>
+        <div class="mb-3">
+          <label for="deskripsi" class="form-label">Deskripsi Toko</label>
+          <textarea class="form-control" id="deskripsi" name="deskripsi" rows="3" placeholder="Deskripsi Toko" style="border-color:<?= (validation_show_error('deskripsi'))?'red':'';?>" required><?= (old('deskripsi')) ? old('deskripsi'):$detail['deskripsi_toko'];?></textarea>
+          <span style="font-size:small; color:red;"><?= validation_show_error('deskripsi');?></span>
+        </div>
+        <button type="submit" class="btn btn-success text-white"><i class="fa-sharp fa-solid fa-pen"></i> Update</button>
+      </form>
     </div>
     <div class="row py-5"></div>
   </div>

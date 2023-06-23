@@ -6,15 +6,16 @@ use App\Controllers\BaseController;
 use App\Models\Admin\KategoriModel;
 use App\Models\Admin\PromoModel;
 use App\Models\Admin\KaryawanModel;
+use App\Models\Admin\InfoTokoModel;
 
 class Home extends BaseController{
 
-    protected $kategoriModel, $promoModel, $karyawanModel;
+    protected $kategoriModel, $promoModel, $karyawanModel, $infoTokoModel;
 	public function __construct() {
 		$this->kategoriModel 	= new KategoriModel();
 		$this->promoModel = new PromoModel();
 		$this->karyawanModel = new KaryawanModel();
-
+        $this->infoTokoModel = new infoTokoModel();
 	}
 
     public function index(){
@@ -63,6 +64,7 @@ class Home extends BaseController{
 
     public function infoToko(){
         $data['title'] = "Info Toko";
+        $data['detail'] = $this->infoTokoModel->select("*")->orderBy("id_toko", "DESC")->limit(1)->get()->getRowArray();
         return view("admin/info-toko", $data);
         // . view("admin/info-toko")
         // . view("admin/main/footer");
