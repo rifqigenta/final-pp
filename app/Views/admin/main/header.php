@@ -11,7 +11,7 @@
 	<!-- Nav Item - Dashboard -->
 	<li class="nav-item" id="linkLaporan">
 		<a class="nav-link" href="/admin/laporan">
-			<i class="fas fa-fw fa-salad"></i>
+			<i class="fa-solid fa-table"></i>
 			<span>Laporan</span></a>
 	</li>
 	
@@ -26,41 +26,41 @@
 
 	<li class="nav-item" id="linkKategori">
 		<a class="nav-link" href="/admin/kategori">
-			<i class="fas fa-fw fa-salad"></i>
+			<i class="fa-solid fa-boxes-stacked"></i>
 			<span>Kategori</span></a>
 	</li>
 	<hr class="sidebar-divider">
 
 	<li class="nav-item" id="linkPromo">
 		<a class="nav-link" href="/admin/promo">
-			<i class="fas fa-fw fa-salad"></i>
+		<i class="fa-solid fa-percent"></i>
 			<span>Promo</span></a>
 	</li>
 	<hr class="sidebar-divider">
 
 	<li class="nav-item" id="linkKaryawan">
 		<a class="nav-link" href="/admin/karyawan">
-			<i class="fas fa-fw fa-salad"></i>
+			<i class="fa-solid fa-users"></i>
 			<span>Karyawan</span></a>
 	</li>
 	<hr class="sidebar-divider">
 
 	<li class="nav-item" id="linkToko">
 		<a class="nav-link" href="/admin/info-toko">
-			<i class="fas fa-fw fa-salad"></i>
+			<i class="fa-solid fa-store"></i>
 			<span>Info Toko</span></a>
 	</li>
 	<hr class="sidebar-divider">
 
 	<li class="nav-item" id="linkKomplain">
 		<a class="nav-link" href="/admin/komplain">
-			<i class="fas fa-fw fa-salad"></i>
+			<i class="fa-regular fa-brake-warning"></i>
 			<span>Komplain</span></a>
 	</li>
 	<hr>
 	<li class="nav-item" id="logout">
 		<a class="nav-link" href="/login/logout/">
-			<i class="fas fa-fw fa-salad"></i>
+			<i class="fa-solid fa-right-from-bracket"></i>
 			<span>Logout</span></a>
 	</li>
 	<!-- <li class="nav-item">
