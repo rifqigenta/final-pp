@@ -7,15 +7,17 @@ use App\Models\Admin\KategoriModel;
 use App\Models\Admin\PromoModel;
 use App\Models\Admin\KaryawanModel;
 use App\Models\Admin\InfoTokoModel;
+use App\Models\Admin\KomplainModel;
 
 class Home extends BaseController{
 
-    protected $kategoriModel, $promoModel, $karyawanModel, $infoTokoModel;
+    protected $kategoriModel, $promoModel, $karyawanModel, $infoTokoModel, $komplainModel;
 	public function __construct() {
 		$this->kategoriModel 	= new KategoriModel();
 		$this->promoModel = new PromoModel();
 		$this->karyawanModel = new KaryawanModel();
         $this->infoTokoModel = new infoTokoModel();
+        $this->komplainModel = new KomplainModel();
 	}
 
     public function index(){
@@ -50,6 +52,7 @@ class Home extends BaseController{
 
     public function komplain(){
         $data['title'] = "Daftar Komplain";
+        $data['detail'] = $this->komplainModel->JOIN("transaksi b", "komplain.id_transaksi=b.id_transaksi")->JOIN("kasir c", "komplain.id_kasir=c.id_kasir")->select("*")->get()->getResultArray();
         return view("admin/komplain", $data);
         // . view("admin/komplain")
         // . view("admin/main/footer");
