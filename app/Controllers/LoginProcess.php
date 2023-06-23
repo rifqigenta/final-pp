@@ -24,6 +24,7 @@ class LoginProcess extends BaseController
 				'rules' => 'required|valid_email',
 				'errors' => [
 					'required' => "*Harus Di isi",
+					'valid_email' => "Username berupa email",
 				],
 			],
 			'pass' => [

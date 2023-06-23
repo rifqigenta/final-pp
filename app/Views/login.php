@@ -60,14 +60,14 @@
                                     <div class="form-group mb-3">
 											<label for="uname" class="form-label text-white">Username / Email</label>
 											<div class="input-group has-validation">
-												<input type="text" class="form-control" autofocus name="uname" id="uname" placeholder="email" style="border-color:<?= ($validation->hasError('uname'))?'red':'';?>" required>
+												<input type="text" class="form-control" autofocus name="uname" id="uname" placeholder="email" style="border-color:<?= (validation_show_error('uname'))?'red':'';?>" value="<?= old('uname');?>" required>
 											</div>
-											<span style="font-size:small; color:red;"><?= $validation->getError('uname');?></span>
+											<span style="font-size:small; color:red;"><?= validation_show_error('uname');?></span>
 										</div>
-                                    <div class="form-group mb-3">
+                                        <div class="form-group mb-3">
 											<label for="pass" class="form-label text-white">Password</label>
-                                            <input type="password" class="form-control" name="pass" id="pass" placeholder="password" style="border-color:<?= ($validation->hasError('pass'))?'red':'';?>" required>
-											<span style="font-size:small; color:red;"><?= $validation->getError('pass');?></span>
+                                            <input type="password" class="form-control" name="pass" id="pass" placeholder="password" style="border-color:<?= (validation_show_error('pass'))?'red':'';?>" value="<?= old('pass');?>" required>
+											<span style="font-size:small; color:red;"><?= validation_show_error('pass');?></span>
 										</div>
                                     
                                     <div class="form-group mb-3">
