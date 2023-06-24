@@ -10,10 +10,11 @@ use App\Models\Admin\InfoTokoModel;
 use App\Models\Admin\KomplainModel;
 use App\Models\Admin\TransaksiModel;
 use App\Models\Admin\ProdukModel;
+use App\Models\Admin\RestockModel;
 
 class Home extends BaseController{
 
-    protected $kategoriModel, $promoModel, $karyawanModel, $infoTokoModel, $komplainModel, $transaksiModel, $produkModel;
+    protected $kategoriModel, $promoModel, $karyawanModel, $infoTokoModel, $komplainModel, $transaksiModel, $produkModel, $restockModel;
 	public function __construct() {
 		$this->kategoriModel 	= new KategoriModel();
 		$this->promoModel = new PromoModel();
@@ -22,6 +23,7 @@ class Home extends BaseController{
         $this->komplainModel = new KomplainModel();
         $this->transaksiModel= new TransaksiModel();
         $this->produkModel  = new ProdukModel();
+        $this->restockModel = new RestockModel();
 	}
 
     public function index(){
@@ -103,7 +105,7 @@ class Home extends BaseController{
         $data['produk'] = $produk->paginate($paginate, 'produk');
 
         $data['kategori'] = $this->kategoriModel->select("*")->where("status", "1")->get()->getResultArray();
-        $data['pager'] = $this->produkModel->select("*")->JOIN("kategori b", "produk.id_kategori=b.id_kategori")->pager;
+        $data['pager'] = $produk->pager;
         $data['nomor'] = nomor($this->request->getVar('page_produk'), $paginate);
         return view("admin/produk", $data);
         // . view("admin/produk")
@@ -144,7 +146,12 @@ class Home extends BaseController{
 
     function restock(){
         $data['title'] = "Restock";
+        $paginate = 5;
         $data['produk'] = $this->produkModel->select("*")->where("status", "1")->get()->getResultArray();
+        $baseQuery = $this->restockModel->select("restock.*, b.nama")->JOIN("produk b", "restock.id_produk=b.id_produk");
+        $data['restock']= $baseQuery->paginate($paginate, "restock");
+        $data['pager']= $baseQuery->pager;
+        $data['nomor'] = nomor($this->request->getVar('page_restock'), $paginate);
         return view("admin/restock", $data);
     }
 }

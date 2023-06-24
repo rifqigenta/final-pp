@@ -18,7 +18,44 @@
     </div>
   </div>
 
-  
+  <div class="row">
+    <div class="col-md-12">
+      <div style="overflow-x:auto;">
+        <table class="table bg-white rounded-3">
+          <thead>
+            <tr>
+              <th scope="col">No</th>
+              <th scope="col">Kode Produk</th>
+              <th scope="col">Nama Produk</th>
+              <th scope="col">Kuantitas</th>
+              <th scope="col">Harga</th>
+              <th scope="col">Tanggal</th>
+              <th scope="col"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <?php foreach ($restock as $row) {?>
+              <tr>
+                <td><?= $nomor++;?></td>
+                <td scope="row">KD-BRG<?= $row['id_produk'];?></td>
+                <td><?= $row['nama'];?></td>
+                <td><?= $row['kuantitas'];?></td>
+                <td>Rp. <?= number_format($row['harga']);?></td>
+                <td><?= $row['tgl_tambah'];?></td>
+                <td>
+                  <button type="button" class="btn btn-sm btn-outline-danger mt-1" onclick="deleteProduk(<?= $row['id_restock'];?>, '<?= $row['nama'];?>')"><i class="fa-solid fa-trash"></i></button>
+                </td>
+              </tr>
+            <?php } ?>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="col-md-12 col-xs-12">
+      <?= $pager->links("restock", "custom_pagination"); ?>
+    </div>
+  </div>
 
 </div>
 
