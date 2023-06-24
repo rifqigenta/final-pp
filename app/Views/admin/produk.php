@@ -1,17 +1,29 @@
 <?= $this->extend('admin/main/bodyContent') ?>
 <?= $this->section('content') ?>
 <?php 
+
+  // Filter Cari
 	$cari = explode("=", service('uri')->getQuery(['only' => ['q']]));
 	if(isset($cari[1])){
 		$cari = $cari[1];
 	}else{
 		$cari	= null;
 	}
+
+  // Filter Kategori
 	$idKategori = explode("=", service('uri')->getQuery(['only' => ['idKategori']]));
   if(isset($idKategori[1])){
 		$idKategori = $idKategori[1];
 	}else{
 		$idKategori	= null;
+	}
+
+  // Filter Kategori
+  $terlaris = explode("=", service('uri')->getQuery(['only' => ['terlaris']]));
+  if(isset($terlaris[1])){
+		$terlaris = $terlaris[1];
+	}else{
+		$terlaris	= null;
 	}
 ?>
 <div class="container-fluid">
@@ -48,10 +60,10 @@
         </select>
       </div>
       <div class="col-md-3 col-xs-12 mb-3">
-        <select class="form-select" name="filterTerlaris" id="filterTerlaris">
-          <option selected>Sort By</option>
-          <option value="1">Terlaris</option>
-          <option value="2">Sedikit</option>
+        <select class="form-select" name="terlaris" id="terlaris">
+          <option selected value="">Sort By</option>
+          <option <?= ($terlaris=="0")?"selected": "";?> value="0">Sedikit</option>
+          <option <?= ($terlaris=="1")?"selected": "";?> value="1">Terlaris</option>
         </select>
       </div>
       <div class="col-md-2">

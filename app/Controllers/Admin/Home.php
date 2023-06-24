@@ -69,10 +69,13 @@ class Home extends BaseController{
         // Variabel Filter
 		$q	= $this->request->getVar("q");
 		$idKategori	= $this->request->getVar("idKategori");
+		$terlaris	= $this->request->getVar("terlaris");
 
         // BASE QUERY
-        $produk = $this->produkModel->select("*")
-        ->JOIN("kategori b", "produk.id_kategori=b.id_kategori");
+        $produk = $this->produkModel->select("produk.id_produk, produk.id_kategori, produk.nama, produk.kuantitas, produk.harga, produk.gambar, b.nama_kategori, COUNT(c.id_produk) as total")
+        ->JOIN("kategori b", "produk.id_kategori=b.id_kategori")
+        ->JOIN("transaksi c", "produk.id_produk=c.id_produk", "left")
+        ->GROUPBY("produk.id_produk");
 
         // Kategori
 		if($idKategori!="" || $idKategori!=null){
@@ -84,10 +87,20 @@ class Home extends BaseController{
             $produk->LIKE("produk.nama", $q)->orLike("b.nama_kategori", $q);
         }
 
+        // Terlaris
+		if($terlaris="0"){
+            $produk->orderBy("total", "DESC");
+        }elseif ($terlaris=="1") {
+            $produk->orderBy("total", "ASC");
+        }else{
+            $produk->orderBy("produk.id_produk", "DESC");
+        }
+
+        // Hanya Produk dengan Status 1
+        $produk->WHERE("produk.status", "1");
+
         // Exec DB
         $data['produk'] = $produk->paginate($paginate, 'produk');
-
-
 
         $data['kategori'] = $this->kategoriModel->select("*")->where("status", "1")->get()->getResultArray();
         $data['pager'] = $this->produkModel->select("*")->JOIN("kategori b", "produk.id_kategori=b.id_kategori")->pager;
