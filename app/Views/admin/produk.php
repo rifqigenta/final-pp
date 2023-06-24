@@ -7,6 +7,12 @@
 	}else{
 		$cari	= null;
 	}
+	$idKategori = explode("=", service('uri')->getQuery(['only' => ['idKategori']]));
+  if(isset($idKategori[1])){
+		$idKategori = $idKategori[1];
+	}else{
+		$idKategori	= null;
+	}
 ?>
 <div class="container-fluid">
   <div class="row">
@@ -24,7 +30,6 @@
     </div>
   </div>
   <form action="/admin/produk" method="GET">
-  <?= csrf_field() ?>
   <div class="row">
     <div class="col-md-12">
       <label for="basic-url" class="form-label">Filter</label>
@@ -35,10 +40,11 @@
         </div>
       </div>
       <div class="col-md-3 col-xs-12 mb-3">
-        <select class="form-select" name="filterKategori" id="filterKategori">
-          <option selected>Pilih Kategori</option>
-          <option value="1">Sayuran</option>
-          <option value="2">Umbi</option>
+        <select class="form-select" name="idKategori" id="idKategori">
+          <option value="">Pilih Kategori</option>
+          <?php foreach ($kategori as $row) {?>
+            <option <?= ($idKategori==$row['id_kategori'])?"selected": "";?> value="<?= $row['id_kategori'];?>"><?= $row['nama_kategori'];?></option>
+          <?php } ?>
         </select>
       </div>
       <div class="col-md-3 col-xs-12 mb-3">

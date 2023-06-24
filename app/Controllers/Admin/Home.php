@@ -66,14 +66,28 @@ class Home extends BaseController{
         $data['title'] = "Daftar Produk";
         $paginate = 5;
 
-        // Variabel Cari
+        // Variabel Filter
 		$q	= $this->request->getVar("q");
+		$idKategori	= $this->request->getVar("idKategori");
 
-		if($q!="" || $q!=null){
-            $data['produk'] = $this->produkModel->select("*")->JOIN("kategori b", "produk.id_kategori=b.id_kategori")->LIKE("produk.nama", $q)->orLike("b.nama_kategori", $q)->paginate($paginate, 'produk');
-        }else{
-            $data['produk'] = $this->produkModel->select("*")->JOIN("kategori b", "produk.id_kategori=b.id_kategori")->paginate($paginate, 'produk');
+        // BASE QUERY
+        $produk = $this->produkModel->select("*")
+        ->JOIN("kategori b", "produk.id_kategori=b.id_kategori");
+
+        // Kategori
+		if($idKategori!="" || $idKategori!=null){
+            $produk->WHERE("produk.id_kategori", $idKategori);
         }
+
+        // Cari
+		if($q!="" || $q!=null){
+            $produk->LIKE("produk.nama", $q)->orLike("b.nama_kategori", $q);
+        }
+
+        // Exec DB
+        $data['produk'] = $produk->paginate($paginate, 'produk');
+
+
 
         $data['kategori'] = $this->kategoriModel->select("*")->where("status", "1")->get()->getResultArray();
         $data['pager'] = $this->produkModel->select("*")->JOIN("kategori b", "produk.id_kategori=b.id_kategori")->pager;
