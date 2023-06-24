@@ -18,25 +18,25 @@
     <div class="col-md-12">
       <label for="basic-url" class="form-label">Filter</label>
     </div>
-    <div class="col-md-4 col-xs-12 mb-3">
+    <div class="col-md-3 col-xs-12 mb-3">
       <div class="input-group">
         <input type="text" class="form-control" placeholder="Cari..." name="filterNama" id="filterNama" aria-label="Recipient's username">
       </div>
     </div>
-    <div class="col-md-3 col-xs-12 mb-3">
+    <div class="col-md-4 col-xs-12 mb-3">
       <div class="input-group">
         <span class="input-group-text">Tanggal Awal</span>
         <input type="date" class="form-control" id="tglAwal" name="tglAwal">
       </div>
     </div>
-    <div class="col-md-3 col-xs-12 mb-3">
+    <div class="col-md-4 col-xs-12 mb-3">
       <div class="input-group">
         <span class="input-group-text">Tanggal Akhir</span>
         <input type="date" class="form-control" id="tglAkhir" name="tglAkhir">
       </div>
     </div>
-    <div class="col-md-2">
-      <button type="button" class="btn btn-outline-success"><i class="fa-solid fa-magnifying-glass"></i> Cari</button>
+    <div class="col-md-1">
+      <button type="button" class="btn btn-outline-success"><i class="fa-solid fa-magnifying-glass"></i></button>
     </div>
   </div>
   <div class="row">
@@ -47,17 +47,27 @@
             <tr>
               <th scope="col">Invoice</th>
               <th scope="col">Waktu Pembelian</th>
+              <th scope="col">Kasir</th>
               <th scope="col">Total</th>
               <th scope="col">Detail</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td scope="row">#123456</td>
-              <td>01-05-2023 10:11:03</td>
-              <td>Rp.8.000.00</td>
-              <td><button type="button" class="btn btn-primary" onclick="lihatDetail(123456)"><i class="fa-solid fa-eye"></i> Lihat</button></td>
-            </tr>
+            <?php
+            if($detail){
+              foreach($detail as $row){?>
+                <tr>
+                  <td scope="row">#<?= $row->id_transaksi;?></td>
+                  <td><?= $row->tgl_pembelian;?></td>
+                  <td><?= $row->nama_kasir;?></td>
+                  <td><?= $row->total_bayar;?></td>
+                  <td><button type="button" class="btn btn-primary" onclick="lihatDetail(123456)"><i class="fa-solid fa-eye"></i> Lihat</button></td>
+                </tr>
+            <?php }}else{ ?>
+              <tr>
+                <td colspan="5" class="text-center">Data Tidak Ada</td>
+              </tr>
+            <?php } ?>
           </tbody>
         </table>
       </div>
@@ -68,21 +78,7 @@
     </div>
 
     <div class="col-md-6 col-xs-6">
-      <nav aria-label="..." style="float:right;">
-        <ul class="pagination">
-          <li class="page-item disabled">
-            <span class="page-link">Previous</span>
-          </li>
-          <li class="page-item"><a class="page-link" href="#">1</a></li>
-          <li class="page-item active" aria-current="page">
-            <span class="page-link">2</span>
-          </li>
-          <li class="page-item"><a class="page-link" href="#">3</a></li>
-          <li class="page-item">
-            <a class="page-link" href="#">Next</a>
-          </li>
-        </ul>
-      </nav>
+      <?= $pager->links() ?>
     </div>
   </div>
 </div>

@@ -8,16 +8,18 @@ use App\Models\Admin\PromoModel;
 use App\Models\Admin\KaryawanModel;
 use App\Models\Admin\InfoTokoModel;
 use App\Models\Admin\KomplainModel;
+use App\Models\Admin\TransaksiModel;
 
 class Home extends BaseController{
 
-    protected $kategoriModel, $promoModel, $karyawanModel, $infoTokoModel, $komplainModel;
+    protected $kategoriModel, $promoModel, $karyawanModel, $infoTokoModel, $komplainModel, $transaksiModel;
 	public function __construct() {
 		$this->kategoriModel 	= new KategoriModel();
 		$this->promoModel = new PromoModel();
 		$this->karyawanModel = new KaryawanModel();
         $this->infoTokoModel = new infoTokoModel();
         $this->komplainModel = new KomplainModel();
+        $this->transaksiModel= new TransaksiModel();
 	}
 
     public function index(){
@@ -75,6 +77,8 @@ class Home extends BaseController{
 
     function laporanPenjualan(){
         $data['title'] = "Laporan Penjualan";
+        $data['detail'] = $this->transaksiModel->paginate(5);
+        $data['pager'] = $this->transaksiModel->pager;
         return view("admin/laporan-penjualan", $data);
         // . view("admin/laporan-penjualan")
         // . view("admin/main/footer");
