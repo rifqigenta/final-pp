@@ -67,6 +67,9 @@
 <script>
   $(document).ready(function() {
     $('#linkRestock').addClass("active");
+    <?php if(validation_errors()!=null){?>
+      $('#modalTambah').modal('show');
+    <?php }?>
     $('#id_produk').select2({
       width: "100%",
       dropdownParent: $("#modalTambah")
