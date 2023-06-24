@@ -148,10 +148,33 @@ class Home extends BaseController{
         $data['title'] = "Restock";
         $paginate = 5;
         $data['produk'] = $this->produkModel->select("*")->where("status", "1")->get()->getResultArray();
-        $baseQuery = $this->restockModel->select("restock.*, b.nama")->JOIN("produk b", "restock.id_produk=b.id_produk");
+
+        // Get Variabel Filter
+        $q	= $this->request->getVar("q");
+		$idKategori	= $this->request->getVar("idKategori");
+        
+        // Kategori
+        $data['kategori'] = $this->kategoriModel->select("*")->where("status", "1")->get()->getResultArray();
+
+        // Base Query
+        $baseQuery = $this->restockModel->select("restock.*, b.nama, b.id_kategori, c.nama_kategori")->JOIN("produk b", "restock.id_produk=b.id_produk")->JOIN("kategori c", "b.id_kategori=c.id_kategori");
+
+        // Kategori
+		if($idKategori!="" || $idKategori!=null){
+            $baseQuery->WHERE("b.id_kategori", $idKategori);
+        }
+
+        // Cari
+		if($q!="" || $q!=null){
+            $baseQuery->LIKE("b.nama", $q)->orLike("c.nama_kategori", $q);
+        }
+
+        // Pagination
         $data['restock']= $baseQuery->paginate($paginate, "restock");
         $data['pager']= $baseQuery->pager;
         $data['nomor'] = nomor($this->request->getVar('page_restock'), $paginate);
+
+        // Load View
         return view("admin/restock", $data);
     }
 }

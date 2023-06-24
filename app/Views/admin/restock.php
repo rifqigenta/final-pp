@@ -1,6 +1,31 @@
 <?= $this->extend('admin/main/bodyContent'); ?>
 <?= $this->section('content'); ?>
 
+<?php
+  $cari = explode("=", service('uri')->getQuery(['only' => ['q']]));
+  if(isset($cari[1])){
+    $cari = $cari[1];
+  }else{
+    $cari	= null;
+  }
+
+  // Filter Kategori
+  $idKategori = explode("=", service('uri')->getQuery(['only' => ['idKategori']]));
+  if(isset($idKategori[1])){
+    $idKategori = $idKategori[1];
+  }else{
+    $idKategori	= null;
+  }
+
+  // Filter Kategori
+  $terlaris = explode("=", service('uri')->getQuery(['only' => ['terlaris']]));
+  if(isset($terlaris[1])){
+    $terlaris = $terlaris[1];
+  }else{
+    $terlaris	= null;
+  }
+?>
+
 <div class="container-fluid">
   <div class="row">
     <div class="col-5 fw-semibold invisible">
@@ -18,6 +43,30 @@
     </div>
   </div>
 
+  <form action="/admin/restock" method="GET">
+    <div class="row">
+      <div class="col-md-12">
+        <label for="basic-url" class="form-label">Filter</label>
+      </div>
+      <div class="col-md-4 col-xs-12 mb-3">
+        <div class="input-group">
+          <input type="text" class="form-control" placeholder="Cari..." name="q" id="q" value="<?= $cari;?>">
+        </div>
+      </div>
+      <div class="col-md-3 col-xs-12 mb-3">
+        <select class="form-select" name="idKategori" id="idKategori">
+          <option value="">Pilih Kategori</option>
+          <?php foreach ($kategori as $row) {?>
+            <option <?= ($idKategori==$row['id_kategori'])?"selected": "";?> value="<?= $row['id_kategori'];?>"><?= $row['nama_kategori'];?></option>
+          <?php } ?>
+        </select>
+      </div>
+      <div class="col-md-5">
+        <button type="submit" class="btn btn-outline-success" style="float:right;"><i class="fa-solid fa-magnifying-glass"></i> Cari</button>
+      </div>
+    </div>
+  </form>
+
   <div class="row">
     <div class="col-md-12">
       <div style="overflow-x:auto;">
@@ -27,6 +76,7 @@
               <th scope="col">No</th>
               <th scope="col">Kode Produk</th>
               <th scope="col">Nama Produk</th>
+              <th scope="col">Kategori</th>
               <th scope="col">Kuantitas</th>
               <th scope="col">Harga</th>
               <th scope="col">Tanggal</th>
@@ -39,6 +89,7 @@
                 <td><?= $nomor++;?></td>
                 <td scope="row">KD-BRG<?= $row['id_produk'];?></td>
                 <td><?= $row['nama'];?></td>
+                <td><?= $row['nama_kategori'];?></td>
                 <td><?= $row['kuantitas'];?></td>
                 <td>Rp. <?= number_format($row['harga']);?></td>
                 <td><?= $row['tgl_tambah'];?></td>
