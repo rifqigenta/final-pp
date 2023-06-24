@@ -141,4 +141,10 @@ class Home extends BaseController{
         // . view("admin/kategori")
         // . view("admin/main/footer");
     }
+
+    function restock(){
+        $data['title'] = "Restock";
+        $data['produk'] = $this->produkModel->select("*")->where("status", "1")->get()->getResultArray();
+        return view("admin/restock", $data);
+    }
 }

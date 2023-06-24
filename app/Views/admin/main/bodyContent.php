@@ -9,19 +9,23 @@
         <title><?= $title;?></title>
         <!-- Custom fonts for this template-->
         <link href="/assets/css/bootstrap.min.css" rel="stylesheet"/>
-		<script src="/assets/js/bootstrap.bundle.min.js"></script>
+        <script src="/assets/js/bootstrap.bundle.min.js"></script>
         <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
         <link href="<?= base_url() ?>newAssets/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
         <!-- Datatable -->
-		<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
-		<link rel="stylesheet" href="//cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css"/>
+        <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+        <link rel="stylesheet" href="//cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css"/>
+
+        <!-- SELECT2 -->
+        <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+        <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
         <!-- SWAL -->
-		<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
         <!-- Custom styles for this template -->
         
@@ -106,6 +110,26 @@
         <!-- <script src="<?= base_url('newAssets/vendor/jquery-easing/jquery.easing.min.js') ?>"></script> -->
         <!-- Custom scripts for all pages-->
         <script src="<?= base_url('newAssets/js/sb-admin-2.min.js') ?>"></script>
+
+        <script>
+          function validasiAngka(evt) {
+            var theEvent = evt || window.event;
+
+            // Handle paste
+            if (theEvent.type === 'paste') {
+                key = event.clipboardData.getData('text/plain');
+            } else {
+            // Handle key press
+                var key = theEvent.keyCode || theEvent.which;
+                key = String.fromCharCode(key);
+            }
+            var regex = /[0-9]|\./;
+            if( !regex.test(key) ) {
+              theEvent.returnValue = false;
+              if(theEvent.preventDefault) theEvent.preventDefault();
+            }
+          }
+        </script>
 
         <?= $this->renderSection('scripts') ?>
     </body>

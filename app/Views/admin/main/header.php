@@ -15,49 +15,51 @@
 			<span>Laporan</span></a>
 	</li>
 	
-	<hr class="sidebar-divider">
 	
 	<li class="nav-item" id="linkProduk">
 		<a class="nav-link" href="/admin/produk">
 			<i class="fas fa-fw fa-salad"></i>
 			<span>Produk</span></a>
 	</li>
-	<hr class="sidebar-divider">
+
+	<li class="nav-item" id="linkRestock">
+		<a class="nav-link" href="/admin/restock">
+			<i class="fa-solid fa-repeat"></i>
+			<span>Restock</span></a>
+	</li>
 
 	<li class="nav-item" id="linkKategori">
 		<a class="nav-link" href="/admin/kategori">
 			<i class="fa-solid fa-boxes-stacked"></i>
 			<span>Kategori</span></a>
 	</li>
-	<hr class="sidebar-divider">
 
 	<li class="nav-item" id="linkPromo">
 		<a class="nav-link" href="/admin/promo">
 		<i class="fa-solid fa-percent"></i>
 			<span>Promo</span></a>
 	</li>
-	<hr class="sidebar-divider">
 
 	<li class="nav-item" id="linkKaryawan">
 		<a class="nav-link" href="/admin/karyawan">
 			<i class="fa-solid fa-users"></i>
 			<span>Karyawan</span></a>
 	</li>
-	<hr class="sidebar-divider">
 
 	<li class="nav-item" id="linkToko">
 		<a class="nav-link" href="/admin/info-toko">
 			<i class="fa-solid fa-store"></i>
 			<span>Info Toko</span></a>
 	</li>
-	<hr class="sidebar-divider">
 
 	<li class="nav-item" id="linkKomplain">
 		<a class="nav-link" href="/admin/komplain">
 			<i class="fa-regular fa-brake-warning"></i>
 			<span>Komplain</span></a>
 	</li>
-	<hr>
+
+	<hr class="sidebar-divider">
+	
 	<li class="nav-item" id="logout">
 		<a class="nav-link" href="/login/logout/">
 			<i class="fa-solid fa-right-from-bracket"></i>

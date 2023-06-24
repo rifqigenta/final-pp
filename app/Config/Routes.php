@@ -47,6 +47,7 @@ $routes->get('admin/laporan/penjualan', 'Admin\Home::laporanPenjualan', ['filter
 $routes->get('admin/laporan/stok', 'Admin\Home::laporanStok', ['filter' => 'AuthAdmin']);
 $routes->get('admin/komplain', 'Admin\Home::komplain', ['filter' => 'AuthAdmin']);
 $routes->get('admin/kategori', 'Admin\Home::kategori', ['filter' => 'AuthAdmin']);
+$routes->get('admin/restock', 'Admin\Home::restock', ['filter' => 'AuthAdmin']);
 
 
 // ROUTES PROSES KASIR
@@ -61,6 +62,7 @@ $routes->POST('admin/proses/info-situs/update', 'Admin\ProsesInfoToko::update', 
 $routes->POST('admin/proses/info-situs/update-gambar', 'Admin\ProsesInfoToko::updateGambar', ['filter' => 'AuthAdmin']);
 $routes->POST('admin/proses/produk/tambah', 'Admin\ProsesProduk::tambah', ['filter' => 'AuthAdmin']);
 $routes->POST('admin/proses/produk/update', 'Admin\ProsesProduk::update', ['filter' => 'AuthAdmin']);
+$routes->POST('admin/proses/restock/tambah', 'Admin\ProsesRestock::tambah', ['filter' => 'AuthAdmin']);
 
 
 
