@@ -9,10 +9,11 @@ use App\Models\Admin\KaryawanModel;
 use App\Models\Admin\InfoTokoModel;
 use App\Models\Admin\KomplainModel;
 use App\Models\Admin\TransaksiModel;
+use App\Models\Admin\ProdukModel;
 
 class Home extends BaseController{
 
-    protected $kategoriModel, $promoModel, $karyawanModel, $infoTokoModel, $komplainModel, $transaksiModel;
+    protected $kategoriModel, $promoModel, $karyawanModel, $infoTokoModel, $komplainModel, $transaksiModel, $produkModel;
 	public function __construct() {
 		$this->kategoriModel 	= new KategoriModel();
 		$this->promoModel = new PromoModel();
@@ -20,6 +21,7 @@ class Home extends BaseController{
         $this->infoTokoModel = new infoTokoModel();
         $this->komplainModel = new KomplainModel();
         $this->transaksiModel= new TransaksiModel();
+        $this->produkModel  = new ProdukModel();
 	}
 
     public function index(){
@@ -62,6 +64,20 @@ class Home extends BaseController{
 
     public function produk(){
         $data['title'] = "Daftar Produk";
+        $paginate = 5;
+
+        // Variabel Cari
+		$q	= $this->request->getVar("q");
+
+		if($q!="" || $q!=null){
+            $data['produk'] = $this->produkModel->select("*")->JOIN("kategori b", "produk.id_kategori=b.id_kategori")->LIKE("produk.nama", $q)->orLike("b.nama_kategori", $q)->paginate($paginate, 'produk');
+        }else{
+            $data['produk'] = $this->produkModel->select("*")->JOIN("kategori b", "produk.id_kategori=b.id_kategori")->paginate($paginate, 'produk');
+        }
+
+        $data['kategori'] = $this->kategoriModel->select("*")->where("status", "1")->get()->getResultArray();
+        $data['pager'] = $this->produkModel->select("*")->JOIN("kategori b", "produk.id_kategori=b.id_kategori")->pager;
+        $data['nomor'] = nomor($this->request->getVar('page_produk'), $paginate);
         return view("admin/produk", $data);
         // . view("admin/produk")
         // . view("admin/main/footer");

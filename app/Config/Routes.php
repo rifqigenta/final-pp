@@ -57,8 +57,9 @@ $routes->POST('admin/proses/kategori/tambah', 'Admin\ProsesKategori::tambah', ['
 $routes->POST('admin/proses/kategori/update', 'Admin\ProsesKategori::update', ['filter' => 'AuthAdmin']);
 $routes->POST('admin/proses/promo/tambah', 'Admin\ProsesPromo::tambah', ['filter' => 'AuthAdmin']);
 $routes->POST('admin/proses/promo/update', 'Admin\ProsesPromo::update', ['filter' => 'AuthAdmin']);
-$routes->POST('admin/proses/info-situs/update', 'Admin\InfoTokoProses::update', ['filter' => 'AuthAdmin']);
-$routes->POST('admin/proses/info-situs/update-gambar', 'Admin\InfoTokoProses::updateGambar', ['filter' => 'AuthAdmin']);
+$routes->POST('admin/proses/info-situs/update', 'Admin\ProsesInfoToko::update', ['filter' => 'AuthAdmin']);
+$routes->POST('admin/proses/info-situs/update-gambar', 'Admin\ProsesInfoToko::updateGambar', ['filter' => 'AuthAdmin']);
+$routes->POST('admin/proses/produk/tambah', 'Admin\ProsesProduk::tambah', ['filter' => 'AuthAdmin']);
 
 
 

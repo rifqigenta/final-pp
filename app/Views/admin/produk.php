@@ -1,5 +1,13 @@
 <?= $this->extend('admin/main/bodyContent') ?>
 <?= $this->section('content') ?>
+<?php 
+	$cari = explode("=", service('uri')->getQuery(['only' => ['q']]));
+	if(isset($cari[1])){
+		$cari = $cari[1];
+	}else{
+		$cari	= null;
+	}
+?>
 <div class="container-fluid">
   <div class="row">
     <div class="col-5 fw-semibold invisible">
@@ -15,39 +23,45 @@
       <button type="button" class="btn btn-primary" style="float: right;" onclick="tambahProduk()"><i class="fa-solid fa-plus"></i> Tambah</button>
     </div>
   </div>
+  <form action="/admin/produk" method="GET">
+  <?= csrf_field() ?>
   <div class="row">
     <div class="col-md-12">
       <label for="basic-url" class="form-label">Filter</label>
     </div>
-    <div class="col-md-4 col-xs-12 mb-3">
-      <div class="input-group">
-        <input type="text" class="form-control" placeholder="Cari..." name="filterNama" id="filterNama" aria-label="Recipient's username">
+      <div class="col-md-4 col-xs-12 mb-3">
+        <div class="input-group">
+          <input type="text" class="form-control" placeholder="Cari..." name="q" id="q" value="<?= $cari;?>">
+        </div>
       </div>
-    </div>
-    <div class="col-md-3 col-xs-12 mb-3">
-      <select class="form-select" name="filterKategori" id="filterKategori">
-        <option selected>Pilih Kategori</option>
-        <option value="1">Sayuran</option>
-        <option value="2">Umbi</option>
-      </select>
-    </div>
-    <div class="col-md-3 col-xs-12 mb-3">
-      <select class="form-select" name="filterTerlaris" id="filterTerlaris">
-        <option selected>Sort By</option>
-        <option value="1">Terlaris</option>
-        <option value="2">Sedikit</option>
-      </select>
-    </div>
-    <div class="col-md-2">
-      <button type="button" class="btn btn-outline-success"><i class="fa-solid fa-magnifying-glass"></i> Cari</button>
-    </div>
+      <div class="col-md-3 col-xs-12 mb-3">
+        <select class="form-select" name="filterKategori" id="filterKategori">
+          <option selected>Pilih Kategori</option>
+          <option value="1">Sayuran</option>
+          <option value="2">Umbi</option>
+        </select>
+      </div>
+      <div class="col-md-3 col-xs-12 mb-3">
+        <select class="form-select" name="filterTerlaris" id="filterTerlaris">
+          <option selected>Sort By</option>
+          <option value="1">Terlaris</option>
+          <option value="2">Sedikit</option>
+        </select>
+      </div>
+      <div class="col-md-2">
+        <button type="submit" class="btn btn-outline-success"><i class="fa-solid fa-magnifying-glass"></i> Cari</button>
+      </div>
   </div>
+  </form>
+
+  <br>
   <div class="row">
     <div class="col-md-12">
       <div style="overflow-x:auto;">
         <table class="table bg-white rounded-3">
           <thead>
             <tr>
+              <th scope="col">No</th>
               <th scope="col">Kode Produk</th>
               <th scope="col">Nama Produk</th>
               <th scope="col">Kuantitas</th>
@@ -57,40 +71,29 @@
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td scope="row">KD-BRG1</td>
-              <td>Bayam</td>
-              <td>10</td>
-              <td>Rp. 10.000</td>
-              <td>
-                <button type="button" class="btn btn-success" onclick="lihatGambar('Nama Gambar', 'url')"><i class="fa-solid fa-eye"></i> Gambar</button>
-              </td>
-              <td>
-                <button type="button" class="btn btn-outline-warning mt-1" onclick="editProduk(123456, 'Sayuran')"><i class="fa-solid fa-pencil"></i></button>
-                <button type="button" class="btn btn-outline-danger mt-1" onclick="deleteProduk(123456)"><i class="fa-solid fa-trash"></i></button>
-              </td>
-            </tr>
+            <?php foreach ($produk as $row) {?>
+              <tr>
+                <td><?= $nomor++;?></td>
+                <td scope="row">KD-BRG<?= $row['id_produk'];?></td>
+                <td><?= $row['nama'];?></td>
+                <td><?= $row['kuantitas'];?></td>
+                <td>Rp. <?= number_format($row['harga']);?></td>
+                <td>
+                  <button type="button" class="btn btn-sm btn-success" onclick="lihatGambar('<?= $row['nama'];?>', '<?= $row['gambar'];?>')"><i class="fa-solid fa-eye"></i> Gambar</button>
+                </td>
+                <td>
+                  <button type="button" class="btn btn-outline-warning mt-1" onclick="editProduk(123456, 'Sayuran')"><i class="fa-solid fa-pencil"></i></button>
+                  <button type="button" class="btn btn-outline-danger mt-1" onclick="deleteProduk(123456)"><i class="fa-solid fa-trash"></i></button>
+                </td>
+              </tr>
+            <?php } ?>
           </tbody>
         </table>
       </div>
     </div>
 
     <div class="col-md-12 col-xs-12">
-      <nav aria-label="..." style="float:right;">
-        <ul class="pagination">
-          <li class="page-item disabled">
-            <span class="page-link">Previous</span>
-          </li>
-          <li class="page-item"><a class="page-link" href="#">1</a></li>
-          <li class="page-item active" aria-current="page">
-            <span class="page-link">2</span>
-          </li>
-          <li class="page-item"><a class="page-link" href="#">3</a></li>
-          <li class="page-item">
-            <a class="page-link" href="#">Next</a>
-          </li>
-        </ul>
-      </nav>
+      <?= $pager->links("produk", "custom_pagination"); ?>
     </div>
   </div>
 </div>
@@ -103,23 +106,37 @@
         <h5 class="modal-title">Tambah Produk</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <form>
+      <?= form_open_multipart('admin/proses/produk/tambah') ?>
+        <?= csrf_field() ?>
         <div class="modal-body">
           <div class="mb-3">
             <label for="nama" class="form-label">Nama Produk</label>
-            <input type="text" class="form-control" id="nama" name="nama" required>
+            <input type="text" class="form-control" id="nama" name="nama" value="<?= old('nama'); ?>" required style="border-color:<?= (validation_show_error('nama')!=null)?'red':'';?>">
+            <span style="font-size:small; color:red;"><?= validation_show_error('nama');?></span>
+          </div>
+          <div class="mb-3">
+            <label for="kategori" class="form-label">Kategori</label>
+            <select class="form-select form-select" aria-label=".form-select-sm example" name="kategori" id="kategori" required style="border-color:<?= (validation_show_error('kategori')!=null)?'red':'';?>">
+              <option selected>Pilih Kategori</option>
+              <?php foreach($kategori as $row){?>
+                <option value="<?= $row['id_kategori'];?>"><?= $row['nama_kategori'];?></option>
+              <?php } ?>
+            </select>
+            <span style="font-size:small; color:red;"><?= validation_show_error('kategori');?></span>
           </div>
           <div class="mb-3">
             <label for="harga" class="form-label">Harga</label>
-            <input type="number" min="1" class="form-control" id="harga" name="harga" required>
+            <input type="number" min="1" onkeypress="validasiAngka(event)" class="form-control" id="harga" name="harga" value="<?= old('harga'); ?>" required style="border-color:<?= (validation_show_error('harga')!=null)?'red':'';?>">
+            <span style="font-size:small; color:red;"><?= validation_show_error('harga');?></span>
           </div>
           <div class="mb-3">
             <label for="gambar" class="form-label">Gambar</label>
-            <input type="file" class="form-control" id="gambar" name="gambar" accept=".jpg, .jpeg, .png" required>
+            <input type="file" class="form-control" id="gambar" name="gambar" accept=".jpg, .jpeg, .png" required style="border-color:<?= (validation_show_error('gambar')!=null)?'red':'';?>">
+            <span style="font-size:small; color:red;"><?= validation_show_error('gambar');?></span>
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-primary" data-bs-dismiss="modal"><i class="fa-solid fa-plus"></i> Tambah</button>
+          <button type="submit" class="btn btn-primary"><i class="fa-solid fa-plus"></i> Tambah</button>
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
         </div>
       </form>
@@ -160,26 +177,16 @@
   </div>
 </div>
 
-<!-- Modal Gambar -->
-<div class="modal fade" id="modalGambar" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="titleModalGambar"></h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        ...
-      </div>
-    </div>
-  </div>
-</div>
-
 <script>
   // Lihat Gambar
   function lihatGambar(nama, gambar) {
-    $('#titleModalGambar').html(`Gambar ${nama}`);
-    $('#modalGambar').modal('show');
+    Swal.fire({
+      title: `Gambar ${nama}`,
+      imageUrl: `<?= base_url();?>gambar/produk/${gambar}`,
+      imageWidth: 400,
+      imageHeight: 200,
+      imageAlt: `${nama}`,
+    })
   }
 
   // Model Edit
@@ -190,6 +197,24 @@
 
     $('#modalEditProduk').html(`Edit Produk ${nama}`)
     $('#modalEdit').modal('show');
+  }
+
+  function validasiAngka(evt) {
+    var theEvent = evt || window.event;
+
+    // Handle paste
+    if (theEvent.type === 'paste') {
+        key = event.clipboardData.getData('text/plain');
+    } else {
+    // Handle key press
+        var key = theEvent.keyCode || theEvent.which;
+        key = String.fromCharCode(key);
+    }
+    var regex = /[0-9]|\./;
+    if( !regex.test(key) ) {
+      theEvent.returnValue = false;
+      if(theEvent.preventDefault) theEvent.preventDefault();
+    }
   }
 
   // Model Tambah
