@@ -100,8 +100,8 @@
                   <button type="button" class="btn btn-sm btn-success" onclick="lihatGambar('<?= $row['nama'];?>', '<?= $row['gambar'];?>')"><i class="fa-solid fa-eye"></i> Gambar</button>
                 </td>
                 <td>
-                  <button type="button" class="btn btn-outline-warning mt-1" onclick="editProduk(123456, 'Sayuran')"><i class="fa-solid fa-pencil"></i></button>
-                  <button type="button" class="btn btn-outline-danger mt-1" onclick="deleteProduk(<?= $row['id_produk'];?>, '<?= $row['nama'];?>')"><i class="fa-solid fa-trash"></i></button>
+                  <button type="button" class="btn btn-sm btn-outline-warning mt-1" onclick="editProduk(<?= $row['id_produk'];?>, '<?= $row['nama'];?>', '<?= $row['id_kategori'];?>', '<?= $row['harga'];?>')"><i class="fa-solid fa-pencil"></i></button>
+                  <button type="button" class="btn btn-sm btn-outline-danger mt-1" onclick="deleteProduk(<?= $row['id_produk'];?>, '<?= $row['nama'];?>')"><i class="fa-solid fa-trash"></i></button>
                 </td>
               </tr>
             <?php } ?>
@@ -170,24 +170,39 @@
         <h5 class="modal-title" id="modalEditProduk"></h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <form>
+      <?= form_open_multipart('admin/proses/produk/update') ?>
+        <?= csrf_field() ?>
+        <input type="hidden" id="idUpdate" name="idUpdate" required/>
         <div class="modal-body">
           <div class="mb-3">
             <label for="editNama" class="form-label">Nama Produk</label>
             <input type="text" class="form-control" id="editNama" name="editNama" required>
+            <span style="font-size:small; color:red;"><?= validation_show_error('editNama');?></span>
+          </div>
+          <div class="mb-3">
+            <label for="kategori" class="form-label">Kategori</label>
+            <select class="form-select form-select" aria-label=".form-select-sm example" name="editKategori" id="editKategori" required style="border-color:<?= (validation_show_error('editKategori')!=null)?'red':'';?>">
+              <option selected>Pilih Kategori</option>
+              <?php foreach($kategori as $row){?>
+                <option value="<?= $row['id_kategori'];?>"><?= $row['nama_kategori'];?></option>
+              <?php } ?>
+            </select>
+            <span style="font-size:small; color:red;"><?= validation_show_error('editKategori');?></span>
           </div>
           <div class="mb-3">
             <label for="editHarga" class="form-label">Harga</label>
-            <input type="number" min="1" class="form-control" id="editHarga" name="editHarga" required>
+            <input type="number" min="1" class="form-control" id="editHarga" name="editHarga" onkeypress="validasiAngka(event)" required>
+            <span style="font-size:small; color:red;"><?= validation_show_error('editHarga');?></span>
           </div>
           <div class="mb-3">
             <label for="editGambar" class="form-label">Gambar</label>
-            <input type="file" class="form-control" id="editGambar" name="editGambar" accept=".jpg, .jpeg, .png" required>
+            <input type="file" class="form-control" id="editGambar" name="editGambar" accept=".jpg, .jpeg, .png">
+            <span style="font-size:small; color:red;"><?= validation_show_error('editGambar');?></span>
             <div class="form-text" style="font-size:10px;">*Upload gambar untuk update.</div>
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-warning text-white" data-bs-dismiss="modal"><i class="fa-solid fa-pencil"></i> Edit</button>
+          <button type="submit" class="btn btn-warning text-white"><i class="fa-solid fa-pencil"></i> Edit</button>
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
         </div>
       </form>
@@ -211,12 +226,12 @@
   }
 
   // Model Edit
-  function editProduk(id, nama) {
-    // AJAX
-
-    // END AJAX
-
-    $('#modalEditProduk').html(`Edit Produk ${nama}`)
+  function editProduk(id, nama, kategori, harga) {
+    $('#idUpdate').val(id);
+    $('#editNama').val(nama);
+    $('#editKategori').val(kategori);
+    $('#editHarga').val(harga);
+    $('#modalEditProduk').html(`Edit Barang KDG-BRG${id}`)
     $('#modalEdit').modal('show');
   }
 
@@ -257,18 +272,19 @@
       if (result.isConfirmed) {
 
         $.ajax({
-					url: '/admin/proses/produk/hapus',
+					url: '/admin/proses/produk/update',
 					dataType: 'json',
 					type: 'POST',
 					data: {
 						idUpdate: id,
+            status: "0",
 						[csrfName]: csrfHash,
 					},
 					success: function(data){
 						if(data==1){
 							Swal.fire(
 								'Berhasil',
-								'Promo Berhasil Dihapus',
+								'Produk Berhasil Dihapus',
 								'success',
 							);
 						}else{
