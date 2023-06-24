@@ -71,4 +71,36 @@ class ProsesProduk extends BaseController{
             </script>";
         }
     }
+
+	function updateStatus(){
+		// Validation
+        $validate = [
+            'idUpdate' => [
+				'label' => 'Id Update',
+				'rules' => 'required|is_not_unique[produk.id_produk]',
+				'errors' => [
+					'required' => "*Harus Di isi",
+					'is_not_unique' => "*Produk Tidak Ditemukan"
+				],
+			],
+		];
+
+		if(!$this->validate($validate)){
+			// var_dump($this->validation->getErrors());
+			return redirect()->back()->withInput();
+		}else{
+			// Variabel Form
+			$id = $this->request->getPost("idUpdate");
+
+			// Exec DB
+			$db = $this->produkModel->update($id, ["status"=>"0"]);
+
+			if($db){
+				echo json_encode(1);
+			}else{
+				echo json_encode(0);
+			}
+
+		}
+	}
 }

@@ -60,6 +60,7 @@ $routes->POST('admin/proses/promo/update', 'Admin\ProsesPromo::update', ['filter
 $routes->POST('admin/proses/info-situs/update', 'Admin\ProsesInfoToko::update', ['filter' => 'AuthAdmin']);
 $routes->POST('admin/proses/info-situs/update-gambar', 'Admin\ProsesInfoToko::updateGambar', ['filter' => 'AuthAdmin']);
 $routes->POST('admin/proses/produk/tambah', 'Admin\ProsesProduk::tambah', ['filter' => 'AuthAdmin']);
+$routes->POST('admin/proses/produk/hapus', 'Admin\ProsesProduk::updateStatus', ['filter' => 'AuthAdmin']);
 
 
 

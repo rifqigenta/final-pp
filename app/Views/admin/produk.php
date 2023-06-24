@@ -101,7 +101,7 @@
                 </td>
                 <td>
                   <button type="button" class="btn btn-outline-warning mt-1" onclick="editProduk(123456, 'Sayuran')"><i class="fa-solid fa-pencil"></i></button>
-                  <button type="button" class="btn btn-outline-danger mt-1" onclick="deleteProduk(123456)"><i class="fa-solid fa-trash"></i></button>
+                  <button type="button" class="btn btn-outline-danger mt-1" onclick="deleteProduk(<?= $row['id_produk'];?>, '<?= $row['nama'];?>')"><i class="fa-solid fa-trash"></i></button>
                 </td>
               </tr>
             <?php } ?>
@@ -196,6 +196,9 @@
 </div>
 
 <script>
+  var csrfName = "<?= csrf_token(); ?>";
+	var csrfHash = "<?= csrf_hash(); ?>";
+
   // Lihat Gambar
   function lihatGambar(nama, gambar) {
     Swal.fire({
@@ -241,10 +244,10 @@
   }
 
   // Delete Produk
-  function deleteProduk(id) {
+  function deleteProduk(id, nama) {
     Swal.fire({
-      title: 'Yakin?',
-      text: "Data tidak bisa dikembalikan!",
+      title: `Yakin Hapus KD-BRG${id}?`,
+      text: `Produk ${nama} tidak bisa dikembalikan!`,
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
@@ -252,13 +255,34 @@
       confirmButtonText: 'Ya, Hapus!'
     }).then((result) => {
       if (result.isConfirmed) {
-        Swal.fire(
-          'Deleted!',
-          'Your file has been deleted.',
-          'success'
-        )
+
+        $.ajax({
+					url: '/admin/proses/produk/hapus',
+					dataType: 'json',
+					type: 'POST',
+					data: {
+						idUpdate: id,
+						[csrfName]: csrfHash,
+					},
+					success: function(data){
+						if(data==1){
+							Swal.fire(
+								'Berhasil',
+								'Promo Berhasil Dihapus',
+								'success',
+							);
+						}else{
+							Swal.fire(
+								'Gagal',
+								'Silahkan coba lagi',
+								'error',
+							);
+						}
+						location.reload();
+					},
+				})
       }
-    });
+    })
   }
 
   $(document).ready(function() {
