@@ -27,6 +27,10 @@ class Home extends BaseController{
 	}
 
     public function index(){
+        $tanggal = date("Y-m-d");
+        $data['sayur'] = $this->produkModel->select("count(id_produk) as total")->where(["status"=>"1", "kuantitas >"=>0])->get()->getRowArray()['total'];
+        $data['totalPenjualan'] = $this->transaksiModel->select("count(id_produk) as total, SUM(total_bayar) as pendapatan")->LIKE("tgl_pembelian", $tanggal)->get()->getRowArray();
+        $data['peringkatKasir'] = $this->transaksiModel->select("COUNT(transaksi.id_transaksi) as total, b.nama")->JOIN("kasir b", "transaksi.id_kasir=b.id_kasir")->GROUPBY("transaksi.id_kasir")->get()->getResultArray();
         $data['title'] = "Dashboard Admin";
         return view("admin/home", $data);
         // . view("admin/home")

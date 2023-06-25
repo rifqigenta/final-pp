@@ -19,7 +19,7 @@
               <div class="text-xs font-weight-bold text-primary text-uppercase mb-1" style="font-size:14px">
                 Pendapatan Hari ini
               </div>
-              <div class="h5 mb-0 font-weight-bold text-gray-800">Rp. 40,000</div>
+              <div class="h5 mb-0 font-weight-bold text-gray-800">Rp. <?= number_format($totalPenjualan['pendapatan']);?></div>
             </div>
             <div class="col-auto">
               <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
@@ -36,7 +36,7 @@
               <div class="text-xs font-weight-bold text-success text-uppercase mb-1" style="font-size:14px">
                 Total Penjualan (Hari)
               </div>
-              <div class="h5 mb-0 font-weight-bold text-gray-800">10</div>
+              <div class="h5 mb-0 font-weight-bold text-gray-800"><?= $totalPenjualan['total'];?></div>
             </div>
             <div class="col-auto">
               <i class="fa-solid fa-chart-simple fa-2x text-grey-300"></i>
@@ -70,7 +70,7 @@
               <div class="text-xs font-weight-bold text-primary text-uppercase mb-1" style="font-size:14px">
                 Total Sayur Tersedia
               </div>
-              <div class="h5 mb-0 font-weight-bold text-gray-800">10</div>
+              <div class="h5 mb-0 font-weight-bold text-gray-800"><?= $sayur;?></div>
             </div>
             <div class="col-auto">
               <i class="fa-solid fa-leaf fa-2x text-gray-300"></i>
@@ -97,21 +97,20 @@
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <th scope="row">1</th>
-              <td>Toto</td>
-              <td>20</td>
-            </tr>
-            <tr>
-              <th scope="row">2</th>
-              <td>Dodo</td>
-              <td>30</td>
-            </tr>
-            <tr>
-              <th scope="row">3</th>
-              <td>Giring</td>
-              <td>13</td>
-            </tr>
+            <?php 
+            $number=1;
+            if ($peringkatKasir){
+            foreach ($peringkatKasir as $row) {?>
+              <tr>
+                <th scope="row"><?= $number++;?></th>
+                <td><?= $row["nama_kasir"];?></td>
+                <td><?= $row["total"];?></td>
+              </tr>
+            <?php } }else{ ?>
+              <tr>
+                <td colspan="3" class="text-center">Data Belum Ada</td>
+              </tr>
+            <?php } ?>
           </tbody>
         </table>
       </div>
