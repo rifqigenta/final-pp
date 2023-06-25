@@ -129,6 +129,22 @@
               if(theEvent.preventDefault) theEvent.preventDefault();
             }
           }
+
+          $("#logout").click(function(){
+            Swal.fire({
+              title: 'Yakin Logout?',
+              icon: 'warning',
+              confirmButtonColor: "#e74c3c",
+              showCancelButton: true,
+              confirmButtonText: 'Iya',
+              cancelButtonText: 'Tidak'
+            }).then((result) => {
+              /* Read more about isConfirmed, isDenied below */
+              if (result.isConfirmed) {
+                window.location = "/login/logout";
+              }
+            });
+          });
         </script>
 
         <?= $this->renderSection('scripts') ?>
