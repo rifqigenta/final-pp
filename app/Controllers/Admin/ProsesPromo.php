@@ -7,7 +7,7 @@ use DateTime;
 
 class ProsesPromo extends BaseController{
   
-  protected $promoModel;
+  	protected $promoModel;
 	public function __construct() {
 		$this->promoModel= new PromoModel();
 	}
