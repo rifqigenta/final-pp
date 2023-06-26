@@ -11,11 +11,13 @@ class ProsesKategori extends BaseController{
 		$this->kategoriModel 	= new KategoriModel();
 	}
 
+
+
   public function tambah(){
 
     $validate = [
 			'kategori' => [
-				'label' => 'Kategori',
+				'label' => 'Kategori',  
 				'rules' => 'required|alpha_space|min_length[5]',
 				'errors' => [
 					'required' => "*Harus Di isi",

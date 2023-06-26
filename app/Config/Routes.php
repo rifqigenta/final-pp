@@ -47,16 +47,24 @@ $routes->get('admin/laporan/penjualan', 'Admin\Home::laporanPenjualan', ['filter
 $routes->get('admin/laporan/stok', 'Admin\Home::laporanStok', ['filter' => 'AuthAdmin']);
 $routes->get('admin/komplain', 'Admin\Home::komplain', ['filter' => 'AuthAdmin']);
 $routes->get('admin/kategori', 'Admin\Home::kategori', ['filter' => 'AuthAdmin']);
+$routes->get('admin/restock', 'Admin\Home::restock', ['filter' => 'AuthAdmin']);
 
 
 // ROUTES PROSES KASIR
 
 
 // ROUTES PROSES ADMIN
-$routes->POST('admin/proses/kategori/tambah', 'Admin\ProsesKategori::tambah');
-$routes->POST('admin/proses/kategori/update', 'Admin\ProsesKategori::update');
-$routes->POST('admin/proses/promo/tambah', 'Admin\ProsesPromo::tambah');
-$routes->POST('admin/proses/promo/update', 'Admin\ProsesPromo::update');
+$routes->POST('admin/proses/karyawan/tambah', 'Admin\ProsesKaryawan::tambah');
+$routes->POST('admin/proses/kategori/tambah', 'Admin\ProsesKategori::tambah', ['filter' => 'AuthAdmin']);
+$routes->POST('admin/proses/kategori/update', 'Admin\ProsesKategori::update', ['filter' => 'AuthAdmin']);
+$routes->POST('admin/proses/promo/tambah', 'Admin\ProsesPromo::tambah', ['filter' => 'AuthAdmin']);
+$routes->POST('admin/proses/promo/update', 'Admin\ProsesPromo::update', ['filter' => 'AuthAdmin']);
+$routes->POST('admin/proses/info-situs/update', 'Admin\ProsesInfoToko::update', ['filter' => 'AuthAdmin']);
+$routes->POST('admin/proses/info-situs/update-gambar', 'Admin\ProsesInfoToko::updateGambar', ['filter' => 'AuthAdmin']);
+$routes->POST('admin/proses/produk/tambah', 'Admin\ProsesProduk::tambah', ['filter' => 'AuthAdmin']);
+$routes->POST('admin/proses/produk/update', 'Admin\ProsesProduk::update', ['filter' => 'AuthAdmin']);
+$routes->POST('admin/proses/restock/tambah', 'Admin\ProsesRestock::tambah', ['filter' => 'AuthAdmin']);
+
 
 
 // ROUTES PROSES LOGIN

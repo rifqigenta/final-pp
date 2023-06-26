@@ -35,7 +35,6 @@
               <td><?= $row['nama']; ?></td>
               <td><?= $row['alamat']; ?></td>
               <td><?= $row['email']; ?></td>
-              <td><?= $row['password']; ?></td>
               <td>
                 <button type="button" class="btn btn-outline-warning" onclick="editKaryawan(1)"><i class="fa-solid fa-pencil"></i></button>
                 <button type="button" class="btn btn-outline-danger" onclick="deleteKaryawan(1)"><i class="fa-solid fa-trash"></i></button>
@@ -60,10 +59,10 @@
       <?= form_open('admin/proses/karyawan/tambah') ?>
       <?= csrf_field() ?>
         <div class="modal-body">
-          <div class="mb-3">
+          <!-- <div class="mb-3">
             <label for="role_kode" class="form-label">Role Kode</label>
             <input type="text" class="form-control" id="role_kode" name="role_kode" required>
-          </div>
+          </div> -->
           <div class="mb-3">
             <label for="nama" class="form-label">Nama</label>
             <input type="text" class="form-control" id="nama" name="nama" required>
@@ -104,12 +103,14 @@
         <div class="modal-body">
           <div class="mb-3">
             <label for="namaEditKaryawan" class="form-label">Nama</label>
-            <input type="text" class="form-control" id="namaEdit" name="namaEdit" value="<?= old('namaEditKaryawan');?>" style="border-color:<?= (validation_show_error('namaEditKaryawan')!=null)?'red':'';?>" required>
+            <input type="text" class="form-control" id="namaEditKaryawan" name="namaEditKaryawan" value="<?= old('namaEditKaryawan');?>" style="border-color:<?= (validation_show_error('namaEditKaryawan')!=null)?'red':'';?>" required>
+            <span style="font-size:small; color:red;"><?= validation_show_error('namaEditKaryawan');?></span>
           </div>
           <div class="mb-3">
             <label for="passwordEdit" class="form-label">Password</label>
-            <input type="password" class="form-control" id="passwordEdit" name="passwordEdit" required>
+            <input type="password" class="form-control" id="passwordEdit" name="passwordEdit" value="<?= old('passwordEdit');?>" required>
             <div class="form-text">* Isi untuk update password.</div>
+            <span style="font-size:small; color:red;"><?= validation_show_error('passwordEdit');?></span>
           </div>
         </div>
         <div class="modal-footer">
@@ -130,12 +131,18 @@
   $(document).ready(function() {
     $('#linkKaryawan').addClass("active");
     $('#tableKaryawan').DataTable();
+    <?php if(validation_errors()!=null){?>
+      $('#modalTambahKaryawan').modal('show');
+    <?php }?>
+    <?php if(validation_errors()!=null){?>
+      $('#modalEditKaryawan').modal('show');
+    <?php }?>
   });
 
-  function deleteKaryawan(data) {
+  function deleteKaryawan(id, nama) {
     Swal.fire({
       title: 'Are you sure?',
-      text: "You won't be able to revert this!",
+      text:  `Data ${nama} tidak bisa dikembalikan!`,
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
@@ -152,11 +159,12 @@
     });
   }
 
-  function editKaryawan(id) {
+  function editKaryawan(id, nama, password) {
     // AJAX
 
     // END AJAX
-    $('#namaEdit').val("Edit Nama");
+    $('#namaEditKaryawan').val(nama);
+    $('#passwordEdit').val(password);
     $('#modalEditKaryawan').modal('show');
   };
 

@@ -9,11 +9,11 @@ class KaryawanModel extends Model
     protected $DBGroup          = 'default';
     protected $table            = 'kasir';
     protected $primaryKey       = 'id_kasir';
-    protected $useAutoIncrement = false;
+    protected $useAutoIncrement = true;
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['role_kode', 'nama','alamat','email','password'];
+    protected $allowedFields    = ['role_kode', 'nama','alamat','email','password','status'];
 
     // Dates
     protected $useTimestamps = false;

@@ -4,27 +4,22 @@ namespace App\Controllers\Admin;
 
 use App\Controllers\BaseController;
 use App\Models\Admin\KaryawanModel;
+use App\Models\Login\LoginModel;
 
 class ProsesKaryawan extends BaseController
 {
 
-    protected $karyawanModel;
+    protected $karyawanModel, $loginModel;
     public function __construct()
     {
         $this->karyawanModel = new KaryawanModel();
+        $this->loginModel = new LoginModel();
     }
 
     public function tambah()
     {
 
         $validate = [
-            'role_kode' => [
-                'label' => 'Role Kode',
-                'rules' => 'required',
-                'errors' => [
-                    'required' => "*Harus diisi",
-                ],
-            ],
             'nama' => [
                 'label' => 'Nama',
                 'rules' => 'required|alpha_space',
@@ -55,32 +50,106 @@ class ProsesKaryawan extends BaseController
             ],
         ];
 
-        if (!$this->validate($validate)) {
-            return redirect()->back()->withInput();
-        } else {
-            $role = $this->request->getPost("role_kode");
-            $karyawan = $this->request->getPost("nama");
-            $alamat = $this->request->getPost("alamat");
-            $email = $this->request->getPost("email");
-            $pass = $this->request->getPost("password");
+        if ($this->validate($validate)) {
+            
+            $nama = $this->request->getPost('nama');
+            $alamat = $this->request->getPost('alamat');
+            $email = $this->request->getPost('email');
+            $password = $this->request->getPost('password');
 
+            $cek = $this->karyawanModel->select('role_kode')->orderBy("role_kode", 'DESC')
+            ->limit(1)
+            ->get();
+            
+            if($cek) {
+                $sumKaryawan = $this->karyawanModel->countAll();
+        
+                $role_kode = 'K-' . ($sumKaryawan + 1);
+            }
+            
             $data = [
-                'role_kode' => $role,
-                'nama' => $karyawan,
+                'role_kode' => $role_kode,
+                // 'nama' => $nama,
+                // 'alamat' => $alamat,
+                'uname' => $email,
+                'pass' => md5($password),
+                'level' => 1,
+                // 'tgl_dibuat'
+                // 'level' => 1,
+            ];
+            $execUser = $this->loginModel->insert($data);
+            
+            $dataKasir = [
+                'role_kode' => $role_kode,
+                'nama' => $nama,
                 'alamat' => $alamat,
                 'email' => $email,
-                'password' => $pass,
+                // 'password' => md5($password),
+            
             ];
-
-            // Exec Database
-            $execDB = $this->kategoriModel->insert($data);
+            $execKasir = $this->karyawanModel->insert($dataKasir);
+            
+            
 
             echo "<script>
-				alert('Kategori Berhasil Ditambah');
-				window.location.href = '/admin/kategori/';
-			</script>";
+                    alert('Kategori Berhasil Ditambah');
+                    window.location.href = '/admin/karyawan/';
+                </script>";
+            
+                
+            return redirect()->to('/admin/karyawan')->with('success', 'Karyawan berhasil ditambahkan.');
+            
+        } else {
+            return redirect()->back()->withInput();
+            
         }
     }
+    // $cek = $this->karyawanModel->select("role_kode")->orderBy("role_kode", 'desc')
+    
+
+    // if ($cek->countAll() < 1) {
+        
+    //     $nama = $this->request->getPost('nama');
+    //     $alamat = $this->request->getPost('alamat');
+    //     $email = $this->request->getPost('email');
+    //     $password = $this->request->getPost('password');
+    //     $sumKaryawan = $karyawanModel->countAllResults() + 1;
+    
+    //     $role_kode = 'K' . $sumKaryawan;
+    //     $data = [
+    //         'role_kode' => $role_kode,
+    //         'nama' => $nama,
+    //         'alamat' => $alamat,
+    //         'email' => $email,
+    //         'password' => md5($password),
+    //     ];
+    
+    //     $execDB = $this->karyawanModel->insert($data);
+    // } else {
+    //     return redirect()->back()->withInput();
+    
+    //     echo "<script>
+    //         alert('Kategori Berhasil Ditambah');
+    //         window.location.href = '/admin/kategori/';
+    //     </script>";
+    
+    // }
+    
+    
+    // $role = $this->request->getPost("role_kode");
+    // $karyawan = $this->request->getPost("nama");
+    // $alamat = $this->request->getPost("alamat");
+    // $email = $this->request->getPost("email");
+    // $pass = $this->request->getPost("password");
+
+    // $data = [
+    //     'role_kode' => $role_kode,
+    //     'uname' => $email,
+    //     'pass' => md5($password),
+    // ];
+
+    // Exec Database
+    // $execDB = $this->karyawanModel->insert($data);
 
     // public function update()
     // {

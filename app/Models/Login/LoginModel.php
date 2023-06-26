@@ -12,7 +12,7 @@ class LoginModel extends Model{
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['uname', 'pass', 'level'];
+    protected $allowedFields    = ['uname', 'role_kode', 'pass', 'level'];
 
     // Dates
     protected $useTimestamps = false;
