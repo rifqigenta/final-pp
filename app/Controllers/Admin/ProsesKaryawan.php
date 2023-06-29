@@ -88,62 +88,12 @@ class ProsesKaryawan extends BaseController
             echo "<script>
                     alert('Kategori Berhasil Ditambah');
                     window.location.href = '/admin/karyawan/';
-                </script>";
-            
-                
-            // return redirect()->to('/admin/karyawan')->with('success', 'Karyawan berhasil ditambahkan.');
-            
+                </script>"; 
         } else {
             return redirect()->back()->withInput();
             
         }
     }
-    // $cek = $this->karyawanModel->select("role_kode")->orderBy("role_kode", 'desc')
-    
-
-    // if ($cek->countAll() < 1) {
-        
-    //     $nama = $this->request->getPost('nama');
-    //     $alamat = $this->request->getPost('alamat');
-    //     $email = $this->request->getPost('email');
-    //     $password = $this->request->getPost('password');
-    //     $sumKaryawan = $karyawanModel->countAllResults() + 1;
-    
-    //     $role_kode = 'K' . $sumKaryawan;
-    //     $data = [
-    //         'role_kode' => $role_kode,
-    //         'nama' => $nama,
-    //         'alamat' => $alamat,
-    //         'email' => $email,
-    //         'password' => md5($password),
-    //     ];
-    
-    //     $execDB = $this->karyawanModel->insert($data);
-    // } else {
-    //     return redirect()->back()->withInput();
-    
-    //     echo "<script>
-    //         alert('Kategori Berhasil Ditambah');
-    //         window.location.href = '/admin/kategori/';
-    //     </script>";
-    
-    // }
-    
-    
-    // $role = $this->request->getPost("role_kode");
-    // $karyawan = $this->request->getPost("nama");
-    // $alamat = $this->request->getPost("alamat");
-    // $email = $this->request->getPost("email");
-    // $pass = $this->request->getPost("password");
-
-    // $data = [
-    //     'role_kode' => $role_kode,
-    //     'uname' => $email,
-    //     'pass' => md5($password),
-    // ];
-
-    // Exec Database
-    // $execDB = $this->karyawanModel->insert($data);
 
     public function update()
     {
@@ -188,26 +138,19 @@ class ProsesKaryawan extends BaseController
             $status         = $this->request->getPost('status');
             $nama           = $this->request->getPost('namaEdit');
             $alamat           = $this->request->getPost('alamatEdit');
-            // $password       = $this->request->getPost('passwordEdit');
 
             // Cek Update Status
             if ($status != "" || $status !=null) {
                 $data['status']    = "0";
             }
-            // Cek Update Kategori
+            // Cek Update Karyawan
             if ($nama != "" || $nama !=null) {
                 $data['nama']    = $nama;
             }
-            // Cek Update Kategori
+            // Cek Update Karyawan
             if ($alamat != "" || $alamat !=null) {
                 $data['alamat']    = $alamat;
             }
-            // Cek Update Kategori
-            // if ($password != "" || $password != null) {
-            //     $pass['password']    = md5($password);
-            // }
-
-            // $execUser = $this->loginModel->update($pass);
 
             // Exec DB
             $execKasir = $this->karyawanModel->update($id, $data);

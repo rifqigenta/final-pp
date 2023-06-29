@@ -59,10 +59,6 @@
       <?= form_open('admin/proses/karyawan/tambah') ?>
       <?= csrf_field() ?>
         <div class="modal-body">
-          <!-- <div class="mb-3">
-            <label for="role_kode" class="form-label">Role Kode</label>
-            <input type="text" class="form-control" id="role_kode" name="role_kode" required>
-          </div> -->
           <div class="mb-3">
             <label for="nama" class="form-label">Nama</label>
             <input type="text" class="form-control" id="nama" name="nama" required>
