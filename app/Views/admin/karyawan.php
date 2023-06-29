@@ -36,8 +36,8 @@
               <td><?= $row['alamat']; ?></td>
               <td><?= $row['email']; ?></td>
               <td>
-                <button type="button" class="btn btn-outline-warning" onclick="editKaryawan(1)"><i class="fa-solid fa-pencil"></i></button>
-                <button type="button" class="btn btn-outline-danger" onclick="deleteKaryawan(1)"><i class="fa-solid fa-trash"></i></button>
+                <button type="button" class="btn btn-outline-warning" onclick="editKaryawan(<?= $row['id_kasir'];?>, '<?= $row['nama']; ?>')"><i class="fa-solid fa-pencil"></i></button>
+                <button type="button" class="btn btn-outline-danger" onclick="deleteKaryawan(<?= $row['id_kasir'];?>)"><i class="fa-solid fa-trash"></i></button>
               </td>
             </tr>
             <?php } ?>
@@ -94,7 +94,7 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">Edit Karyawan [Fetrus]</h5>
+        <h5 class="modal-title" id="titleEditModal"></h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <?= form_open('admin/proses/karyawan/update') ?>
@@ -103,14 +103,22 @@
         <div class="modal-body">
           <div class="mb-3">
             <label for="namaEditKaryawan" class="form-label">Nama</label>
-            <input type="text" class="form-control" id="namaEditKaryawan" name="namaEditKaryawan" value="<?= old('namaEditKaryawan');?>" style="border-color:<?= (validation_show_error('namaEditKaryawan')!=null)?'red':'';?>" required>
-            <span style="font-size:small; color:red;"><?= validation_show_error('namaEditKaryawan');?></span>
+            <input type="text" class="form-control" id="namaEdit" name="namaEdit" value="<?= old('namaEdit');?>" style="border-color:<?= (validation_show_error('namaEdit')!=null)?'red':'';?>" required>
+            <span style="font-size:small; color:red;"><?= validation_show_error('namaEdit');?></span>
+          </div>
+          <div class="mb-3">
+            <label for="alamatEditKaryawan" class="form-label">Alamat</label>
+            <input type="text" class="form-control" id="alamatEdit" name="alamatEdit" value="<?= old('alamatEdit');?>" style="border-color:<?= (validation_show_error('alamatEdit')!=null)?'red':'';?>" required>
+            <span style="font-size:small; color:red;"><?= validation_show_error('alamatEdit');?></span>
+          </div>
+          <div class="mb-3">
+            <label for="emailEditKaryawan" class="form-label">Email</label>
+            <input type="text" readonly class="form-control" id="emailEdit" name="emailEdit" value="<?= old('emailEdit');?>" style="border-color:<?= (validation_show_error('emailEdit')!=null)?'red':'';?>" required>
           </div>
           <div class="mb-3">
             <label for="passwordEdit" class="form-label">Password</label>
-            <input type="password" class="form-control" id="passwordEdit" name="passwordEdit" value="<?= old('passwordEdit');?>" required>
-            <div class="form-text">* Isi untuk update password.</div>
-            <span style="font-size:small; color:red;"><?= validation_show_error('passwordEdit');?></span>
+            <input type="password" readonly class="form-control" id="passwordEdit" name="passwordEdit" value="<?= old('passwordEdit');?>" required>
+            <!-- <div class="form-text">* Isi untuk update password.</div> -->
           </div>
         </div>
         <div class="modal-footer">
@@ -141,30 +149,51 @@
 
   function deleteKaryawan(id, nama) {
     Swal.fire({
-      title: 'Are you sure?',
-      text:  `Data ${nama} tidak bisa dikembalikan!`,
+      title: 'Yakin?',
+      text: `Data Karyawan ${nama} tidak bisa dikembalikan!`,
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, delete it!'
+      confirmButtonText: 'Ya, Hapus!'
     }).then((result) => {
       if (result.isConfirmed) {
-        Swal.fire(
-          'Deleted!',
-          'Your file has been deleted.',
-          'success'
-        )
+        $.ajax({
+					url: '/admin/proses/karyawan/update',
+					dataType: 'json',
+					type: 'POST',
+					data: {
+						idUpdate: id,
+            status: '0',
+						[csrfName]: csrfHash,
+					},
+					success: function(data){
+						if(data==1){
+							Swal.fire(
+								'Berhasil',
+								'Kategori Berhasil Dihapus',
+								'success',
+							);
+						}else{
+							Swal.fire(
+								'Gagal',
+								'Silahkan coba lagi',
+								'error',
+							);
+						}
+						location.reload();
+					},
+				});
       }
     });
   }
 
-  function editKaryawan(id, nama, password) {
-    // AJAX
+  
 
-    // END AJAX
-    $('#namaEditKaryawan').val(nama);
-    $('#passwordEdit').val(password);
+  function editKaryawan(id, nama) {
+    $('#titleEditModal').html(`Edit Karyawan <i>${nama}</i>`);
+    $('#namaEdit').val(nama);
+    $('#idUpdate').val(id);
     $('#modalEditKaryawan').modal('show');
   };
 

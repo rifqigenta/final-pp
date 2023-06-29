@@ -19,255 +19,127 @@
     <!-- <div class="container-fluid" >
         
     </div> -->
-    <div class="row">
+    <!-- <div class="row">
         <div class="col-5 fw-semibold " style="line-height: 4; ">
             <form class="d-flex p-3" style="margin-left: 0.7rem;" role="search">
                 <input class="form-control" type="search" placeholder="Search" aria-label="Search" />
                 <button class="btn btn-outline-success ms-5" type="submit">Search</button>
             </form>
         </div>
-    </div>
+    </div> -->
+    <nav class="navbar navbar-expand navbar-light topbar mb-4 static-top ">
+
+        <!-- Sidebar Toggle (Topbar)
+        <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+            <i class="fa fa-bars"></i>
+        </button> -->
+
+        <!-- Topbar Search -->
+        <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-1 my-2 my-md-0 mw-100 navbar-search">
+            <div class="input-group">
+                <input type="text" class="form-control bg-light border-1 small" placeholder="Search ..." aria-label="Search" aria-describedby="basic-addon2">
+                <div class="input-group-append">
+                    <button class="btn btn-dark" style="background: #00CC88;" type="button">
+                        <i class="fas fa-search fa-sm"></i>
+                    </button>
+                </div>
+            </div>
+        </form>
+
+        <!-- Topbar Navbar -->
+        <ul class="navbar-nav ml-auto">
+
+            <!-- Nav Item - Search Dropdown (Visible Only XS) -->
+            <!-- <li class="nav-item dropdown no-arrow d-sm-none">
+        <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button"
+            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="fas fa-search fa-fw"></i>
+        </a> -->
+
+
+            <!-- Nav Item - Messages -->
+            <?php
+            $keranjang = $cart->contents();
+            $jml_item = 0;
+            foreach ($keranjang as $key => $value) {
+                $jml_item = $jml_item + $value['qty'];
+            }
+            ?>
+            <li class="nav-item dropdown no-arrow mx-1">
+                <a class="nav-link dropdown-toggle" id="messagesDropdown" role="button" 
+                aria-haspopup="true" aria-expanded="false" href="#" data-toggle="dropdown">
+                    <i class="fa-sharp fa-solid fa-cart-shopping fa-xl"></i>
+                    <!-- Counter - Messages -->
+                    <span class="badge badge-danger badge-counter"><?= $jml_item ?></span>
+                </a>
+                <!-- Dropdown - Messages -->
+
+                <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                aria-labelledby="messagesDropdown">
+                    <h6 class="dropdown-header">
+                        Keranjang
+                    </h6>
+                    
+                    <?php if (empty($keranjang)) { ?>
+                        <a href="#" class="dropdown-item">
+                            <p>Keranjang Kosong</p>
+                        </a>
+                    <?php } else { ?>
+                        <a class="d-flex" href="#">
+                            <?php foreach ($keranjang as $key => $value) { ?>
+                                <a class="dropdown-item d-flex align-items-center">
+                                    <div class="dropdown-list-image mr-3">
+                                        <img class="rounded-circle img-size-50" src="<?= base_url('assets/gambar/' . $value['options']['gambar']) ?>"
+                                            alt="...">
+                                        <!-- <div class="status-indicator bg-success"></div> -->
+                                    </div>
+                                    <div class="font-weight-bold">
+                                        <div class="text-truncate"><?= $value['name'] ?></div>
+                                        <div class="small text-gray-500"><?= $value['qty'] ?>*<?= number_to_currency($value['price'], 'IDR') ?>=<?= number_to_currency($value['subtotal'], 'IDR')?></div>
+                                    </div>
+                                </a>
+                            <?php } ?>
+                        </a>
+                        
+                        <a class="dropdown-item text-center" href="#">Total : <?= number_to_currency($cart->total(), 'IDR') ?></a>
+                        
+                        <a class="dropdown-item text-center" href="#">Checkout</a>
+                        <a href="<?= base_url('kasir/keranjang/clear'); ?>"  class="dropdown-item text-center small text-gray-500">Clear</a>
+                        <!-- <div class="dropdown-divider"></div> -->
+                        <!-- <a href="#" class="dropdown_item dropdown-footer">Lihat Keranjang</a>
+                        <a href="#" class="dropdown_item dropdown-footer">Checkout</a> -->
+                    <?php } ?>
+                </div>
+            </li>
+        </ul>
+    </nav>
     <div class="row">
-        <div class="d-flex col-sm-3 justify-content-center">
-            <div class="card" style="width: 15rem; float: left; margin: 5px;">
-                <img src="assets/img/Sayur Hijau/Bayam.jpg" class="card-img-top" alt="bayam">
-                <div class="card-body">
-                    <h5 class="card-title">Bayam</h5>
-                    <p class="card-text">Rp 3000 / ikat</p>
-                    <a href="#" class="btn btn-outline-primary">
-                        Tambah Keranjang
-                    </a>
+        <?php foreach ($produk as $key => $value) { ?>
+            <div class="d-flex col-sm-3 justify-content-center">
+                <?php
+                echo form_open('kasir/keranjang/tambah');
+                echo form_hidden('id', $value['id_produk']);
+                echo form_hidden('price', $value['harga']);
+                echo form_hidden('name', $value['nama']);
+                //option 
+                echo form_hidden('gambar', $value['gambar']);
+                // echo form_hidden('kuantitas', $value['kuantitas']); 
+                ?>
+                <div class="card" style="width: 15rem; float: left; margin: 5px;">
+                    <img src="<?= base_url('assets/gambar/' . $value['gambar']) ?>" class="card-img-top">
+                    <div class="card-body">
+                        <h5 class="card-title"><?= $value['nama'] ?></h5>
+                        <p class="card-text"><?= number_to_currency($value['harga'], 'IDR'); ?></p>
+                        <!-- <p class="card-text"><?= $value['kuantitas'] ?>gr</p> -->
+                        <!-- ra ruh carane gae perbedaan antara gram / ikat -->
+                        <button class="btn btn-outline-primary" type="submit">
+                            Tambah Keranjang
+                        </button>
+                    </div>
                 </div>
+                <?php echo form_close(); ?>
             </div>
-        </div>
-        <div class="d-flex col-sm-3 justify-content-center">
-            <div class="card" style="width: 15rem; float: left; margin: 5px;">
-                <img src="assets/img/Sayur Hijau/brokoli.jpg" class="card-img-top" alt="brokoli">
-                <div class="card-body">
-                    <h5 class="card-title">Brokoli</h5>
-                    <p class="card-text">Rp 3000 / 100 gr</p>
-                    <a href="#" class="btn btn-outline-primary">
-                        Tambah Keranjang
-                    </a>
-                </div>
-            </div>
-        </div>
-        <div class="d-flex col-sm-3 justify-content-center">
-            <div class="card" style="width: 15rem; float: left; margin: 5px;">
-                <img src="assets/img/Sayur Hijau/buncis.jpg" class="card-img-top" alt="buncis">
-                <div class="card-body">
-                    <h5 class="card-title">Buncis</h5>
-                    <p class="card-text">Rp 2000 / 100gr</p>
-                    <a href="#" class="btn btn-outline-primary">
-                        Tambah Keranjang
-                    </a>
-                </div>
-            </div>
-        </div>
-        <div class="d-flex col-sm-3 justify-content-center">
-            <div class="card" style="width: 15rem; float: left; margin: 5px;">
-                <img src="assets/img/Sayur Hijau/kemangi.png" class="card-img-top" alt="daun_kemangi">
-                <div class="card-body">
-                    <h5 class="card-title">Daun Kemangi</h5>
-                    <p class="card-text">Rp 2000 / 100gr</p>
-                    <a href="#" class="btn btn-outline-primary">
-                        Tambah Keranjang
-                    </a>
-                </div>
-            </div>
-        </div>
-        <div class="d-flex col-sm-3 justify-content-center">
-            <div class="card" style="width: 15rem; float: left; margin: 5px;">
-                <img src="assets/img/Sayur Hijau/daunbawang.jpg" class="card-img-top" alt="daunbawang">
-                <div class="card-body">
-                    <h5 class="card-title">Daun Bawang</h5>
-                    <p class="card-text">Rp 3000 / ikat</p>
-                    <a href="#" class="btn btn-outline-primary">
-                        Tambah Keranjang
-                    </a>
-                </div>
-            </div>
-        </div>
-        <div class="d-flex col-sm-3 justify-content-center">
-            <div class="card" style="width: 15rem; float: left; margin: 5px;">
-                <img src="assets/img/Sayur Hijau/kangkung.jpg" class="card-img-top" alt="kangkung">
-                <div class="card-body">
-                    <h5 class="card-title">kangkung</h5>
-                    <p class="card-text">Rp 3000 / ikat</p>
-                    <a href="#" class="btn btn-outline-primary">
-                        Tambah Keranjang
-                    </a>
-                </div>
-            </div>
-        </div>
-        <div class="d-flex col-sm-3 justify-content-center">
-            <div class="card" style="width: 15rem; float: left; margin: 5px;">
-                <img src="assets/img/Sayur Hijau/kubis.jpg" class="card-img-top" alt="kubis">
-                <div class="card-body">
-                    <h5 class="card-title">Kubis</h5>
-                    <p class="card-text">Rp 5000 / 500 gr</p>
-                    <a href="#" class="btn btn-outline-primary">
-                        Tambah Keranjang
-                    </a>
-                </div>
-            </div>
-        </div>
-        <div class="d-flex col-sm-3 justify-content-center">
-            <div class="card" style="width: 15rem; float: left; margin: 5px;">
-                <img src="assets/img/Sayur Hijau/Pakcoy.jpg" class="card-img-top" alt="pakcoy">
-                <div class="card-body">
-                    <h5 class="card-title">Pakcoy</h5>
-                    <p class="card-text">Rp 2000 / ikat</p>
-                    <a href="#" class="btn btn-outline-primary">
-                        Tambah Keranjang
-                    </a>
-                </div>
-            </div>
-        </div>
-        <div class="d-flex col-sm-3 justify-content-center">
-            <div class="card" style="width: 15rem; float: left; margin: 5px;">
-                <img src="assets/img/Sayuran Keras/wortel.jpg" class="card-img-top" alt="wortel">
-                <div class="card-body">
-                    <h5 class="card-title">Wortel</h5>
-                    <p class="card-text">Rp 3000 / 200 gr</p>
-                    <a href="#" class="btn btn-outline-primary">
-                        Tambah Keranjang
-                    </a>
-                </div>
-            </div>
-        </div>
-        <div class="d-flex col-sm-3 justify-content-center">
-            <div class="card" style="width: 15rem; float: left; margin: 5px;">
-                <img src="assets/img/Sayuran Keras/terongungu.webp" class="card-img-top" alt="terongungu">
-                <div class="card-body">
-                    <h5 class="card-title">Terong Ungu</h5>
-                    <p class="card-text">Rp 10.000 / 500 gr</p>
-                    <a href="#" class="btn btn-outline-primary">
-                        Tambah Keranjang
-                    </a>
-                </div>
-            </div>
-        </div>
-        <div class="d-flex col-sm-3 justify-content-center">
-            <div class="card" style="width: 15rem; float: left; margin: 5px;">
-                <img src="assets/img/Sayuran Keras/pare.webp" class="card-img-top" alt="pare">
-                <div class="card-body">
-                    <h5 class="card-title">Pare</h5>
-                    <p class="card-text">Rp 8000 / 400 gr</p>
-                    <a href="#" class="btn btn-outline-primary">
-                        Tambah Keranjang
-                    </a>
-                </div>
-            </div>
-        </div>
-        <div class="d-flex col-sm-3 justify-content-center">
-            <div class="card" style="width: 15rem; float: left; margin: 5px;">
-                <img src="assets/img/Sayuran Keras/timun.jpg" class="card-img-top" alt="timun">
-                <div class="card-body">
-                    <h5 class="card-title">Timun</h5>
-                    <p class="card-text">Rp 6000 / 500 gr</p>
-                    <a href="#" class="btn btn-outline-primary">
-                        Tambah Keranjang
-                    </a>
-                </div>
-            </div>
-        </div>
-        <div class="d-flex col-sm-3 justify-content-center">
-            <div class="card" style="width: 15rem; float: left; margin: 5px;">
-                <img src="assets/img/Sayuran Keras/tomato red 2.png" class="card-img-top" alt="tomat_merah">
-                <div class="card-body">
-                    <h5 class="card-title">Tomat Merah</h5>
-                    <p class="card-text">Rp 12.000 / 500 gr</p>
-                    <a href="#" class="btn btn-outline-primary">
-                        Tambah Keranjang
-                    </a>
-                </div>
-            </div>
-        </div>
-        <div class="d-flex col-sm-3 justify-content-center">
-            <div class="card" style="width: 15rem; float: left; margin: 5px;">
-                <img src="assets/img/Sayuran Keras/kacangpanjang.webp" class="card-img-top" alt="kacang_panjang">
-                <div class="card-body">
-                    <h5 class="card-title">Kacang Panjang</h5>
-                    <p class="card-text">Rp 5000 / 250 gr</p>
-                    <a href="#" class="btn btn-outline-primary">
-                        Tambah Keranjang
-                    </a>
-                </div>
-            </div>
-        </div>
-        <div class="d-flex col-sm-3 justify-content-center">
-            <div class="card" style="width: 15rem; float: left; margin: 5px;">
-                <img src="assets/img/Sayuran Keras/kentang.webp" class="card-img-top" alt="kentang">
-                <div class="card-body">
-                    <h5 class="card-title">Kentang</h5>
-                    <p class="card-text">Rp 4000 / 200 gr</p>
-                    <a href="#" class="btn btn-outline-primary">
-                        Tambah Keranjang
-                    </a>
-                </div>
-            </div>
-        </div>
-        <div class="d-flex col-sm-3 justify-content-center">
-            <div class="card" style="width: 15rem; float: left; margin: 5px;">
-                <img src="assets/img/Sayuran Keras/jagungmanis.jpg" class="card-img-top" alt="jagungmanis">
-                <div class="card-body">
-                    <h5 class="card-title">Jagung Manis</h5>
-                    <p class="card-text">Rp 7000 / 500 gr</p>
-                    <a href="#" class="btn btn-outline-primary">
-                        Tambah Keranjang
-                    </a>
-                </div>
-            </div>
-        </div>
-        <div class="d-flex col-sm-3 justify-content-center">
-            <div class="card" style="width: 15rem; float: left; margin: 5px;">
-                <img src="assets/img/Bawang/garlic 1.png" class="card-img-top" alt="bawangputih">
-                <div class="card-body">
-                    <h5 class="card-title">Bawang Putih</h5>
-                    <p class="card-text">Rp 7.500 / 200gr </p>
-                    <a href="#" class="btn btn-outline-primary">
-                        Tambah Keranjang
-                    </a>
-                </div>
-            </div>
-        </div>
-        <div class="d-flex col-sm-3 justify-content-center">
-            <div class="card" style="width: 15rem; float: left; margin: 5px;">
-                <img src="assets/img/Bawang/onion.png" class="card-img-top" alt="bawangmerah">
-                <div class="card-body">
-                    <h5 class="card-title">Bawang Merah</h5>
-                    <p class="card-text">Rp 8000 / 1/2 kg</p>
-                    <a href="#" class="btn btn-outline-primary">
-                        Tambah Keranjang
-                    </a>
-                </div>
-            </div>
-        </div>
-        <div class="d-flex col-sm-3 justify-content-center">
-            <div class="card" style="width: 15rem; float: left; margin: 5px;">
-                <img src="assets/img/cabai/cabairawitmerah.jpg" class="card-img-top" alt="rawitmerah">
-                <div class="card-body">
-                    <h5 class="card-title">Cabai Rawit Merah</h5>
-                    <p class="card-text">Rp 5000 / 100 gr</p>
-                    <a href="#" class="btn btn-outline-primary">
-                        Tambah Keranjang
-                    </a>
-                </div>
-            </div>
-        </div>
-        <div class="d-flex col-sm-3 justify-content-center">
-            <div class="card" style="width: 15rem; float: left; margin: 5px;">
-                <img src="assets/img/cabai/cabaimerahbesar.jpg" class="card-img-top" alt="cabaimerahbesar">
-                <div class="card-body">
-                    <h5 class="card-title">Cabai Merah Besar</h5>
-                    <p class="card-text">Rp 7000 / 100 gr</p>
-                    <a href="#" class="btn btn-outline-primary">
-                        Tambah Keranjang
-                    </a>
-                </div>
-            </div>
-        </div>
+        <?php } ?>
     </div>
 </div>
 <script>

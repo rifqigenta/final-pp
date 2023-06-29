@@ -43,9 +43,10 @@ class ProsesKaryawan extends BaseController
             ],
             'password' => [
                 'label' => 'Password',
-                'rules' => 'required',
+                'rules' => 'required|min_length[8]',
                 'errors' => [
                     'required' => "*Harus diisi",
+                    'min_length[8]' => "Minimal 8 karakter"
                 ],
             ],
         ];
@@ -69,13 +70,9 @@ class ProsesKaryawan extends BaseController
             
             $data = [
                 'role_kode' => $role_kode,
-                // 'nama' => $nama,
-                // 'alamat' => $alamat,
                 'uname' => $email,
                 'pass' => md5($password),
                 'level' => 1,
-                // 'tgl_dibuat'
-                // 'level' => 1,
             ];
             $execUser = $this->loginModel->insert($data);
             
@@ -84,12 +81,9 @@ class ProsesKaryawan extends BaseController
                 'nama' => $nama,
                 'alamat' => $alamat,
                 'email' => $email,
-                // 'password' => md5($password),
             
             ];
             $execKasir = $this->karyawanModel->insert($dataKasir);
-            
-            
 
             echo "<script>
                     alert('Kategori Berhasil Ditambah');
@@ -97,7 +91,7 @@ class ProsesKaryawan extends BaseController
                 </script>";
             
                 
-            return redirect()->to('/admin/karyawan')->with('success', 'Karyawan berhasil ditambahkan.');
+            // return redirect()->to('/admin/karyawan')->with('success', 'Karyawan berhasil ditambahkan.');
             
         } else {
             return redirect()->back()->withInput();
@@ -151,68 +145,84 @@ class ProsesKaryawan extends BaseController
     // Exec Database
     // $execDB = $this->karyawanModel->insert($data);
 
-    // public function update()
-    // {
-    //     $validate = [
-    //         'idUpdate'    => [
-    //             'label'    => "ID",
-    //             'rules'    => 'required|is_natural|is_not_unique[kategori.id_kategori]',
-    //             'errors' => [
-    //                 'required'            => "*Harus Di isi",
-    //                 'is_natural'        => "*Harus angka",
-    //                 'is_not_unique'    => "*Id Tidak Ditemukan"
-    //             ]
-    //         ],
-    //         'status' => [
-    //             'label'    => "Status",
-    //             'rules'    => "permit_empty|in_list[0,1]",
-    //             'errors' => [
-    //                 'in_list' => "*Status Tidak Tersedia",
-    //             ]
-    //         ],
-    //         'kategoriEdit' => [
-    //             'label' => 'Kategori',
-    //             'rules' => 'permit_empty|alpha_space|min_length[5]',
-    //             'errors' => [
-    //                 'alpha_space' => "*Hanya boleh huruf",
-    //                 'min_length' => "*Minimal 5 karakter"
-    //             ],
-    //         ]
-    //     ];
+    public function update()
+    {
+        $validate = [
+            'idUpdate'    => [
+                'label'    => "ID",
+                'rules'    => 'required|is_natural|is_not_unique[kasir.id_kasir]',
+                'errors' => [
+                    'required'            => "*Harus Di isi",
+                    'is_natural'        => "*Harus angka",
+                    'is_not_unique'    => "*Id Tidak Ditemukan"
+                ]
+            ],
+            'status' => [
+                'label'    => "Status",
+                'rules'    => "permit_empty|in_list[0,1]",
+                'errors' => [
+                    'in_list' => "*Status Tidak Tersedia",
+                ]
+            ],
+            'namaEdit' => [
+                'label' => 'Nama',
+                'rules' => 'permit_empty|alpha_space',
+                'errors' => [
+                    'alpha_space' => "*Hanya boleh huruf"
+                ],
+            ],
+            'alamatEdit' => [
+                'label' => 'Alamat',
+                'rules' => 'permit_empty|alpha_numeric',
+                'errors' => [
+                    'alpha_numeric' => "*Hanya Berisi Huruf dan Angka"
+                ],
+            ]
+        ];
 
-    //     if (!$this->validate($validate)) {
-    //         return redirect()->back()->withInput();
-    //     } else {
-    //         // Variabel FORM
-    //         $id            = $this->request->getPost('idUpdate');
-    //         $status    = $this->request->getPost('status');
-    //         $kategori   = $this->request->getPost('kategoriEdit');
+        if (!$this->validate($validate)) {
+            return redirect()->back()->withInput();
+        } else {
+            // Variabel FORM
+            $id             = $this->request->getPost('idUpdate');
+            $status         = $this->request->getPost('status');
+            $nama           = $this->request->getPost('namaEdit');
+            $alamat           = $this->request->getPost('alamatEdit');
+            // $password       = $this->request->getPost('passwordEdit');
 
-    //         // Cek Update Status
-    //         if ($status != "" || $status != null) {
-    //             $data['status']    = "0";
-    //         }
+            // Cek Update Status
+            if ($status != "" || $status !=null) {
+                $data['status']    = "0";
+            }
+            // Cek Update Kategori
+            if ($nama != "" || $nama !=null) {
+                $data['nama']    = $nama;
+            }
+            // Cek Update Kategori
+            if ($alamat != "" || $alamat !=null) {
+                $data['alamat']    = $alamat;
+            }
+            // Cek Update Kategori
+            // if ($password != "" || $password != null) {
+            //     $pass['password']    = md5($password);
+            // }
 
-    //         // Cek Update Kategori
-    //         if ($kategori != "" || $kategori != null) {
-    //             $data['nama_kategori']    = $kategori;
-    //         }
+            // $execUser = $this->loginModel->update($pass);
 
-    //         // Exec DB
-    //         $exec = $this->kategoriModel->update($id, $data);
-
-    //         if ($exec) {
-    //             if (isset($data['status'])) {
-    //                 return json_encode(1);
-    //             } else {
-    //                 echo "<script>
-    //       alert('Kategori Berhasil Diubah');
-    //       window.location.href = '/admin/kategori/';
-    //     </script>";
-    //             }
-    //         } else {
-    //             return json_encode(0);
-    //         }
-    //     }
-    // }
+            // Exec DB
+            $execKasir = $this->karyawanModel->update($id, $data);
+            if ($execKasir) {
+                if (isset($data['status'])) {
+                    return json_encode(1);
+                } else {
+                    echo "<script>
+                    alert('Data Karyawan Berhasil Diubah');
+                    window.location.href = '/admin/karyawan/';
+                    </script>";
+                }
+            } else {
+                return json_encode(0);
+            }
+        }
+    }
 }

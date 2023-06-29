@@ -4,15 +4,15 @@ namespace App\Models\Kasir;
 
 use CodeIgniter\Model;
 
-class Home extends Model{
+class ProdukModel extends Model{
     protected $DBGroup          = 'default';
-    protected $table            = 'homes';
-    protected $primaryKey       = 'id';
+    protected $table            = 'produk';
+    protected $primaryKey       = 'id_produk';
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = [];
+    protected $allowedFields    = ['nama', 'kuantitas', 'harga', 'status', 'gambar'];
 
     // Dates
     protected $useTimestamps = false;
