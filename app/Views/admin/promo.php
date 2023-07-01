@@ -35,7 +35,7 @@
           <tbody>
             <?php foreach ($detail as $row) {?>
               <tr>
-                <tD scope="row"><?= $row['nama'];?></tD>
+                <td scope="row"><?= $row['nama'];?></td>
                 <td><?= $row['kode_promo'];?></td>
                 <td><?= $row['tgl_dibuat'];?></td>
                 <td><?= $row['tgl_berakhir'];?></td>

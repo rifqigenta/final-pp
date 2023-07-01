@@ -30,33 +30,15 @@
         <!-- Custom styles for this template -->
         
 
-        <link
-        rel="stylesheet"
-        data-purpose="Layout StyleSheet"
-        title="Web Awesome"
+        <link rel="stylesheet" data-purpose="Layout StyleSheet" title="Web Awesome" href="/css/app-wa-8d95b745961f6b33ab3aa1b98a45291a.css?vsn=d">
 
-        href="/css/app-wa-8d95b745961f6b33ab3aa1b98a45291a.css?vsn=d"
-        >
+        <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.4.0/css/all.css" >
 
-        <link
-            rel="stylesheet"
-            href="https://site-assets.fontawesome.com/releases/v6.4.0/css/all.css"
-        >
+        <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.4.0/css/sharp-solid.css" >
 
-        <link
-            rel="stylesheet"
-            href="https://site-assets.fontawesome.com/releases/v6.4.0/css/sharp-solid.css"
-        >
+        <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.4.0/css/sharp-regular.css" >
 
-        <link
-            rel="stylesheet"
-            href="https://site-assets.fontawesome.com/releases/v6.4.0/css/sharp-regular.css"
-        >
-
-        <link
-            rel="stylesheet"
-            href="https://site-assets.fontawesome.com/releases/v6.4.0/css/sharp-light.css"
-        >
+        <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.4.0/css/sharp-light.css" >
 
         <link href="<?= base_url('newAssets/css/sb-admin-2.min.css') ?>" rel="stylesheet">
 
@@ -82,28 +64,7 @@
         </div>
         <!-- End of Page Wrapper -->
         <!-- Scroll to Top Button-->
-        <a class="scroll-to-top rounded" href="#page-top">
-        <i class="fas fa-angle-up"></i>
-        </a>
-        <!-- Logout Modal-->
-        <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-            aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-                    <div class="modal-footer">
-                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                        <a class="btn btn-primary" href="logout">Logout</a>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <a class="scroll-to-top rounded" href="#page-top"><i class="fas fa-angle-up"></i></a>
         <!-- Bootstrap core JavaScript-->
         <!-- <script src="<?= base_url('newAssets/vendor/bootstrap/js/bootstrap.bundle.min.js') ?>"></script> -->
         <!-- Core plugin JavaScript-->

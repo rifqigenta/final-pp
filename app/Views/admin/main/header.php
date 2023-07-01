@@ -1,6 +1,6 @@
 <ul class="navbar-nav sidebar sidebar-dark accordion" style="background-color: #00CC88;" id="accordionSidebar">
 	<!-- Sidebar - Brand -->
-	<a class="sidebar-brand d-flex align-items-center justify-content-center" href="#">
+	<a class="sidebar-brand d-flex align-items-center justify-content-center" href="/admin/">
 		<div class="sidebar-brand-icon">
 			<i class="fas fa-circle-user"></i> <!-- or fa-seedling-->
 		</div>

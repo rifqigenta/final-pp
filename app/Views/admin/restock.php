@@ -84,7 +84,9 @@
             </tr>
           </thead>
           <tbody>
-            <?php foreach ($restock as $row) {?>
+            <?php 
+            if ($restock){
+              foreach ($restock as $row) {?>
               <tr>
                 <td><?= $nomor++;?></td>
                 <td scope="row">KD-BRG<?= $row['id_produk'];?></td>
@@ -96,6 +98,10 @@
                 <td>
                   <button type="button" class="btn btn-sm btn-outline-danger mt-1" onclick="deleteProduk(<?= $row['id_restock'];?>, '<?= $row['nama'];?>')"><i class="fa-solid fa-trash"></i></button>
                 </td>
+              </tr>
+            <?php } }else{ ?>
+              <tr>
+                <td colspan="8" class="text-center">Data Tidak Ditemukan</td>
               </tr>
             <?php } ?>
           </tbody>

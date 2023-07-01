@@ -80,13 +80,12 @@ class ProsesKaryawan extends BaseController
                 'role_kode' => $role_kode,
                 'nama' => $nama,
                 'alamat' => $alamat,
-                'email' => $email,
-            
+                'email' => $email,            
             ];
             $execKasir = $this->karyawanModel->insert($dataKasir);
 
             echo "<script>
-                    alert('Kategori Berhasil Ditambah');
+                    alert('Karyawan Berhasil Ditambah');
                     window.location.href = '/admin/karyawan/';
                 </script>"; 
         } else {

@@ -57,41 +57,43 @@ class LoginProcess extends BaseController
 				if (md5($password) === $pass) {
 
 					// CEK STATUS
-					$dataKasir = $this->karyawanModel->where('role_kode', $data['role_kode'])->first();
-					$status = $dataKasir['status'];
 					$level = $data['level'];
-					if ($status == '1' && $level == '0' ) {
+					if ($level == '0' ) {
 
 						$ses_data = [
 							'id_user'	=> $data['id_user'],
 							'uname'		=> $data['uname'],
 							'logged_in'	=> true,
-							'level' => $data['level'],
-							'status' => $data['status'], 
+							'level' 	=> $data['level']
 							// 'uname'			=> $data['uname'],
 							//selain insert, field di kanan
 							// selebihnya field di kiri (UNTUK CRUD) 
 						];
 						session()->set($ses_data);
 						return redirect()->to('/admin');
-					} elseif ($status == 1) {
-						$ses_data = [
-							'id_user'	=> $data['id_user'],
-							'uname' => $data['uname'],
-							'logged_in'	=> true,
-							'level' => $data['level'],
-							'status' => $data['status'], 
-						];
-						session()->set($ses_data);
-						return redirect()->to('/kasir/menu_utama');
+					} elseif ($level=="1") {
+						$dataKasir = $this->karyawanModel->where('role_kode', $data['role_kode'])->first();
+						$status = $dataKasir['status'];
+						if($status=="1"){
+							$ses_data = [
+								'id_user'	=> $data['id_user'],
+								'uname' => $data['uname'],
+								'logged_in'	=> true,
+								'level' => $data['level'],
+							];
+							session()->set($ses_data);
+							return redirect()->to('/kasir/menu_utama');
+						}else{
+							session()->setFlashdata('msgLogin', 'Akun Anda dinonaktifkan');
+							return redirect()->to('/login');
+						}
 					} 
-				} 
-				else {
-					session()->setFlashdata('msgLogin', 'Username/Password Salah');
+				} else {
+					session()->setFlashdata('msgLogin', 'Password Salah');
 					return redirect()->to('/login');
 				}
 			} else {
-				session()->setFlashdata('msgLogin', 'Username/Password Salah');
+				session()->setFlashdata('msgLogin', 'Username Salah');
 				return redirect()->to('/login');
 			}
 		}
