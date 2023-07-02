@@ -10,8 +10,12 @@ class Home extends BaseController{
 	}
 
 	public function payment(){
+        $cart = \Config\Services::cart();
+		$total = $cart->total();
+		$data['total'] = $total;
 		$data['keranjang'] = $cart->contents();
 		$data['title'] = "Pembayaran";
 		return view("kasir/pembayaran", $data);
+		
 	}
 }
