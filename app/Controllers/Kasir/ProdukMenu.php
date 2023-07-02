@@ -46,12 +46,25 @@ class ProdukMenu extends BaseController{
                 // 'kuantitas' => $this->request->getPost('kuantitas')
             )
         ));
+
+        session()->set('cart', $cart->contents());
+
         return redirect()->to(base_url('kasir/menu_utama'));
+    }
+
+    public function checkout() 
+    {
+        $cart = \Config\Services::cart();
+        // $cart->destroy();
+
+        return redirect()->to('kasir/pembayaran');
+        
     }
 
     public function clear() {
         $cart = \Config\Services::cart();
         $cart->destroy();
+        // $keranjang->destroy();
 
         return redirect()->to('kasir/menu_utama');
     }

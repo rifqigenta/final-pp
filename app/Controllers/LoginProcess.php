@@ -77,6 +77,7 @@ class LoginProcess extends BaseController
 						if($status=="1"){
 							$ses_data = [
 								'id_user'	=> $data['id_user'],
+								'id_kasir' => $dataKasir['id_kasir'],
 								'uname' => $data['uname'],
 								'logged_in'	=> true,
 								'level' => $data['level'],

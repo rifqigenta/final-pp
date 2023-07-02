@@ -61,8 +61,7 @@
                         </a>
                         
                         <a class="dropdown-item text-center" href="#">Total : <?= number_to_currency($cart->total(), 'IDR') ?></a>
-                        
-                        <a class="dropdown-item text-center" href="#">Checkout</a>
+                        <a class="dropdown-item text-center" href="<?= base_url('kasir/checkout'); ?>">Checkout</a>
                         <a href="<?= base_url('kasir/keranjang/clear'); ?>"  class="dropdown-item text-center small text-gray-500">Clear</a>
                     <?php } ?>
                 </div>

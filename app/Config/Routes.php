@@ -52,8 +52,10 @@ $routes->get('admin/restock', 'Admin\Home::restock', ['filter' => 'AuthAdmin']);
 
 
 // ROUTES PROSES KASIR
+$routes->get('kasir/checkout', 'Kasir\ProdukMenu::checkout', ['filter' => 'AuthKasir']);
 $routes->get('kasir/keranjang/clear', 'Kasir\ProdukMenu::clear', ['filter' => 'AuthKasir']);
 $routes->POST('kasir/keranjang/tambah', 'Kasir\ProdukMenu::add', ['filter' => 'AuthKasir']);
+$routes->POST('kasir/pembayaran/bayar', 'Kasir\ProdukMenu::bayar', ['filter' => 'AuthKasir']);
 
 // ROUTES PROSES ADMIN
 $routes->POST('admin/proses/karyawan/tambah', 'Admin\ProsesKaryawan::tambah', ['filter' => 'AuthAdmin']);
