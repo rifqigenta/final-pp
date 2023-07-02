@@ -7,7 +7,7 @@ use CodeIgniter\Filters\FilterInterface;
 class AuthAdmin implements FilterInterface{
 	public function before(RequestInterface $request, $arguments = null){
 		// jika user belum login
-		if(session()->get('status') == "0" && session()->get('level') !="0"){
+		if(session()->get('level') !="0"){
 			// maka redirct ke halaman login
 			return redirect()->to('/login'); 
 		}

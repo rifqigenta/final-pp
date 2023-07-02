@@ -8,20 +8,7 @@
   
 </div> -->
 <div class="container-fluid">
-  <div class="row">
-    <div class="col-5 fw-semibold mt-3" style="line-height: 4; ">
-      <form class="d-flex" role="search">
-        <input class="form-control" type="search" placeholder="Search" aria-label="Search" />
-        <button class="btn btn-outline-success ms-5" type="submit">Search</button>
-      </form>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-2 mt-4">Tanggal
-      <input type="date" name="tanggal" class="mt-2" style="width: 15rem;">
-    </div>
-  </div>
-  <div class="row">
+  <div class="row mt-5">
     <div class="col table-responsive">
       <table class="table table-bordered mt-2 bg-white">
         <thead>
@@ -40,34 +27,6 @@
             <td>100 gr</td>
             <td>-</td>
             <td>3000</td>
-          </tr>
-          <tr>
-            <td>2</td>
-            <td>Kangkung</td>
-            <td>2</td>
-            <td>-</td>
-            <td>6000</td>
-          </tr>
-          <tr>
-            <td>2</td>
-            <td>Kangkung</td>
-            <td>2</td>
-            <td>-</td>
-            <td>6000</td>
-          </tr>
-          <tr>
-            <td>2</td>
-            <td>Kangkung</td>
-            <td>2</td>
-            <td>-</td>
-            <td>6000</td>
-          </tr>
-          <tr>
-            <td>2</td>
-            <td>Kangkung</td>
-            <td>2</td>
-            <td>-</td>
-            <td>6000</td>
           </tr>
         </tbody>
       </table>

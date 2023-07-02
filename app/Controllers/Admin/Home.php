@@ -29,7 +29,7 @@ class Home extends BaseController{
     public function index(){
         $tanggal = date("Y-m-d");
         $data['sayur'] = $this->produkModel->select("count(id_produk) as total")->where(["status"=>"1", "kuantitas >"=>0])->get()->getRowArray()['total'];
-        $data['totalPenjualan'] = $this->transaksiModel->select("count(id_produk) as total, SUM(total_bayar) as pendapatan")->LIKE("tgl_pembelian", $tanggal)->get()->getRowArray();
+        $data['totalPenjualan'] = $this->transaksiModel->select("count(id_transaksi) as total, SUM(total_bayar) as pendapatan")->LIKE("tgl_pembelian", $tanggal)->get()->getRowArray();
         $data['peringkatKasir'] = $this->transaksiModel->select("COUNT(transaksi.id_transaksi) as total, b.nama")->JOIN("kasir b", "transaksi.id_kasir=b.id_kasir")->GROUPBY("transaksi.id_kasir")->get()->getResultArray();
         $data['title'] = "Dashboard Admin";
         return view("admin/home", $data);
@@ -47,7 +47,7 @@ class Home extends BaseController{
 
     public function promo(){
         $data['title'] = "Daftar Promo";
-        $data['detail'] = $this->promoModel->select("*")->get()->getResultArray();
+        $data['detail'] = $this->promoModel->select("*")->where("status <", "2")->get()->getResultArray();
         return view("admin/promo", $data);
         // . view("admin/promo")
         // . view("admin/main/footer");
@@ -80,7 +80,7 @@ class Home extends BaseController{
         // BASE QUERY
         $produk = $this->produkModel->select("produk.id_produk, produk.id_kategori, produk.nama, produk.kuantitas, produk.harga, produk.gambar, b.nama_kategori, COUNT(c.id_produk) as total")
         ->JOIN("kategori b", "produk.id_kategori=b.id_kategori")
-        ->JOIN("transaksi c", "produk.id_produk=c.id_produk", "left")
+        ->JOIN("transaksi_detail c", "produk.id_produk=c.id_produk", "left")
         ->GROUPBY("produk.id_produk");
 
         // Kategori

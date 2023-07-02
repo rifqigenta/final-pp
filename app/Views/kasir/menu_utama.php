@@ -34,8 +34,7 @@
                 </a>
                 <!-- Dropdown - Messages -->
 
-                <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                                aria-labelledby="messagesDropdown">
+                <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="messagesDropdown">
                     <h6 class="dropdown-header">
                         Keranjang
                     </h6>
@@ -65,9 +64,6 @@
                         
                         <a class="dropdown-item text-center" href="#">Checkout</a>
                         <a href="<?= base_url('kasir/keranjang/clear'); ?>"  class="dropdown-item text-center small text-gray-500">Clear</a>
-                        <!-- <div class="dropdown-divider"></div> -->
-                        <!-- <a href="#" class="dropdown_item dropdown-footer">Lihat Keranjang</a>
-                        <a href="#" class="dropdown_item dropdown-footer">Checkout</a> -->
                     <?php } ?>
                 </div>
             </li>

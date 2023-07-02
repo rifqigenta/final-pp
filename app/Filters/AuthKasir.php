@@ -7,7 +7,7 @@ use CodeIgniter\Filters\FilterInterface;
 class AuthKasir implements FilterInterface{
 	public function before(RequestInterface $request, $arguments = null){
 		// jika user belum login
-		if(session()->get('status') == "0" && session()->get('level') !="1"){
+		if(session()->get('level') !="1"){
 			// maka redirct ke halaman login
 			return redirect()->to('/login'); 
 		}

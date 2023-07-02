@@ -44,7 +44,7 @@
                 <td><?= $row['kuota'];?></td>
                 <td>[20]</td>
                 <td>
-                  <button title="Lihat Transaksi yang Menggunakan Promo" type="button" class="btn btn-outline-success mt-1" onclick="lihatTransaksi('<?= $row['kode_promo'];?>')"><i class="fa-solid fa-eye"></i></button>
+                  <!-- <button title="Lihat Transaksi yang Menggunakan Promo" type="button" class="btn btn-outline-success mt-1" onclick="lihatTransaksi('<?= $row['kode_promo'];?>')"><i class="fa-solid fa-eye"></i></button> -->
                   <button title="Hapus Promo" type="button" class="btn btn-outline-danger mt-1" onclick="deletePromo(<?= $row['id_promo'];?>, '<?= $row['kode_promo'];?>')"><i class="fa-solid fa-trash"></i></button>
                 </td>
               </tr>
