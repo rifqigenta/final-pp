@@ -10,7 +10,6 @@ class Home extends BaseController{
 	}
 
 	public function payment(){
-		$data['keranjang'] = $cart->contents();
 		$data['title'] = "Pembayaran";
 		return view("kasir/pembayaran", $data);
 	}
