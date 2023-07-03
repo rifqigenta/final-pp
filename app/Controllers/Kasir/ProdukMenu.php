@@ -30,30 +30,67 @@ class ProdukMenu extends BaseController{
         $response = $cart->contents();
         // $data = json_encode($response);
         echo '<pre>';
-        print_r($response); 
+        $newArray = array();
+
+        foreach ($response as $key => $value) {
+            $newArray[$key]['id'] = $value['id'];
+            $newArray[$key]['qty'] = $value['qty'];
+        }
+        print_r($newArray); 
         echo '</pre>';
     }
 
     public function add() {
         $cart = \Config\Services::cart();
-        $cart->insert(array(
-            'id' => $this->request->getPost('id'),
-            'qty' => 1,
-            'price' => $this->request->getPost('price'),
-            'name' => $this->request->getPost('name'),
-            'options' => array(
-                'gambar' => $this->request->getPost('gambar'),
-                // 'kuantitas' => $this->request->getPost('kuantitas')
-            )
-        ));
+        $response = $cart->contents();
 
-        session()->set('cart', $cart->contents());
+        // $idBarang
+        $idBarang = $this->request->getPost('id');
+        $ada = false;
+
+        foreach ($response as $key => $value) {
+            if ($value['id'] === $idBarang) {
+                $foundKey = $key;
+                $ada = true;
+                break;
+            }
+        }
+        
+        if($ada){
+            // Sudah ada di cart
+            $cart->update(array(
+                'rowid'   => $foundKey,
+                'id'      => $idBarang,
+                'qty'     => $this->request->getPost('kuantitas'),
+                'price'   => $this->request->getPost('price'),
+                'name'    => $this->request->getPost('name'),
+                'options' => array(
+                    'gambar' => $this->request->getPost('gambar'),
+                    // 'kuantitas' => $this->request->getPost('kuantitas')
+                )
+             ));
+
+        }else{
+
+            // Belum ada di cart
+            $cart->insert(array(
+                'id' => $idBarang,
+                'qty' => $this->request->getPost('kuantitas'),
+                'price' => $this->request->getPost('price'),
+                'name' => $this->request->getPost('name'),
+                'options' => array(
+                    'gambar' => $this->request->getPost('gambar'),
+                    // 'kuantitas' => $this->request->getPost('kuantitas')
+                )
+            ));
+
+            session()->set('cart', $cart->contents());
+        }
 
         return redirect()->to(base_url('kasir/menu_utama'));
     }
 
-    public function checkout() 
-    {
+    public function checkout() {
         $cart = \Config\Services::cart();
         // $cart->destroy();
 

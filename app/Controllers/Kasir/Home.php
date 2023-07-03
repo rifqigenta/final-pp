@@ -13,12 +13,22 @@ class Home extends BaseController{
 	}
 
 	public function index(){
+		$cart = \Config\Services::cart();
 		$kondisi = ["status" => "1", "kuantitas >" => 0];
 		$produk = $this->produkModel->select("*")->where($kondisi)->get()->getResultArray();
+
+		$keranjangCek = array();
+		$keranjang = $cart->contents();
+		foreach ($keranjang as $key => $value) {
+            $keranjangCek[$key]['id'] = $value['id'];
+            $keranjangCek[$key]['qty'] = $value['qty'];
+        }
+
         $data = [
             'title' => 'Dashboard Menu Utama',
             'produk' => $produk,
-            'cart' => \Config\Services::cart()
+            'cart' => $cart,
+			'keranjangCart'=>$keranjangCek
         ];
         
         return view('kasir/menu_utama', $data);

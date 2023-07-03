@@ -48,7 +48,7 @@
                             <?php foreach ($keranjang as $key => $value) { ?>
                                 <a class="dropdown-item d-flex align-items-center">
                                     <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle img-size-50" src="<?= base_url('assets/gambar/' . $value['options']['gambar']) ?>"
+                                        <img class="rounded-circle img-size-50" src="<?= base_url('gambar/produk/' . $value['options']['gambar']) ?>"
                                             alt="...">
                                         <!-- <div class="status-indicator bg-success"></div> -->
                                     </div>
@@ -79,13 +79,24 @@
                 //option 
                 echo form_hidden('gambar', $value['gambar']);
                 // echo form_hidden('kuantitas', $value['kuantitas']); 
+
+                $idToFind = $value['id_produk'];
+                $foundQty = 0;
+
+                foreach ($keranjangCart as $ker) {
+                    if ($ker['id'] === $idToFind) {
+                        $qty = $ker['qty'];
+                        break;
+                    }
+                }
+
                 ?>
                 <div class="card mt-2" style="float: left;">
                     <img src="<?= base_url('gambar/produk/' . $value['gambar']) ?>" class="card-img-top">
                     <div class="card-body">
                         <h5 class="card-title" style="margin-bottom:5px;"><?= $value['nama'] ?></h5>
-                        <p class="card-text" style="margin-bottom:5px;"><?= number_to_currency($value['harga'], 'IDR'); ?></p>
-                        <!-- <p class="card-text"><?= $value['kuantitas'] ?>gr</p> -->
+                        <p class="card-text" style="margin-bottom:5px;"><?= number_to_currency($value['harga'], 'Rp. '); ?></p>
+                        <input type="number" class="mb-2" onkeypress="validasiAngka(event)" max="<?= $value['kuantitas']; ?>" name="kuantitas" min="1" value="<?= $qty;?>" required />
                         <!-- ra ruh carane gae perbedaan antara gram / ikat -->
                         <button class="btn btn-outline-primary" type="submit">
                             Tambah Keranjang

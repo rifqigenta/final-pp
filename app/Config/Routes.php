@@ -36,6 +36,8 @@ $routes->get('kasir/menu_utama', 'Kasir\Home::index', ['filter' => 'AuthKasir'])
 $routes->get('kasir/menu_utama/cek', 'Kasir\ProdukMenu::cek', ['filter' => 'AuthKasir']);
 $routes->get('kasir/pembayaran', 'Kasir\Home::payment', ['filter' => 'AuthKasir']);
 $routes->get('kasir/checkout', 'Kasir\Home::payment', ['filter' => 'AuthKasir']);
+$routes->get('kasir/cek', 'Kasir\ProdukMenu::cek', ['filter' => 'AuthKasir']);
+
 // $routes->get('kasir/login', 'Kasir\Home::login');
 
 // ROUTES TAMPILAN ADMIN
