@@ -103,7 +103,7 @@
             foreach ($peringkatKasir as $row) {?>
               <tr>
                 <th scope="row"><?= $number++;?></th>
-                <td><?= $row["nama_kasir"];?></td>
+                <td><?= $row["nama"];?></td>
                 <td><?= $row["total"];?></td>
               </tr>
             <?php } }else{ ?>

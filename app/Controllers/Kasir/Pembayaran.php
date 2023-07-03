@@ -20,13 +20,7 @@ class Pembayaran extends BaseController
     {
         $cart = \Config\Services::cart();
         $keranjang = $cart->contents();
-
-        // if (empty($keranjang)) {
-        //     return redirect()->to('kasir/menu_utama');
-        // }
-        // $transaksiModel = new TransaksiModel();
-        // $cartData = session('cart');
-
+        
         $id_kasir = session('id_kasir');
         $kode_promo = "tfhg657";
         $total_bayar = $cart->total();
@@ -57,24 +51,9 @@ class Pembayaran extends BaseController
             $transaksiDetailModel->insert($transaksiDetailData);
         }
 
-        // Hapus keranjang setelah checkout
         $cart->destroy();
 
-        // Redirect ke halaman pembayaran
         return redirect()->to('kasir/pembayaran');
-        // foreach($cartData as $item) {
-        //     $transaksiModel->insert([
-        //         'nama' => $item['name'],
-        //         'jumlah' => $item['qty'],
-        //         'diskon' => '-',
-        //         'Harga' => $item['price']
-        //     ]);
-        // }
-
-
-
         session()->remove('cart');
-
-        return  redirect()->to('kasir/pembayaran');
     }
 }
