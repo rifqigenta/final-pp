@@ -69,7 +69,7 @@
         </ul>
     </nav>
     <div class="row">
-        <?php foreach ($produk as $key => $value) { ?>
+        <?php foreach ($produk as $value) { ?>
             <div class="col-md-4 col-sm-6 justify-content-center">
                 <?php
                 echo form_open('kasir/keranjang/tambah');

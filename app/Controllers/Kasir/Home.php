@@ -13,7 +13,8 @@ class Home extends BaseController{
 	}
 
 	public function index(){
-		$produk = $this->produkModel->findAll();
+		$kondisi = ["status" => "1", "kuantitas >" => 0];
+		$produk = $this->produkModel->select("*")->where($kondisi)->get()->getResultArray();
         $data = [
             'title' => 'Dashboard Menu Utama',
             'produk' => $produk,
