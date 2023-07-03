@@ -12,7 +12,7 @@ class ProdukModel extends Model{
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['nama', 'kuantitas', 'harga', 'status', 'gambar'];
+    protected $allowedFields    = ['kuantitas'];
 
     // Dates
     protected $useTimestamps = false;

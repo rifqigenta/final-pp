@@ -12,7 +12,7 @@ class TransaksiModel extends Model{
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['id_kasir', 'kode_promo', 'total_bayar', 'tgl_pembelian'];
+    protected $allowedFields    = ['id_kasir', 'kode_promo', 'total_bayar', 'tgl_pembelian', 'total_transaksi'];
 
     // Dates
     protected $useTimestamps = false;

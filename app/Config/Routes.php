@@ -35,6 +35,7 @@ $routes->get('/login', 'Login::index');
 $routes->get('kasir/menu_utama', 'Kasir\Home::index', ['filter' => 'AuthKasir']);
 $routes->get('kasir/menu_utama/cek', 'Kasir\ProdukMenu::cek', ['filter' => 'AuthKasir']);
 $routes->get('kasir/pembayaran', 'Kasir\Home::payment', ['filter' => 'AuthKasir']);
+$routes->get('kasir/checkout', 'Kasir\Home::payment', ['filter' => 'AuthKasir']);
 // $routes->get('kasir/login', 'Kasir\Home::login');
 
 // ROUTES TAMPILAN ADMIN
@@ -52,7 +53,7 @@ $routes->get('admin/restock', 'Admin\Home::restock', ['filter' => 'AuthAdmin']);
 
 
 // ROUTES PROSES KASIR
-$routes->get('kasir/checkout', 'Kasir\ProdukMenu::checkout', ['filter' => 'AuthKasir']);
+$routes->POST('kasir/checkout', 'Kasir\Pembayaran::bayar', ['filter' => 'AuthKasir']);
 $routes->get('kasir/keranjang/clear', 'Kasir\ProdukMenu::clear', ['filter' => 'AuthKasir']);
 $routes->POST('kasir/keranjang/tambah', 'Kasir\ProdukMenu::add', ['filter' => 'AuthKasir']);
 $routes->POST('kasir/pembayaran/bayar', 'Kasir\ProdukMenu::bayar', ['filter' => 'AuthKasir']);

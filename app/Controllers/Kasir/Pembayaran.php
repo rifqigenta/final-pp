@@ -5,6 +5,8 @@ namespace App\Controllers\Kasir;
 use App\Controllers\BaseController;
 use App\Models\Kasir\TransaksiModel;
 use App\Models\Kasir\TransaksiDetailModel;
+use App\Models\Kasir\ProdukModel;
+
 
 class Pembayaran extends BaseController
 {
@@ -14,6 +16,7 @@ class Pembayaran extends BaseController
     {
         $this->transaksiModel = new TransaksiModel();
         $this->transaksiDetailModel = new TransaksiDetailModel();
+        $this->produkModel = new ProdukModel();
     }
 
     public function bayar()
@@ -22,15 +25,18 @@ class Pembayaran extends BaseController
         $keranjang = $cart->contents();
         
         $id_kasir = session('id_kasir');
-        $kode_promo = "tfhg657";
+        $kode_promo = null;
         $total_bayar = $cart->total();
+        $total_transaksi = $cart->total();
+
         $tgl_pembelian = date('Y-m-d');
 
         $transaksiData = array(
             'id_kasir' => $id_kasir,
             'kode_promo' => $kode_promo,
             'total_bayar' => $total_bayar,
-            'tgl_pembelian' => $tgl_pembelian
+            'tgl_pembelian' => $tgl_pembelian,
+            'total_transaksi' => $total_transaksi
         );
 
         $transaksiModel = new TransaksiModel();
@@ -48,12 +54,17 @@ class Pembayaran extends BaseController
                 'subtotal' => $item['subtotal']
             );
 
+            // Mengurangi Stok
+            $kuantitas = $this->produkModel->select("kuantitas")->where("id_produk", $item['id'])->get()->getRowArray()['kuantitas'];
+            $dataProduk = ["kuantitas"=>$kuantitas-$item['qty']];
+            $this->produkModel->update($item['id'], $dataProduk);
+
             $transaksiDetailModel->insert($transaksiDetailData);
         }
 
         $cart->destroy();
-
-        return redirect()->to('kasir/pembayaran');
         session()->remove('cart');
+
+        echo json_encode(1);
     }
 }
