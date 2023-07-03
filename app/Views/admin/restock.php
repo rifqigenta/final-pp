@@ -2,28 +2,28 @@
 <?= $this->section('content'); ?>
 
 <?php
-  $cari = explode("=", service('uri')->getQuery(['only' => ['q']]));
-  if(isset($cari[1])){
-    $cari = $cari[1];
-  }else{
-    $cari	= null;
-  }
+$cari = explode("=", service('uri')->getQuery(['only' => ['q']]));
+if (isset($cari[1])) {
+  $cari = $cari[1];
+} else {
+  $cari  = null;
+}
 
-  // Filter Kategori
-  $idKategori = explode("=", service('uri')->getQuery(['only' => ['idKategori']]));
-  if(isset($idKategori[1])){
-    $idKategori = $idKategori[1];
-  }else{
-    $idKategori	= null;
-  }
+// Filter Kategori
+$idKategori = explode("=", service('uri')->getQuery(['only' => ['idKategori']]));
+if (isset($idKategori[1])) {
+  $idKategori = $idKategori[1];
+} else {
+  $idKategori  = null;
+}
 
-  // Filter Kategori
-  $terlaris = explode("=", service('uri')->getQuery(['only' => ['terlaris']]));
-  if(isset($terlaris[1])){
-    $terlaris = $terlaris[1];
-  }else{
-    $terlaris	= null;
-  }
+// Filter Kategori
+$terlaris = explode("=", service('uri')->getQuery(['only' => ['terlaris']]));
+if (isset($terlaris[1])) {
+  $terlaris = $terlaris[1];
+} else {
+  $terlaris  = null;
+}
 ?>
 
 <div class="container-fluid">
@@ -50,14 +50,14 @@
       </div>
       <div class="col-md-4 col-xs-12 mb-3">
         <div class="input-group">
-          <input type="text" class="form-control" placeholder="Cari..." name="q" id="q" value="<?= $cari;?>">
+          <input type="text" class="form-control" placeholder="Cari..." name="q" id="q" value="<?= $cari; ?>">
         </div>
       </div>
       <div class="col-md-3 col-xs-12 mb-3">
         <select class="form-select" name="idKategori" id="idKategori">
           <option value="">Pilih Kategori</option>
-          <?php foreach ($kategori as $row) {?>
-            <option <?= ($idKategori==$row['id_kategori'])?"selected": "";?> value="<?= $row['id_kategori'];?>"><?= $row['nama_kategori'];?></option>
+          <?php foreach ($kategori as $row) { ?>
+            <option <?= ($idKategori == $row['id_kategori']) ? "selected" : ""; ?> value="<?= $row['id_kategori']; ?>"><?= $row['nama_kategori']; ?></option>
           <?php } ?>
         </select>
       </div>
@@ -84,22 +84,25 @@
             </tr>
           </thead>
           <tbody>
-            <?php 
-            if ($restock){
-              foreach ($restock as $row) {?>
-              <tr>
-                <td><?= $nomor++;?></td>
-                <td scope="row">KD-BRG<?= $row['id_produk'];?></td>
-                <td><?= $row['nama'];?></td>
-                <td><?= $row['nama_kategori'];?></td>
-                <td><?= $row['kuantitas'];?></td>
-                <td>Rp. <?= number_format($row['harga']);?></td>
-                <td><?= $row['tgl_tambah'];?></td>
-                <td>
-                  <button type="button" class="btn btn-sm btn-outline-danger mt-1" onclick="deleteProduk(<?= $row['id_restock'];?>, '<?= $row['nama'];?>')"><i class="fa-solid fa-trash"></i></button>
-                </td>
-              </tr>
-            <?php } }else{ ?>
+            <?php
+            if ($restock) {
+              foreach ($restock as $row) { ?>
+                <tr>
+                  <td><?= $nomor++; ?></td>
+                  <td scope="row">KD-BRG<?= $row['id_produk']; ?></td>
+                  <td><?= $row['nama']; ?></td>
+                  <td><?= $row['nama_kategori']; ?></td>
+                  <td><?= $row['kuantitas']; ?></td>
+                  <td>Rp. <?= number_format($row['harga']); ?></td>
+                  <td><?= $row['tgl_tambah']; ?></td>
+                  <td>
+                    <button type="button" class="btn btn-sm btn-outline-danger mt-1" onclick="deleteRestock(<?= $row['id_restock']; ?>, '<?= $row['nama']; ?>')">
+                      <i class="fa-solid fa-trash"></i>
+                    </button>
+                  </td>
+                </tr>
+              <?php }
+            } else { ?>
               <tr>
                 <td colspan="8" class="text-center">Data Tidak Ditemukan</td>
               </tr>
@@ -125,34 +128,34 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <?= form_open_multipart('admin/proses/restock/tambah') ?>
-        <?= csrf_field() ?>
-        <div class="modal-body">
-          <div class="mb-3">
-            <label for="produk" class="form-label">Produk</label>
-            <br>
-            <select class="form-select js-example-basic-single js-states" aria-label=".form-select-sm example" name="id_produk" id="id_produk" required style="border-color:<?= (validation_show_error('id_produk')!=null)?'red':'';?>">
-              <option selected>Pilih Produk</option>
-              <?php foreach($produk as $row){?>
-                <option value="<?= $row['id_produk'];?>">KD-BRG<?= $row['id_produk'];?> | <?= $row['nama'];?></option>
-              <?php } ?>
-            </select>
-            <span style="font-size:small; color:red;"><?= validation_show_error('id_produk');?></span>
-          </div>
-          <div class="mb-3">
-            <label for="harga" class="form-label">Kuantitas</label>
-            <input type="number" min="1" onkeypress="validasiAngka(event)" class="form-control" id="kuantitas" name="kuantitas" value="<?= old('kuantitas'); ?>" required style="border-color:<?= (validation_show_error('kuantitas')!=null)?'red':'';?>">
-            <span style="font-size:small; color:red;"><?= validation_show_error('kuantitas');?></span>
-          </div>
-          <div class="mb-3">
-            <label for="harga" class="form-label">Harga Beli</label>
-            <input type="number" min="1" onkeypress="validasiAngka(event)" class="form-control" id="harga" name="harga" value="<?= old('harga'); ?>" required style="border-color:<?= (validation_show_error('harga')!=null)?'red':'';?>">
-            <span style="font-size:small; color:red;"><?= validation_show_error('harga');?></span>
-          </div>
+      <?= csrf_field() ?>
+      <div class="modal-body">
+        <div class="mb-3">
+          <label for="produk" class="form-label">Produk</label>
+          <br>
+          <select class="form-select js-example-basic-single js-states" aria-label=".form-select-sm example" name="id_produk" id="id_produk" required style="border-color:<?= (validation_show_error('id_produk') != null) ? 'red' : ''; ?>">
+            <option selected>Pilih Produk</option>
+            <?php foreach ($produk as $row) { ?>
+              <option value="<?= $row['id_produk']; ?>">KD-BRG<?= $row['id_produk']; ?> | <?= $row['nama']; ?></option>
+            <?php } ?>
+          </select>
+          <span style="font-size:small; color:red;"><?= validation_show_error('id_produk'); ?></span>
         </div>
-        <div class="modal-footer">
-          <button type="submit" class="btn btn-sm btn-primary"><i class="fa-solid fa-plus"></i> Tambah</button>
-          <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Close</button>
+        <div class="mb-3">
+          <label for="harga" class="form-label">Kuantitas</label>
+          <input type="number" min="1" onkeypress="validasiAngka(event)" class="form-control" id="kuantitas" name="kuantitas" value="<?= old('kuantitas'); ?>" required style="border-color:<?= (validation_show_error('kuantitas') != null) ? 'red' : ''; ?>">
+          <span style="font-size:small; color:red;"><?= validation_show_error('kuantitas'); ?></span>
         </div>
+        <div class="mb-3">
+          <label for="harga" class="form-label">Harga Beli</label>
+          <input type="number" min="1" onkeypress="validasiAngka(event)" class="form-control" id="harga" name="harga" value="<?= old('harga'); ?>" required style="border-color:<?= (validation_show_error('harga') != null) ? 'red' : ''; ?>">
+          <span style="font-size:small; color:red;"><?= validation_show_error('harga'); ?></span>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-sm btn-primary"><i class="fa-solid fa-plus"></i> Tambah</button>
+        <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
       </form>
     </div>
   </div>
@@ -161,16 +164,63 @@
 <script>
   $(document).ready(function() {
     $('#linkRestock').addClass("active");
-    <?php if(validation_errors()!=null){?>
+    <?php if (validation_errors() != null) { ?>
       $('#modalTambah').modal('show');
-    <?php }?>
+    <?php } ?>
     $('#id_produk').select2({
       width: "100%",
       dropdownParent: $("#modalTambah")
     });
   });
 
-  $('#tambahRestock').click(function(){
+  function deleteRestock(id_restock, nama) {
+    Swal.fire({
+      title: 'Yakin?',
+      text: `Yakin ingin menghapus restock ${nama}?`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Ya, Hapus!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        $.ajax({
+          url: '/admin/proses/restock/delete',
+          dataType: 'json',
+          type: 'POST',
+          data: {
+            id_restock: id_restock
+          },
+          success: function(response) {
+            if (response.success) {
+              Swal.fire(
+                'Berhasil',
+                'Restock berhasil dihapus',
+                'success'
+              ).then(() => {
+                location.reload();
+              });
+            } else {
+              Swal.fire(
+                'Gagal',
+                'Terjadi kesalahan saat menghapus restock',
+                'error'
+              );
+            }
+          },
+          error: function() {
+            Swal.fire(
+              'Gagal',
+              'Terjadi kesalahan saat menghapus restock',
+              'error'
+            );
+          }
+        });
+      }
+    });
+  }
+  
+  $('#tambahRestock').click(function() {
     $('#modalTambah').modal('show');
   });
 </script>

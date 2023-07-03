@@ -72,6 +72,7 @@ $routes->POST('admin/proses/info-situs/update-gambar', 'Admin\ProsesInfoToko::up
 $routes->POST('admin/proses/produk/tambah', 'Admin\ProsesProduk::tambah', ['filter' => 'AuthAdmin']);
 $routes->POST('admin/proses/produk/update', 'Admin\ProsesProduk::update', ['filter' => 'AuthAdmin']);
 $routes->POST('admin/proses/restock/tambah', 'Admin\ProsesRestock::tambah', ['filter' => 'AuthAdmin']);
+$routes->POST('admin/proses/restock/delete', 'Admin\ProsesRestock::delete', ['filter' => 'AuthAdmin']);
 
 
 

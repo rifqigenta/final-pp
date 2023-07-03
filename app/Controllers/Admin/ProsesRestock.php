@@ -1,18 +1,22 @@
 <?php
 
 namespace App\Controllers\Admin;
+
 use App\Controllers\BaseController;
 use App\Models\Admin\RestockModel;
 use App\Models\Admin\ProdukModel;
 
-class ProsesRestock extends BaseController{
-  protected $restockModel, $produkModel;
-	public function __construct() {
+class ProsesRestock extends BaseController
+{
+	protected $restockModel, $produkModel;
+	public function __construct()
+	{
 		$this->restockModel = new RestockModel();
 		$this->produkModel = new ProdukModel();
 	}
 
-  	public function tambah(){
+	public function tambah()
+	{
 		$validate = [
 			'id_produk' => [
 				'label' => 'Produk',
@@ -40,34 +44,60 @@ class ProsesRestock extends BaseController{
 			],
 		];
 
-		if(!$this->validate($validate)){
+		if (!$this->validate($validate)) {
 			return redirect()->back()->withInput();
-		}else{
+		} else {
 
-		// Variabel Form
-		$data['id_produk'] = $this->request->getPost("id_produk");
-		$data['kuantitas'] = $this->request->getPost("kuantitas");
-		$data['harga'] = $this->request->getPost("harga");
+			// Variabel Form
+			$data['id_produk'] = $this->request->getPost("id_produk");
+			$data['kuantitas'] = $this->request->getPost("kuantitas");
+			$data['harga'] = $this->request->getPost("harga");
 
-		// Exec DB
-		$db = $this->restockModel->insert($data);
+			// Exec DB
+			$db = $this->restockModel->insert($data);
 
-		// Update Stock
-		$updateStock = $this->produkModel->select("kuantitas")->where("id_produk", $data['id_produk'])->get()->getRowArray()["kuantitas"];
-		$stockTerkini['kuantitas'] = $updateStock+$data['kuantitas'];
-		$updateProduk = $this->produkModel->update($data['id_produk'], $stockTerkini);
+			// Update Stock
+			$updateStock = $this->produkModel->select("kuantitas")->where("id_produk", $data['id_produk'])->get()->getRowArray()["kuantitas"];
+			$stockTerkini['kuantitas'] = $updateStock + $data['kuantitas'];
+			$updateProduk = $this->produkModel->update($data['id_produk'], $stockTerkini);
 
-		if($db){
-			echo "<script>
+			if ($db) {
+				echo "<script>
 				alert('Restock Berhasil Ditambah');
 				window.location.href = '/admin/restock/';
 			</script>";
-		}else{
-			echo "<script>
+			} else {
+				echo "<script>
 				alert('Gagal, silahkan coba lagi');
 				window.location.href = '/admin/restock/';
 			</script>";
+			}
 		}
-    }
-  }
+	}
+	
+	public function delete()
+	{
+		$id_restock = $this->request->getPost('id_restock');
+		$restockData = $this->restockModel->find($id_restock);
+
+		if (!$restockData) {
+			return $this->response->setJSON(['success' => false]);
+		}
+
+		$produkData = $this->produkModel->find($restockData['id_produk']);
+
+		if (!$produkData) {
+			return $this->response->setJSON(['success' => false]);
+		}
+
+		$updateProduk = $this->produkModel->update($produkData['id_produk'], ['kuantitas' => $produkData['kuantitas'] - $restockData['kuantitas']]);
+
+		if ($updateProduk) {
+			$deleteRestock = $this->restockModel->delete($id_restock);
+			if ($deleteRestock) {
+				return $this->response->setJSON(['success' => true]);
+			}
+		}
+		return $this->response->setJSON(['success' => false]);
+	}
 }
