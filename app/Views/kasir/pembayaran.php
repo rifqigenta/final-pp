@@ -9,7 +9,6 @@
             <th scope="col">No</th>
             <th scope="col">Nama Barang</th>
             <th scope="col">Jumlah</th>
-            <th scope="col">Diskon</th>
             <th scope="col">Harga</th>
           </tr>
         </thead>
@@ -23,8 +22,7 @@
             <td><?= $nomor++;?></td>
             <td scope="row"><?= $row['name']; ?></td>
             <td><?= $row['qty']; ?></td>
-            <td>-</td>
-            <td><?= $row['price']; ?></td>
+            <td>Rp. <?= number_format($row['price']); ?></td>
           </tr>
           <?php } } else{?>
             <tr>
