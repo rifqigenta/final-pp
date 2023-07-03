@@ -36,7 +36,7 @@
   <div class="row mb-3">
     <div class="input-group col-5">
       <span class="input-group-text" id="inputGroup-sizing-lg">Total</span>
-      <input type="text" class="form-control" aria-describedby="inputGroup-sizing-lg" id="total" value="<?= $total; ?>" readonly>
+      <input type="text" class="form-control" aria-describedby="inputGroup-sizing-lg" id="total" value="Rp. <?= number_format($total); ?>" readonly>
     </div>
     <div class="input-group col-5">
       <span class="input-group-text" id="inputGroup-sizing-lg">Bayar</span>
