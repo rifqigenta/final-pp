@@ -99,9 +99,11 @@ class ProsesInfoToko extends BaseController{
             // Pindah Gambar Utama
 			$data['gambar_utama'] = "gambar-utama.".$gambarUtama->guessExtension();
 
+            // Get Gambar Sebelumnya
+            $gambarSebelum = $this->infoTokoModel->select("gambar_utama")->limit(1)->get()->getRowArray()['gambar_utama'];
             // Delete Gambar
             try{
-                unlink("gambar/".$data['gambar_utama']);
+                unlink("gambar/".$gambarSebelum);
             }catch(Exception $e){
                 
             }
