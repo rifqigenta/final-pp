@@ -78,7 +78,7 @@
     </div>
 
     <div class="col-md-6 col-xs-6">
-      <?= $pager->links() ?>
+      <?= $pager->links("penjualan", "custom_pagination"); ?>
     </div>
   </div>
 </div>

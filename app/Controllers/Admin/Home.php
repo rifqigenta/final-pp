@@ -126,7 +126,7 @@ class Home extends BaseController{
 
     function laporanPenjualan(){
         $data['title'] = "Laporan Penjualan";
-        $data['detail'] = $this->transaksiModel->select("transaksi.*, b.nama")->JOIN("kasir b", "transaksi.id_kasir=b.id_kasir")->orderBY("transaksi.id_transaksi", "DESC")->paginate(5);
+        $data['detail'] = $this->transaksiModel->select("transaksi.*, b.nama")->JOIN("kasir b", "transaksi.id_kasir=b.id_kasir")->orderBY("transaksi.id_transaksi", "DESC")->paginate(5, "penjualan");
         $data['pager'] = $this->transaksiModel->pager;
         return view("admin/laporan-penjualan", $data);
     }
