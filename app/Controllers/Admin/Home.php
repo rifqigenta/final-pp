@@ -161,7 +161,7 @@ class Home extends BaseController{
         $data['kategori'] = $this->kategoriModel->select("*")->where("status", "1")->get()->getResultArray();
 
         // Base Query
-        $baseQuery = $this->restockModel->select("restock.*, b.nama, b.id_kategori, c.nama_kategori")->JOIN("produk b", "restock.id_produk=b.id_produk")->JOIN("kategori c", "b.id_kategori=c.id_kategori");
+        $baseQuery = $this->restockModel->select("restock.*, b.nama, b.id_kategori, c.nama_kategori")->JOIN("produk b", "restock.id_produk=b.id_produk")->JOIN("kategori c", "b.id_kategori=c.id_kategori")->orderBy("restock.id_restock", "DESC");
 
         // Kategori
 		if($idKategori!="" || $idKategori!=null){

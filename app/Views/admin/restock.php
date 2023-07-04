@@ -96,9 +96,13 @@ if (isset($terlaris[1])) {
                   <td>Rp. <?= number_format($row['harga']); ?></td>
                   <td><?= $row['tgl_tambah']; ?></td>
                   <td>
-                    <button type="button" class="btn btn-sm btn-outline-danger mt-1" onclick="deleteRestock(<?= $row['id_restock']; ?>, '<?= $row['nama']; ?>')">
-                      <i class="fa-solid fa-trash"></i>
-                    </button>
+                    <?php $tglSekarang = date("Y-m-d H:i:s"); 
+                    $tglBaru = date("Y-m-d H:i:s", strtotime($row['tgl_tambah'] . "+1 day")); 
+                    if($tglBaru>$tglSekarang){?>
+                      <button type="button" class="btn btn-sm btn-outline-danger mt-1" onclick="deleteRestock(<?= $row['id_restock']; ?>, '<?= $row['nama']; ?>')">
+                        <i class="fa-solid fa-trash"></i>
+                      </button>
+                    <?php } ?>
                   </td>
                 </tr>
               <?php }
