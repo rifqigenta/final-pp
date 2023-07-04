@@ -29,7 +29,7 @@ class Pembayaran extends BaseController
         $total_bayar = $cart->total();
         $total_transaksi = $cart->total();
 
-        $tgl_pembelian = date('Y-m-d');
+        $tgl_pembelian = date('Y-m-d H:i:s');
 
         $transaksiData = array(
             'id_kasir' => $id_kasir,

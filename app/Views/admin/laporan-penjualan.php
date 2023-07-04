@@ -57,11 +57,11 @@
             if($detail){
               foreach($detail as $row){?>
                 <tr>
-                  <td scope="row">#<?= $row->id_transaksi;?></td>
-                  <td><?= $row->tgl_pembelian;?></td>
-                  <td><?= $row->nama_kasir;?></td>
-                  <td><?= $row->total_bayar;?></td>
-                  <td><button type="button" class="btn btn-primary" onclick="lihatDetail(123456)"><i class="fa-solid fa-eye"></i> Lihat</button></td>
+                  <td scope="row">#<?= $row['id_transaksi'];?></td>
+                  <td><?= $row['tgl_pembelian'];?></td>
+                  <td><?= $row['nama'];?></td>
+                  <td>Rp. <?= number_format($row['total_bayar']);?></td>
+                  <td><button type="button" class="btn btn-primary" onclick="lihatDetail(<?= $row['id_transaksi'];?>)"><i class="fa-solid fa-eye"></i> Lihat</button></td>
                 </tr>
             <?php }}else{ ?>
               <tr>
