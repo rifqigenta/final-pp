@@ -70,7 +70,7 @@
     </nav>
     <div class="row">
         <?php foreach ($produk as $value) { ?>
-            <div class="col-md-4 col-sm-6 justify-content-center">
+            <div class="d-flex col-sm-3 justify-content-center">
                 <?php
                 echo form_open('kasir/keranjang/tambah');
                 echo form_hidden('id', $value['id_produk']);
@@ -92,12 +92,12 @@
                 }
 
                 ?>
-                <div class="card mt-2" style="float: left;">
+                <div class="card" style="width:15rem; float: left;">
                     <img src="<?= base_url('gambar/produk/' . $value['gambar']) ?>" class="card-img-top">
                     <div class="card-body">
                         <h5 class="card-title" style="margin-bottom:5px;"><?= $value['nama'] ?></h5>
                         <p class="card-text" style="margin-bottom:5px;"><?= number_to_currency($value['harga'], 'Rp. '); ?></p>
-                        <input type="number" class="mb-2" onkeypress="validasiAngka(event)" max="<?= $value['kuantitas']; ?>" name="kuantitas" min="1" value="<?= $qty;?>" required />
+                        <input type="number" class="mb-2 border border-0" onkeypress="validasiAngka(event)" max="<?= $value['kuantitas']; ?>" name="kuantitas" min="1" value="<?= $qty;?>" required></input><br>
                         <!-- ra ruh carane gae perbedaan antara gram / ikat -->
                         <button class="btn btn-outline-primary" type="submit">
                             Tambah Keranjang

@@ -18,11 +18,11 @@ class ProsesKategori extends BaseController{
     $validate = [
 			'kategori' => [
 				'label' => 'Kategori',  
-				'rules' => 'required|alpha_space|min_length[5]',
+				'rules' => 'required|alpha_space|min_length[4]',
 				'errors' => [
 					'required' => "*Harus Di isi",
 					'alpha_space' => "*Hanya boleh huruf",
-					'min_length' => "*Minimal 5 karakter"
+					'min_length' => "*Minimal 4 karakter"
 				],
 			]
 		];
@@ -67,10 +67,10 @@ class ProsesKategori extends BaseController{
       ],
       'kategoriEdit' => [
         'label' => 'Kategori',
-        'rules' => 'permit_empty|alpha_space|min_length[5]',
+        'rules' => 'permit_empty|alpha_space|min_length[4]',
         'errors' => [
           'alpha_space' => "*Hanya boleh huruf",
-          'min_length' => "*Minimal 5 karakter"
+          'min_length' => "*Minimal 4 karakter"
         ],
       ]
     ];
