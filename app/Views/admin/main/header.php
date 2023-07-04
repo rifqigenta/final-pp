@@ -10,7 +10,7 @@
 	<hr class="sidebar-divider my-0">
 	<!-- Nav Item - Dashboard -->
 	<li class="nav-item" id="linkLaporan">
-		<a class="nav-link" href="/admin/laporan">
+		<a class="nav-link" href="/admin/laporan/penjualan">
 			<i class="fa-solid fa-table"></i>
 			<span>Laporan</span></a>
 	</li>
