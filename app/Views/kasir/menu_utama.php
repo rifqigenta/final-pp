@@ -5,7 +5,7 @@
         <!-- Topbar Search -->
         <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-1 my-2 my-md-0 mw-100 navbar-search">
             <div class="input-group">
-                <input type="text" class="form-control bg-light border-1 small" placeholder="Search ..." aria-label="Search" aria-describedby="basic-addon2">
+                <input type="search" onkeyup="pencarian()" class="form-control bg-light border-1 small" id="search" placeholder="Search ..." aria-label="Search" aria-describedby="basic-addon2">
                 <div class="input-group-append">
                     <button class="btn btn-dark" style="background: #00CC88;" type="button">
                         <i class="fas fa-search fa-sm"></i>
@@ -70,7 +70,7 @@
     </nav>
     <div class="row">
         <?php foreach ($produk as $value) { ?>
-            <div class="d-flex col-sm-3 justify-content-center">
+            <div class="d-grid col-sm-3 justify-content-center haha">
                 <?php
                 echo form_open('kasir/keranjang/tambah');
                 echo form_hidden('id', $value['id_produk']);
@@ -95,7 +95,7 @@
                 <div class="card" style="width:15rem; float: left;">
                     <img src="<?= base_url('gambar/produk/' . $value['gambar']) ?>" class="card-img-top">
                     <div class="card-body">
-                        <h5 class="card-title" style="margin-bottom:5px;"><?= $value['nama'] ?></h5>
+                        <h5 class="card-title" id="namaProduk" style="margin-bottom:5px;"><?= $value['nama'] ?></h5>
                         <p class="card-text" style="margin-bottom:5px;"><?= number_to_currency($value['harga'], 'Rp. '); ?></p>
                         <input type="number" class="mb-2 border border-0" onkeypress="validasiAngka(event)" max="<?= $value['kuantitas']; ?>" name="kuantitas" min="1" value="<?= $qty;?>" required></input><br>
                         <!-- ra ruh carane gae perbedaan antara gram / ikat -->
@@ -112,7 +112,29 @@
 <script>
     $(document).ready(function() {
         $('#linkMenuUtama').addClass("active");
-        // $('#tableKaryawan').DataTable();
     });
+
+    function pencarian() {
+        let filter = document.getElementById('search').value.toLowerCase();
+        let item = document.querySelectorAll('.haha');
+        let cari = document.getElementsByTagName('h5');
+        
+        for (var i = 0; i < cari.length; i++) {
+            let a = item[i].getElementsByTagName('h5')[0];
+
+            let value = a.innerHTML || a.innerText || a.textContent;
+            if (value.toLowerCase().indexOf(filter) > -1) {
+                item[i].style.display = "";
+            } else {
+                item[i].style.display = "none ";
+            }
+        }
+    }
+//     $("#filter").on("keyup", function() {
+//     var value = $(this).val().toLowerCase();
+//     $("#cardContainer > div").filter(function() {
+//       $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+//     });
+//   });
 </script>
 <?= $this->endSection() ?>
