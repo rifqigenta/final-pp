@@ -82,6 +82,7 @@
 
                 $idToFind = $value['id_produk'];
                 $foundQty = 0;
+                $qty = 0;
 
                 foreach ($keranjangCart as $ker) {
                     if ($ker['id'] === $idToFind) {
