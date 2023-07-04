@@ -22,7 +22,6 @@
             <tr class="text-white" style="background-color:#04BEB3">
               <th scope="col">Nama Kasir</th>
               <th scope="col">Nama Pembeli</th>
-              <th scope="col">Invoice</th>
               <th scope="col">Tanggal</th>
               <th scope="col">Komplain</th>
             </tr>
@@ -30,9 +29,8 @@
           <tbody>
             <?php foreach ($detail as $row) {?>
               <tr>
-                <td scope="row"><?= $row['nam_kasir'];?></tD>
+                <td scope="row"><?= $row['nama_kasir'];?></tD>
                 <td><?= $row['nama'];?></td>
-                <td><a href="/admin/transaksi/<?= $row['nam_kasir'];?>"><?= $row['id_transkasi'];?></a></td>
                 <td><?= $row['tanggal'];?></td>
                 <td><?= $row['teks_komplain'];?></td>
               </tr>

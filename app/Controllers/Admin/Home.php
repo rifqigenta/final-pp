@@ -62,7 +62,7 @@ class Home extends BaseController{
 
     public function komplain(){
         $data['title'] = "Daftar Komplain";
-        $data['detail'] = $this->komplainModel->JOIN("transaksi b", "komplain.id_transaksi=b.id_transaksi")->JOIN("kasir c", "komplain.id_kasir=c.id_kasir")->select("*")->get()->getResultArray();
+        $data['detail'] = $this->komplainModel->select("komplain.*, c.nama as nama_kasir")->JOIN("kasir c", "komplain.id_kasir=c.id_kasir")->get()->getResultArray();
         return view("admin/komplain", $data);
         // . view("admin/komplain")
         // . view("admin/main/footer");
