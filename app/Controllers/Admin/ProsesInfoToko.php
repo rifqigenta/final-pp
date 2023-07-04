@@ -97,11 +97,15 @@ class ProsesInfoToko extends BaseController{
             $gambarUtama= $this->request->getFile("gambarUtama");
 
             // Pindah Gambar Utama
-			$data['gambar_utama'] = "gambar-utama.".$gambarUtama->guessExtension();;
+			$data['gambar_utama'] = "gambar-utama.".$gambarUtama->guessExtension();
 
             // Delete Gambar
-            unlink("gambar/".$data['gambar_utama']);
-            
+            try{
+                unlink("gambar/".$data['gambar_utama']);
+            }catch(Exception $e){
+                
+            }
+
 			$gambarUtama->move('gambar/', $data['gambar_utama']);
 
             // Cek Data Gambar
