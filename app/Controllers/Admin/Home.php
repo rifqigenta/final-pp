@@ -120,14 +120,36 @@ class Home extends BaseController{
         $data['title'] = "Info Toko";
         $data['detail'] = $this->infoTokoModel->select("*")->orderBy("id_toko", "DESC")->limit(1)->get()->getRowArray();
         return view("admin/info-toko", $data);
-        // . view("admin/info-toko")
-        // . view("admin/main/footer");
     }
 
     function laporanPenjualan(){
         $data['title'] = "Laporan Penjualan";
-        $data['detail'] = $this->transaksiModel->select("transaksi.*, b.nama")->JOIN("kasir b", "transaksi.id_kasir=b.id_kasir")->orderBY("transaksi.id_transaksi", "DESC")->paginate(5, "penjualan");
-        $data['pager'] = $this->transaksiModel->pager;
+		$q	= $this->request->getVar("q");
+        $tglMulai = $this->request->getVar("tglAwal");
+		$tglAkhir = $this->request->getVar("tglAkhir");
+        $paginate = 5;
+
+        // Base Query
+        $laporanPenjualan = $this->transaksiModel->select("transaksi.*, b.nama")
+        ->JOIN("kasir b", "transaksi.id_kasir=b.id_kasir")
+        ->orderBY("transaksi.id_transaksi", "DESC");
+        
+        // Tangagl Mulai
+		if($tglMulai!="" || $tglMulai!=null){
+            $laporanPenjualan->WHERE("transaksi.tgl_pembelian >=", $tglMulai);
+        }
+
+        // Tangagl Mulai
+		if($tglAkhir!="" || $tglAkhir!=null){
+            $laporanPenjualan->WHERE("transaksi.tgl_pembelian <=", $tglAkhir);
+        }
+
+        // Cari
+		if($q!="" || $q!=null){
+            $laporanPenjualan->LIKE("transaksi.id_transaksi", $q)->orLike("b.nama", $q);
+        }
+        $data['detail'] = $laporanPenjualan->paginate($paginate, "penjualan"); 
+        $data['pager'] = $laporanPenjualan->pager;
         return view("admin/laporan-penjualan", $data);
     }
 

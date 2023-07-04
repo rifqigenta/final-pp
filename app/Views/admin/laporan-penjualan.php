@@ -1,5 +1,31 @@
 <?= $this->extend('admin/main/bodyContent') ?>
 <?= $this->section('content') ?>
+
+<?php 
+  $cari = explode("=", service('uri')->getQuery(['only' => ['q']]));
+  if(isset($cari[1])){
+    $cari = $cari[1];
+  }else{
+    $cari	= null;
+  }
+
+  // Filter Kategori
+  $tglAwal = explode("=", service('uri')->getQuery(['only' => ['tglAwal']]));
+  if(isset($tglAwal[1])){
+    $tglAwal = $tglAwal[1];
+  }else{
+    $tglAwal	= null;
+  }
+
+  // Filter Kategori
+  $tglAkhir = explode("=", service('uri')->getQuery(['only' => ['tglAkhir']]));
+  if(isset($tglAkhir[1])){
+    $tglAkhir = $tglAkhir[1];
+  }else{
+    $tglAkhir	= null;
+  }
+?>
+
 <div class="container-fluid">
   <div class="row">
     <div class="col-5 fw-semibold invisible">
@@ -14,31 +40,33 @@
       <label style="font-size:18px; font-weight:600">Laporan Penjualan</label>
     </div>
   </div>
-  <div class="row">
-    <div class="col-md-12">
-      <label for="basic-url" class="form-label">Filter</label>
-    </div>
-    <div class="col-md-3 col-xs-12 mb-3">
-      <div class="input-group">
-        <input type="text" class="form-control" placeholder="Cari..." name="filterNama" id="filterNama" aria-label="Recipient's username">
+  <form action="/admin/laporan/penjualan" method="GET">
+    <div class="row">
+      <div class="col-md-12">
+        <label for="basic-url" class="form-label">Filter</label>
+      </div>
+      <div class="col-md-3 col-xs-12 mb-3">
+        <div class="input-group">
+          <input type="text" class="form-control" placeholder="Cari..." name="q" id="q" value="<?= $cari;?>">
+        </div>
+      </div>
+      <div class="col-md-4 col-xs-12 mb-3">
+        <div class="input-group">
+          <span class="input-group-text">Tanggal Awal</span>
+          <input type="date" class="form-control" id="tglAwal" name="tglAwal" value="<?= $tglAwal;?>">
+        </div>
+      </div>
+      <div class="col-md-4 col-xs-12 mb-3">
+        <div class="input-group">
+          <span class="input-group-text">Tanggal Akhir</span>
+          <input type="date" class="form-control" id="tglAkhir" name="tglAkhir" value="<?= $tglAkhir;?>">
+        </div>
+      </div>
+      <div class="col-md-1">
+        <button type="submit" class="btn btn-outline-success"><i class="fa-solid fa-magnifying-glass"></i></button>
       </div>
     </div>
-    <div class="col-md-4 col-xs-12 mb-3">
-      <div class="input-group">
-        <span class="input-group-text">Tanggal Awal</span>
-        <input type="date" class="form-control" id="tglAwal" name="tglAwal">
-      </div>
-    </div>
-    <div class="col-md-4 col-xs-12 mb-3">
-      <div class="input-group">
-        <span class="input-group-text">Tanggal Akhir</span>
-        <input type="date" class="form-control" id="tglAkhir" name="tglAkhir">
-      </div>
-    </div>
-    <div class="col-md-1">
-      <button type="button" class="btn btn-outline-success"><i class="fa-solid fa-magnifying-glass"></i></button>
-    </div>
-  </div>
+  </form>
   <div class="row">
     <div class="col-md-12">
       <div style="overflow-x:auto;">
@@ -61,7 +89,7 @@
                   <td><?= $row['tgl_pembelian'];?></td>
                   <td><?= $row['nama'];?></td>
                   <td>Rp. <?= number_format($row['total_bayar']);?></td>
-                  <td><button type="button" class="btn btn-primary" onclick="lihatDetail(<?= $row['id_transaksi'];?>)"><i class="fa-solid fa-eye"></i> Lihat</button></td>
+                  <td><button type="button" class="btn btn-sm btn-primary" onclick="lihatDetail(<?= $row['id_transaksi'];?>)"><i class="fa-solid fa-eye"></i> Lihat</button></td>
                 </tr>
             <?php }}else{ ?>
               <tr>
@@ -93,26 +121,17 @@
       </div>
       <div class="modal-body">
         <div style="overflow-x:auto;">
-          <table class="table">
+          <table class="table" id="detailTable">
             <thead>
               <tr>
                 <th scope="col">Nama Produk</th>
                 <th scope="col">Harga</th>
+                <th scope="col">QTY</th>
+                <th scope="col">Subtotal</th>
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <th scope="row">Sawi</th>
-                <td>2.000</td>
-              </tr>
-              <tr>
-                <th scope="row">Jagung</th>
-                <td>4.000</td>
-              </tr>
-              <tr>
-                <th scope="row">Bayam</th>
-                <td>2.000</td>
-              </tr>
+              
             </tbody>
           </table>
         </div>
@@ -126,6 +145,48 @@
 
 <script>
   function lihatDetail(invoice) {
+    
+    // Get Detail Transaksi
+    const url = `<?= base_url();?>/admin/proses/detail-transaksi/${invoice}`;
+    var tbody = document.querySelector('#detailTable tbody');
+
+    fetch(url)
+      .then(function(response) {
+        return response.json();
+      })
+      .then(function(data) {
+        // Iterasi melalui data JSON
+        data.forEach(function(item) {
+          // Membuat sebuah baris <tr> untuk setiap item
+          var row = document.createElement('tr');
+
+          // Membuat sel <td> untuk setiap properti dalam item
+          var nama = document.createElement('td');
+          nama.textContent = item.nama;
+
+          var harga = document.createElement('td');
+          harga.textContent = item.harga;
+
+          var qty = document.createElement('td');
+          qty.textContent = item.qty;
+
+          var subtotal = document.createElement('td');
+          subtotal.textContent = item.subtotal;
+
+          // Menambahkan sel ke dalam baris
+          row.appendChild(nama);
+          row.appendChild(harga);
+          row.appendChild(qty);
+          row.appendChild(subtotal);
+
+
+          // Menambahkan baris ke dalam tbody
+          tbody.appendChild(row);
+        });
+      });
+
+    // END Get Detail Transaksi
+
     $('#titleDetailPembelian').html(`#${invoice}`);
     $('#modalDetail').modal('show');
   }

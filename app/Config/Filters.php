@@ -23,6 +23,7 @@ class Filters extends BaseConfig
         'secureheaders' => SecureHeaders::class,
         'AuthAdmin'     => \App\Filters\AuthAdmin::class,
         'AuthKasir'     => \App\Filters\AuthKasir::class,
+        'debug' => \App\Filters\DebugFilter::class,
     ];
 
     /**
@@ -62,5 +63,11 @@ class Filters extends BaseConfig
      * Example:
      * 'isLoggedIn' => ['before' => ['account/*', 'profiles/*']]
      */
-    public array $filters = [];
+    public array $filters = [
+        'debug' => [
+            'before' => [
+                '/admin/proses/detail-transaksi/15',
+            ],
+        ],
+    ];
 }
