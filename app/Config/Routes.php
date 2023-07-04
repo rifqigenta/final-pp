@@ -37,6 +37,8 @@ $routes->get('kasir/menu_utama/cek', 'Kasir\ProdukMenu::cek', ['filter' => 'Auth
 $routes->get('kasir/pembayaran', 'Kasir\Home::payment', ['filter' => 'AuthKasir']);
 $routes->get('kasir/checkout', 'Kasir\Home::payment', ['filter' => 'AuthKasir']);
 $routes->get('kasir/cek', 'Kasir\ProdukMenu::cek', ['filter' => 'AuthKasir']);
+$routes->get('kasir/komplain', 'Kasir\Home::komplain', ['filter' => 'AuthKasir']);
+
 
 // $routes->get('kasir/login', 'Kasir\Home::login');
 

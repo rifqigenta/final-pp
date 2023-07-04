@@ -41,6 +41,10 @@ class Home extends BaseController{
 		$data['keranjang'] = $cart->contents();
 		$data['title'] = "Pembayaran";
 		return view("kasir/pembayaran", $data);
+	}
 
+	public function komplain(){
+		$data['title'] = "Komplain";
+		return view("kasir/komplain", $data);
 	}
 }

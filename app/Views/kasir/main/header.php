@@ -24,6 +24,12 @@
             <span>Pembayaran</span></a>
     </li>
 
+    <li class="nav-item" id="linkKomplain">
+        <a class="nav-link" href="/kasir/komplain">
+            <i class="fa-regular fa-brake-warning"></i>
+            <span>Komplain</span></a>
+    </li>
+
     <hr class="sidebar-divider">
 
     <li class="nav-item" id="logout">
