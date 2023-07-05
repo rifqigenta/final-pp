@@ -30,6 +30,11 @@
         <link href="<?= base_url('/newAssets/css/sb-admin-2.min.css') ?>" rel="stylesheet">
 
         <?= $this->renderSection('styles') ?>
+        <!-- <style>
+          .haha{
+            display: block;
+          }
+        </style> -->
     </head>
     <body id="page-top">
         <!-- Page Wrapper -->
