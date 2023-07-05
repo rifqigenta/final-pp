@@ -92,7 +92,7 @@
                 }
 
                 ?>
-                <div class="card" style="width:15rem; float: left;">
+                <div class="card mt-2" style="width:15rem; float: left;">
                     <img src="<?= base_url('gambar/produk/' . $value['gambar']) ?>" class="card-img-top">
                     <div class="card-body">
                         <h5 class="card-title" id="namaProduk" style="margin-bottom:5px;"><?= $value['nama'] ?></h5>

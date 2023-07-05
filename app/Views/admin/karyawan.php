@@ -29,17 +29,17 @@
             </tr>
           </thead>
           <tbody>
-            <?php foreach($detail as $row){?>
-            <tr>
-              <td scope="row"><?= $row['role_kode'];?></td>
-              <td><?= $row['nama']; ?></td>
-              <td><?= $row['alamat']; ?></td>
-              <td><?= $row['email']; ?></td>
-              <td>
-                <button type="button" class="btn btn-outline-warning" onclick="editKaryawan(<?= $row['id_kasir'];?>, '<?= $row['nama']; ?>')"><i class="fa-solid fa-pencil"></i></button>
-                <button type="button" class="btn btn-outline-danger" onclick="deleteKaryawan(<?= $row['id_kasir'];?>)"><i class="fa-solid fa-trash"></i></button>
-              </td>
-            </tr>
+            <?php foreach ($detail as $row) { ?>
+              <tr>
+                <td scope="row"><?= $row['role_kode']; ?></td>
+                <td><?= $row['nama']; ?></td>
+                <td><?= $row['alamat']; ?></td>
+                <td><?= $row['email']; ?></td>
+                <td>
+                  <button type="button" class="btn btn-outline-warning" onclick="editKaryawan(<?= $row['id_kasir']; ?>, '<?= $row['nama']; ?>')"><i class="fa-solid fa-pencil"></i></button>
+                  <button type="button" class="btn btn-outline-danger" onclick="deleteKaryawan(<?= $row['id_kasir']; ?>)"><i class="fa-solid fa-trash"></i></button>
+                </td>
+              </tr>
             <?php } ?>
           </tbody>
         </table>
@@ -58,28 +58,28 @@
       </div>
       <?= form_open('admin/proses/karyawan/tambah') ?>
       <?= csrf_field() ?>
-        <div class="modal-body">
-          <div class="mb-3">
-            <label for="nama" class="form-label">Nama</label>
-            <input type="text" class="form-control" id="nama" name="nama" required>
-          </div>
-          <div class="mb-3">
-            <label for="alamat" class="form-label">Alamat</label>
-            <input type="text" class="form-control" id="alamat" name="alamat" required>
-          </div>
-          <div class="mb-3">
-            <label for="email" class="form-label">Email</label>
-            <input type="email" class="form-control" id="email" name="email" required>
-          </div>
-          <div class="mb-3">
-            <label for="password" class="form-label">Password</label>
-            <input type="password" class="form-control" id="password" name="password" required>
-          </div>
+      <div class="modal-body">
+        <div class="mb-3">
+          <label for="nama" class="form-label">Nama</label>
+          <input type="text" class="form-control" id="nama" name="nama" required>
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-primary">Tambah Karyawan</button>
+        <div class="mb-3">
+          <label for="alamat" class="form-label">Alamat</label>
+          <input type="text" class="form-control" id="alamat" name="alamat" required>
         </div>
+        <div class="mb-3">
+          <label for="email" class="form-label">Email</label>
+          <input type="email" class="form-control" id="email" name="email" required>
+        </div>
+        <div class="mb-3">
+          <label for="password" class="form-label">Password</label>
+          <input type="password" class="form-control" id="password" name="password" required>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Tambah Karyawan</button>
+      </div>
       </form>
     </div>
   </div>
@@ -95,32 +95,32 @@
       </div>
       <?= form_open('admin/proses/karyawan/update') ?>
       <?= csrf_field() ?>
-      <input type="hidden" name="idUpdate" id="idUpdate"/>
-        <div class="modal-body">
-          <div class="mb-3">
-            <label for="namaEditKaryawan" class="form-label">Nama</label>
-            <input type="text" class="form-control" id="namaEdit" name="namaEdit" value="<?= old('namaEdit');?>" style="border-color:<?= (validation_show_error('namaEdit')!=null)?'red':'';?>" required>
-            <span style="font-size:small; color:red;"><?= validation_show_error('namaEdit');?></span>
-          </div>
-          <div class="mb-3">
-            <label for="alamatEditKaryawan" class="form-label">Alamat</label>
-            <input type="text" class="form-control" id="alamatEdit" name="alamatEdit" value="<?= old('alamatEdit');?>" style="border-color:<?= (validation_show_error('alamatEdit')!=null)?'red':'';?>" required>
-            <span style="font-size:small; color:red;"><?= validation_show_error('alamatEdit');?></span>
-          </div>
-          <div class="mb-3">
-            <label for="emailEditKaryawan" class="form-label">Email</label>
-            <input type="text" readonly class="form-control" id="emailEdit" name="emailEdit" value="<?= old('emailEdit');?>" style="border-color:<?= (validation_show_error('emailEdit')!=null)?'red':'';?>" required>
-          </div>
-          <div class="mb-3">
-            <label for="passwordEdit" class="form-label">Password</label>
-            <input type="password" readonly class="form-control" id="passwordEdit" name="passwordEdit" value="<?= old('passwordEdit');?>" required>
-            <!-- <div class="form-text">* Isi untuk update password.</div> -->
-          </div>
+      <input type="hidden" name="idUpdate" id="idUpdate" />
+      <div class="modal-body">
+        <div class="mb-3">
+          <label for="namaEditKaryawan" class="form-label">Nama</label>
+          <input type="text" class="form-control" id="namaEdit" name="namaEdit" value="<?= old('namaEdit'); ?>" style="border-color:<?= (validation_show_error('namaEdit') != null) ? 'red' : ''; ?>" required>
+          <span style="font-size:small; color:red;"><?= validation_show_error('namaEdit'); ?></span>
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary mt-1" data-bs-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-warning mt-1"><i class="fa-solid fa-pencil"></i> Update</button>
+        <div class="mb-3">
+          <label for="alamatEditKaryawan" class="form-label">Alamat</label>
+          <input type="text" class="form-control" id="alamatEdit" name="alamatEdit" value="<?= old('alamatEdit'); ?>" style="border-color:<?= (validation_show_error('alamatEdit') != null) ? 'red' : ''; ?>" required>
+          <span style="font-size:small; color:red;"><?= validation_show_error('alamatEdit'); ?></span>
         </div>
+        <div class="mb-3">
+          <label for="emailEditKaryawan" class="form-label">Email</label>
+          <input type="text" readonly class="form-control" id="emailEdit" name="emailEdit" value="<?= old('emailEdit'); ?>" style="border-color:<?= (validation_show_error('emailEdit') != null) ? 'red' : ''; ?>" required>
+        </div>
+        <div class="mb-3">
+          <label for="passwordEdit" class="form-label">Password</label>
+          <input type="password" readonly class="form-control" id="passwordEdit" name="passwordEdit" value="<?= old('passwordEdit'); ?>" required>
+          <!-- <div class="form-text">* Isi untuk update password.</div> -->
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary mt-1" data-bs-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-warning mt-1"><i class="fa-solid fa-pencil"></i> Update</button>
+      </div>
       </form>
     </div>
   </div>
@@ -135,12 +135,12 @@
   $(document).ready(function() {
     $('#linkKaryawan').addClass("active");
     $('#tableKaryawan').DataTable();
-    <?php if(validation_errors()!=null){?>
+    <?php if (validation_errors() != null) { ?>
       $('#modalTambahKaryawan').modal('show');
-    <?php }?>
-    <?php if(validation_errors()!=null){?>
+    <?php } ?>
+    <?php if (validation_errors() != null) { ?>
       $('#modalEditKaryawan').modal('show');
-    <?php }?>
+    <?php } ?>
   });
 
   function deleteKaryawan(id, nama) {
@@ -155,36 +155,36 @@
     }).then((result) => {
       if (result.isConfirmed) {
         $.ajax({
-					url: '/admin/proses/karyawan/update',
-					dataType: 'json',
-					type: 'POST',
-					data: {
-						idUpdate: id,
+          url: '/admin/proses/karyawan/update',
+          dataType: 'json',
+          type: 'POST',
+          data: {
+            idUpdate: id,
             status: '0',
-						[csrfName]: csrfHash,
-					},
-					success: function(data){
-						if(data==1){
-							Swal.fire(
-								'Berhasil',
-								'Kategori Berhasil Dihapus',
-								'success',
-							);
-						}else{
-							Swal.fire(
-								'Gagal',
-								'Silahkan coba lagi',
-								'error',
-							);
-						}
-						location.reload();
-					},
-				});
+            [csrfName]: csrfHash,
+          },
+          success: function(data) {
+            if (data == 1) {
+              Swal.fire(
+                'Berhasil',
+                'Kategori Berhasil Dihapus',
+                'success',
+              );
+            } else {
+              Swal.fire(
+                'Gagal',
+                'Silahkan coba lagi',
+                'error',
+              );
+            }
+            location.reload();
+          },
+        });
       }
     });
-  }
+  } 
 
-  
+
 
   function editKaryawan(id, nama) {
     $('#titleEditModal').html(`Edit Karyawan <i>${nama}</i>`);

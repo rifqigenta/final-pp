@@ -64,6 +64,7 @@ $routes->POST('kasir/pembayaran/bayar', 'Kasir\ProdukMenu::bayar', ['filter' => 
 $routes->POST('kasir/proses/tambah-komplain', 'Kasir\KomplainProses::tambah', ['filter' => 'AuthKasir']);
 
 // ROUTES PROSES ADMIN
+$routes->GET('admin/proses/detail-transaksi/(:num)', 'Admin\ProsesLaporan::detailTransaksi/$1', ['filter' => 'AuthAdmin']);
 $routes->POST('admin/proses/karyawan/tambah', 'Admin\ProsesKaryawan::tambah', ['filter' => 'AuthAdmin']);
 $routes->POST('admin/proses/karyawan/update', 'Admin\ProsesKaryawan::update', ['filter' => 'AuthAdmin']);
 $routes->POST('admin/proses/kategori/tambah', 'Admin\ProsesKategori::tambah', ['filter' => 'AuthAdmin']);
