@@ -88,7 +88,11 @@ class Pembayaran extends BaseController
             if($total<$cekDB['minimum_pembelian']){
                 echo json_encode(1);
             }else{
-                echo json_encode(2);
+                $data = [
+                    'potongan' => $cekDB['potongan_persen'],
+                    'total' => $cart->total()
+                ];
+                echo json_encode($data);
             }
         }else{
             echo json_encode(0);

@@ -34,19 +34,23 @@
 		</div>
 	</div>
 	<div class="row">
-		<div class="form-group col-md-3 col-xs-6 mt-2">
+		<div class="form-group col-md-4 col-xs-6 mt-2">
 			<label for="exampleInputEmail1">Total Bayar</label>
 			<input type="text" class="form-control" id="total" value="Rp. <?= number_format($total); ?>" readonly>
 		</div>
-		<div class="form-group col-md-3 col-xs-6 mt-2">
+		<div class="form-group col-md-4 col-xs-6 mt-2">
+			<label for="exampleInputEmail1">Total Setelah Diskon</label>
+			<input type="text" class="form-control" name="totalDiskon" id="totalDiskon" value="Rp. <?= number_format($total); ?>" readonly>
+		</div>
+		<div class="form-group col-md-4 col-xs-6 mt-2">
 			<label for="exampleInputEmail1">Bayar</label>
 			<input type="number" class="form-control" id="bayar" onkeypress="validasiAngka(event)">
 		</div>
-		<div class="form-group col-md-3 col-xs-6 mt-2">
+		<div class="form-group col-md-6 col-xs-6 mt-2">
 			<label for="exampleInputEmail1">Promo</label>
 			<input type="text" name="promo" id="promo" onkeyup="promoEvent()" class="form-control">
 		</div>
-		<div class="form-group col-md-3 col-xs-6 mt-2">
+		<div class="form-group col-md-6 col-xs-6 mt-2">
 			<label for="exampleInputEmail1">Kembalian</label>
 			<input type="text" class="form-control" id="kembalian" readonly>
 		</div>
@@ -65,7 +69,7 @@
 		$('#linkPembayaran').addClass("active");
 
 		$('#bayar').on('input', function() {
-			var total = $('#total').val()
+			var total = $('#totalDiskon').val()
 			total = total.replace(/\D/g, '');
 			var bayar = parseFloat($(this).val());
 			if (!isNaN(total) && !isNaN(bayar)) {
@@ -91,7 +95,6 @@
 				promo: promo
 			},
 			success: function(data){
-				console.log(data);
 				if(data==0){
 					Swal.fire(
 						'Gagal',
@@ -105,11 +108,22 @@
 						'warning',
 					);
 				}else{
-					Swal.fire(
-						'Berhasil',
-						'Promo Bisa Digunakan',
-						'success',
-					);
+					var total = data.total
+					var potongan = data.potongan
+					// Hitung jumlah diskon
+					var jumlahDiskon = (potongan / 100) * total;
+
+					// Hitung harga setelah diskon
+					var hargaSetelahDiskon = total - jumlahDiskon;
+
+					// Convert to IDR
+					var formattedPrice = hargaSetelahDiskon.toLocaleString('id-ID', {
+						style: 'currency',
+						currency: 'IDR',
+					});
+					formattedPrice = formattedPrice.replace(/\.?0+$/, '');
+
+					$('#totalDiskon').val(`${formattedPrice}`)
 				}
 			},
 		});
