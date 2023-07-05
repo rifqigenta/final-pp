@@ -13,7 +13,7 @@
         <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
-        <link href="<?= base_url() ?>newAssets/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" type="text/css">
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
         <!-- Datatable -->
@@ -40,7 +40,7 @@
 
         <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.4.0/css/sharp-light.css" >
 
-        <link href="<?= base_url('newAssets/css/sb-admin-2.min.css') ?>" rel="stylesheet">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/startbootstrap-sb-admin-2/4.1.4/css/sb-admin-2.min.css" rel="stylesheet">
 
         <?= $this->renderSection('styles') ?>
     </head>
@@ -70,7 +70,7 @@
         <!-- Core plugin JavaScript-->
         <!-- <script src="<?= base_url('newAssets/vendor/jquery-easing/jquery.easing.min.js') ?>"></script> -->
         <!-- Custom scripts for all pages-->
-        <script src="<?= base_url('newAssets/js/sb-admin-2.min.js') ?>"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/startbootstrap-sb-admin-2/4.1.3/js/sb-admin-2.min.js"></script>
 
         <script>
           function validasiAngka(evt) {

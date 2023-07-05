@@ -6,17 +6,19 @@ use App\Controllers\BaseController;
 use App\Models\Kasir\TransaksiModel;
 use App\Models\Kasir\TransaksiDetailModel;
 use App\Models\Kasir\ProdukModel;
-
+use App\Models\Kasir\PromoModel;
 
 class Pembayaran extends BaseController
 {
 
-    protected $transaksiModel, $transaksiDetailModel;
+    protected $transaksiModel, $transaksiDetailModel, $produkModel, $promoModel;
     public function __construct()
     {
         $this->transaksiModel = new TransaksiModel();
         $this->transaksiDetailModel = new TransaksiDetailModel();
         $this->produkModel = new ProdukModel();
+        $this->promoModel = new PromoModel();
+
     }
 
     public function bayar()
@@ -66,5 +68,30 @@ class Pembayaran extends BaseController
         session()->remove('cart');
 
         echo json_encode(1);
+    }
+
+    function cekPromo(){
+        // Variabel Form
+        $promo = strtolower($this->request->getPOST("promo"));
+
+        // Kondisi
+        $tglSekarang = date("Y-m-d H:i:s");
+        $kondisi = ['tgl_berakhir >' => $tglSekarang, 'kode_promo'=>$promo, "kuota >"=>0, "status"=>"1"];
+
+        // Cek Database
+        $cekDB = $this->promoModel->select("potongan_persen, minimum_pembelian")->where($kondisi)->get()->getRowArray();
+
+        // Cek Harga
+        $cart = \Config\Services::cart();
+        $total = $cart->total();
+        if($cekDB){
+            if($total<$cekDB['minimum_pembelian']){
+                echo json_encode(1);
+            }else{
+                echo json_encode(2);
+            }
+        }else{
+            echo json_encode(0);
+        }
     }
 }
