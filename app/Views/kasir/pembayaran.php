@@ -43,12 +43,12 @@
 			<input type="text" class="form-control" name="totalDiskon" id="totalDiskon" value="Rp. <?= number_format($total); ?>" readonly>
 		</div>
 		<div class="form-group col-md-4 col-xs-6 mt-2">
-			<label for="exampleInputEmail1">Bayar</label>
-			<input type="number" class="form-control" id="bayar" onkeypress="validasiAngka(event)">
-		</div>
-		<div class="form-group col-md-6 col-xs-6 mt-2">
 			<label for="exampleInputEmail1">Promo</label>
 			<input type="text" name="promo" id="promo" onkeyup="promoEvent()" class="form-control">
+		</div>
+		<div class="form-group col-md-6 col-xs-6 mt-2">
+			<label for="exampleInputEmail1">Bayar</label>
+			<input type="number" class="form-control" id="bayar" onkeypress="validasiAngka(event)">
 		</div>
 		<div class="form-group col-md-6 col-xs-6 mt-2">
 			<label for="exampleInputEmail1">Kembalian</label>
@@ -130,6 +130,8 @@
 	}
 
 	function buttonPembayaran() {
+		var promo = $('#promo').val();
+
 		Swal.fire({
 			title: 'Yakin ingin melakukan transaksi ?',
 			icon: 'warning',
@@ -145,6 +147,7 @@
 					type: 'POST',
 					data: {
 						[csrfName]: csrfHash,
+						promo: promo
 					},
 					success: function(data){
 						if(data==1){
@@ -160,7 +163,7 @@
 								'error',
 							);
 						}
-						location.reload();
+						// location.reload();
 					},
 				});
 			}

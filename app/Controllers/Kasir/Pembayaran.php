@@ -27,9 +27,36 @@ class Pembayaran extends BaseController
         $keranjang = $cart->contents();
         
         $id_kasir = session('id_kasir');
-        $kode_promo = null;
-        $total_bayar = $cart->total();
+        $kode_promo = $this->request->getPost("promo");
         $total_transaksi = $cart->total();
+        $total_bayar = $cart->total();
+
+        // Cek Promo Ada
+        $tglSekarang = date("Y-m-d H:i:s");
+        $kondisi = ['tgl_berakhir >' => $tglSekarang, 'kode_promo'=>$kode_promo, "kuota >"=>0, "status"=>"1"];
+
+        // Cek Database
+        $cekDB = $this->promoModel->select("id_promo, potongan_persen, minimum_pembelian, kuota")->where($kondisi)->get()->getRowArray();
+
+        // Cek Harga
+        $cart = \Config\Services::cart();
+        if($cekDB){
+            if($total_transaksi<$cekDB['minimum_pembelian']){
+                
+            }else{
+                $potongan = $cekDB['potongan_persen'];
+                $diskon = ($potongan / 100) * $total_transaksi;
+				$total_bayar = $total_transaksi - $diskon;
+
+                // Kurangi Kuota
+                $updateData['kuota'] = $cekDB['kuota']-1;
+                if($updateData['kuota']<=0){
+                    $updateData['status'] = "0";
+                }
+                $kondisiUpdate = ["kode_promo" => $kode_promo];
+                $this->promoModel->update($cekDB['id_promo'], $updateData);
+            }
+        }
 
         $tgl_pembelian = date('Y-m-d H:i:s');
 

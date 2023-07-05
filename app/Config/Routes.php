@@ -38,6 +38,8 @@ $routes->get('kasir/pembayaran', 'Kasir\Home::payment', ['filter' => 'AuthKasir'
 $routes->get('kasir/checkout', 'Kasir\Home::payment', ['filter' => 'AuthKasir']);
 $routes->get('kasir/cek', 'Kasir\ProdukMenu::cek', ['filter' => 'AuthKasir']);
 $routes->get('kasir/komplain', 'Kasir\Home::komplain', ['filter' => 'AuthKasir']);
+$routes->get('kasir/tes', 'Kasir\Pembayaran::tes', ['filter' => 'AuthKasir']);
+
 
 
 // $routes->get('kasir/login', 'Kasir\Home::login');
