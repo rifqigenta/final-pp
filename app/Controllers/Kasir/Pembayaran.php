@@ -6,17 +6,19 @@ use App\Controllers\BaseController;
 use App\Models\Kasir\TransaksiModel;
 use App\Models\Kasir\TransaksiDetailModel;
 use App\Models\Kasir\ProdukModel;
-
+use App\Models\Kasir\PromoModel;
 
 class Pembayaran extends BaseController
 {
 
-    protected $transaksiModel, $transaksiDetailModel;
+    protected $transaksiModel, $transaksiDetailModel, $produkModel, $promoModel;
     public function __construct()
     {
         $this->transaksiModel = new TransaksiModel();
         $this->transaksiDetailModel = new TransaksiDetailModel();
         $this->produkModel = new ProdukModel();
+        $this->promoModel = new PromoModel();
+
     }
 
     public function bayar()
@@ -25,9 +27,36 @@ class Pembayaran extends BaseController
         $keranjang = $cart->contents();
         
         $id_kasir = session('id_kasir');
-        $kode_promo = null;
-        $total_bayar = $cart->total();
+        $kode_promo = $this->request->getPost("promo");
         $total_transaksi = $cart->total();
+        $total_bayar = $cart->total();
+
+        // Cek Promo Ada
+        $tglSekarang = date("Y-m-d H:i:s");
+        $kondisi = ['tgl_berakhir >' => $tglSekarang, 'kode_promo'=>$kode_promo, "kuota >"=>0, "status"=>"1"];
+
+        // Cek Database
+        $cekDB = $this->promoModel->select("id_promo, potongan_persen, minimum_pembelian, kuota")->where($kondisi)->get()->getRowArray();
+
+        // Cek Harga
+        $cart = \Config\Services::cart();
+        if($cekDB){
+            if($total_transaksi<$cekDB['minimum_pembelian']){
+                
+            }else{
+                $potongan = $cekDB['potongan_persen'];
+                $diskon = ($potongan / 100) * $total_transaksi;
+				$total_bayar = $total_transaksi - $diskon;
+
+                // Kurangi Kuota
+                $updateData['kuota'] = $cekDB['kuota']-1;
+                if($updateData['kuota']<=0){
+                    $updateData['status'] = "0";
+                }
+                $kondisiUpdate = ["kode_promo" => $kode_promo];
+                $this->promoModel->update($cekDB['id_promo'], $updateData);
+            }
+        }
 
         $tgl_pembelian = date('Y-m-d H:i:s');
 
@@ -66,5 +95,34 @@ class Pembayaran extends BaseController
         session()->remove('cart');
 
         echo json_encode(1);
+    }
+
+    function cekPromo(){
+        // Variabel Form
+        $promo = strtolower($this->request->getPOST("promo"));
+
+        // Kondisi
+        $tglSekarang = date("Y-m-d H:i:s");
+        $kondisi = ['tgl_berakhir >' => $tglSekarang, 'kode_promo'=>$promo, "kuota >"=>0, "status"=>"1"];
+
+        // Cek Database
+        $cekDB = $this->promoModel->select("potongan_persen, minimum_pembelian")->where($kondisi)->get()->getRowArray();
+
+        // Cek Harga
+        $cart = \Config\Services::cart();
+        $total = $cart->total();
+        if($cekDB){
+            if($total<$cekDB['minimum_pembelian']){
+                echo json_encode(1);
+            }else{
+                $data = [
+                    'potongan' => $cekDB['potongan_persen'],
+                    'total' => $cart->total()
+                ];
+                echo json_encode($data);
+            }
+        }else{
+            echo json_encode(0);
+        }
     }
 }

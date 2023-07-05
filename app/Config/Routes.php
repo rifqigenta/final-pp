@@ -38,6 +38,8 @@ $routes->get('kasir/pembayaran', 'Kasir\Home::payment', ['filter' => 'AuthKasir'
 $routes->get('kasir/checkout', 'Kasir\Home::payment', ['filter' => 'AuthKasir']);
 $routes->get('kasir/cek', 'Kasir\ProdukMenu::cek', ['filter' => 'AuthKasir']);
 $routes->get('kasir/komplain', 'Kasir\Home::komplain', ['filter' => 'AuthKasir']);
+$routes->get('kasir/tes', 'Kasir\Pembayaran::tes', ['filter' => 'AuthKasir']);
+
 
 
 // $routes->get('kasir/login', 'Kasir\Home::login');
@@ -62,6 +64,7 @@ $routes->get('kasir/keranjang/clear', 'Kasir\ProdukMenu::clear', ['filter' => 'A
 $routes->POST('kasir/keranjang/tambah', 'Kasir\ProdukMenu::add', ['filter' => 'AuthKasir']);
 $routes->POST('kasir/pembayaran/bayar', 'Kasir\ProdukMenu::bayar', ['filter' => 'AuthKasir']);
 $routes->POST('kasir/proses/tambah-komplain', 'Kasir\KomplainProses::tambah', ['filter' => 'AuthKasir']);
+$routes->POST('kasir/promo/cek', 'Kasir\Pembayaran::cekPromo', ['filter' => 'AuthKasir']);
 
 // ROUTES PROSES ADMIN
 $routes->GET('admin/proses/detail-transaksi/(:num)', 'Admin\ProsesLaporan::detailTransaksi/$1', ['filter' => 'AuthAdmin']);
