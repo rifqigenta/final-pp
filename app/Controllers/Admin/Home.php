@@ -37,6 +37,16 @@ class Home extends BaseController{
         // . view("admin/main/footer");
     }
 
+    public function getHarian(){
+        $tanggal = date("Y-m");
+        $data = $this->transaksiModel->select("count(id_transaksi) as total, 
+        SUM(total_bayar) as pendapatan, 
+        DAY(tgl_pembelian) as hari")
+        ->LIKE("tgl_pembelian", $tanggal)->GROUPBY("hari")->ORDERBY("hari", "ASC")
+        ->get()->getResultArray();
+        return json_encode($data);
+    }
+
     public function karyawan(){
         $data['title'] = "Daftar Karyawan";
         $data['detail'] = $this->karyawanModel->select("*")->where("status", "1")->get()->getResultArray();

@@ -30,6 +30,9 @@ $routes->set404Override();
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
 $routes->get('/login', 'Login::index');
+$routes->get('/', 'Login::index');
+$routes->get('/test', 'Admin\Home::getHarian');
+
 
 // ROUTES TAMPILAN KASIR
 $routes->get('kasir/menu_utama', 'Kasir\Home::index', ['filter' => 'AuthKasir']);

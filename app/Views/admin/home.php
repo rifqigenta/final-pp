@@ -39,7 +39,7 @@
               <div class="h5 mb-0 font-weight-bold text-gray-800"><?= $totalPenjualan['total'];?></div>
             </div>
             <div class="col-auto">
-              <i class="fa-solid fa-chart-simple fa-2x text-grey-300"></i>
+              <i class="fa-solid fa-chart-simple fa-2x text-gray-300"></i>
             </div>
           </div>
         </div>
@@ -119,35 +119,65 @@
 </div>
 
 <script>
-  const xValues = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30];
-  const yValues = [21, 24, 27, 25, 29, 26, 20, 22, 23, 30, 28, 26, 24, 21, 29, 20, 23, 27, 28, 25, 22, 29, 21, 30, 26, 23, 24, 20, 28, 25];
+  const xValues = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31];
+  let yValues = []
+  for (let i = 1; i <= 31; i++) {
+    yValues[i] = 0;
+  }
 
-  new Chart("myChart", {
-    type: "line",
-    data: {
-      labels: xValues,
-      datasets: [{
-        fill: false,
-        lineTension: 0,
-        backgroundColor: "rgba(0,0,255,1.0)",
-        borderColor: "rgba(0,0,255,0.1)",
-        data: yValues
-      }]
-    },
-    options: {
-      legend: {
-        display: false
-      },
-      responsive: true,
-      scales: {
-        yAxes: [{
-          ticks: {
-            min: 9,
-            max: 40
+  $(document).ready(function(){
+    fetch('/test')
+      .then(response => response.json())
+      .then(data => {
+        // Process the returned JSON data
+        data.forEach(item => {
+          const index = parseInt(item.hari); // Mengubah indeks hari menjadi tipe data angka
+          let pendapatan = parseInt(item.pendapatan); // Mengubah pendapatan menjadi tipe data angka
+
+          // pendapatan = new Intl.NumberFormat('id-ID', {
+          //   style: 'currency',
+          //   currency: 'IDR'
+          // }).format(pendapatan);
+          yValues[index] = pendapatan;
+        });
+        // Perform any additional actions with the data
+      })
+      .catch(error => {
+        // Handle any errors that occurred during the fetch request
+        console.error('Error:', error);
+      });
+
+    console.log(yValues)
+
+    setTimeout(()=> {
+      new Chart("myChart", {
+        type: "line",
+        data: {
+          labels: xValues,
+          datasets: [{
+            fill: false,
+            lineTension: 0,
+            backgroundColor: "rgba(0,0,255,1.0)",
+            borderColor: "rgba(0,0,255,0.1)",
+            data: yValues
+          }]
+        },
+        options: {
+          legend: {
+            display: false
+          },
+          responsive: true,
+          scales: {
+            yAxes: [{
+              ticks: {
+                min: 9,
+              }
+            }],
           }
-        }],
-      }
+        }
+      });
     }
+    ,3000);
   });
 </script>
 <?= $this->endSection() ?>
