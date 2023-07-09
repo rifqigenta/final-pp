@@ -7,9 +7,9 @@
             <div class="input-group">
                 <input type="search" onkeyup="pencarian()" class="form-control bg-light border-1 small" id="search" placeholder="Search ..." aria-label="Search" aria-describedby="basic-addon2">
                 <div class="input-group-append">
-                    <button class="btn btn-dark" style="background: #00CC88;" type="button">
+                    <!-- <button class="btn btn-dark" style="background: #00CC88;" type="button">
                         <i class="fas fa-search fa-sm"></i>
-                    </button>
+                    </button> -->
                 </div>
             </div>
         </form>
