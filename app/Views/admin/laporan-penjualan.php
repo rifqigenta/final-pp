@@ -102,7 +102,7 @@
     </div>
 
     <div class="col-md-6 col-xs-6">
-      <button type="button" class="btn btn-success" title="Ekspor Excel"><i class="fa-solid fa-file-export"></i> Ekspor</button>
+      <button type="button" class="btn btn-sm btn-success" title="Ekspor Excel" onclick="eksporExcel()"><i class="fa-solid fa-file-export"></i> Ekspor</button>
     </div>
 
     <div class="col-md-6 col-xs-6">
@@ -137,13 +137,18 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Close</button>
       </div>
     </div>
   </div>
 </div>
 
 <script>
+
+  function eksporExcel() {
+    window.location.href= "/admin/download/laporan-penjualan?q=<?= $cari;?>&tglAwal=<?= $tglAwal;?>&tglAkhir=<?= $tglAkhir;?>";
+  }
+
   function lihatDetail(invoice) {
     
     // Get Detail Transaksi

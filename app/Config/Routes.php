@@ -59,6 +59,8 @@ $routes->get('admin/laporan/stok', 'Admin\Home::laporanStok', ['filter' => 'Auth
 $routes->get('admin/komplain', 'Admin\Home::komplain', ['filter' => 'AuthAdmin']);
 $routes->get('admin/kategori', 'Admin\Home::kategori', ['filter' => 'AuthAdmin']);
 $routes->get('admin/restock', 'Admin\Home::restock', ['filter' => 'AuthAdmin']);
+$routes->get('admin/download/laporan-penjualan', 'Admin\Home::downloadLaporanPenjualan', ['filter' => 'AuthAdmin']);
+
 
 
 // ROUTES PROSES KASIR

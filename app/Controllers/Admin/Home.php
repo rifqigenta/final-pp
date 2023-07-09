@@ -12,6 +12,10 @@ use App\Models\Admin\TransaksiModel;
 use App\Models\Admin\ProdukModel;
 use App\Models\Admin\RestockModel;
 
+// Spreadsheet
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+
 class Home extends BaseController{
 
     protected $kategoriModel, $promoModel, $karyawanModel, $infoTokoModel, $komplainModel, $transaksiModel, $produkModel, $restockModel;
@@ -158,6 +162,7 @@ class Home extends BaseController{
 		if($q!="" || $q!=null){
             $laporanPenjualan->LIKE("transaksi.id_transaksi", $q)->orLike("b.nama", $q);
         }
+
         $data['detail'] = $laporanPenjualan->paginate($paginate, "penjualan"); 
         $data['pager'] = $laporanPenjualan->pager;
         return view("admin/laporan-penjualan", $data);
@@ -210,5 +215,68 @@ class Home extends BaseController{
 
         // Load View
         return view("admin/restock", $data);
+    }
+
+    public function downloadLaporanPenjualan(){
+        $q = $this->request->getGet("q");
+        $tglMulai = $this->request->getGet("tglAwal");
+        $tglAkhir = $this->request->getGet("tglAkhir");
+
+        $laporanPenjualan = $this->transaksiModel->select("transaksi.*, b.nama")
+        ->JOIN("kasir b", "transaksi.id_kasir=b.id_kasir")
+        ->orderBY("transaksi.id_transaksi", "DESC");
+        
+        // Tangagl Mulai
+		if($tglMulai!="" || $tglMulai!=null){
+            $laporanPenjualan->WHERE("transaksi.tgl_pembelian >=", $tglMulai);
+        }
+
+        // Tangagl Mulai
+		if($tglAkhir!="" || $tglAkhir!=null){
+            $laporanPenjualan->WHERE("transaksi.tgl_pembelian <=", $tglAkhir);
+        }
+
+        // Cari
+		if($q!="" || $q!=null){
+            $laporanPenjualan->LIKE("transaksi.id_transaksi", $q)->orLike("b.nama", $q);
+        }
+
+        $laporanPenjualan = $laporanPenjualan->ORDERBY("transaksi.id_transaksi", "DESC");
+
+        $laporanPenjualan = $laporanPenjualan->get()->getResultArray();
+        $header = ['Invoice', 'Waktu Pembelian', 'Kasir', 'Total'];
+
+        $this->spreadsheet($header, $laporanPenjualan, "Laporan Penjualan");
+    }
+
+    function spreadsheet($header, $dataTable, $namaFile){
+        
+        // Create a new Spreadsheet object
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+        $sheet->fromArray($header, null, 'A1');
+
+        $row = 2;
+        foreach ($dataTable as $data) {
+            $rowData = ["#".$data['id_transaksi'], $data['tgl_pembelian'], $data['nama'], $data['total_bayar']];
+            $sheet->fromArray($rowData, null, 'A' . $row);
+            $row++;
+        }
+
+        $writer = new Xlsx($spreadsheet);
+        $filename = $namaFile.'.xlsx';
+
+        $tempFilePath = WRITEPATH . 'temp/' . $filename;
+        $writer->save($tempFilePath);
+
+        // Set headers to force download
+        $mimeType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+        header('Content-Type: ' . $mimeType);
+        header('Content-Disposition: attachment;filename="' . $filename . '"');
+        header('Cache-Control: max-age=0');
+
+        // Save the Excel file to the output buffer
+        $writer->save('php://output');
+        exit;
     }
 }
