@@ -134,10 +134,10 @@
           const index = parseInt(item.hari); // Mengubah indeks hari menjadi tipe data angka
           let pendapatan = parseInt(item.pendapatan); // Mengubah pendapatan menjadi tipe data angka
 
-          pendapatan = new Intl.NumberFormat('id-ID', {
-            style: 'currency',
-            currency: 'IDR'
-          }).format(pendapatan);
+          // pendapatan = new Intl.NumberFormat('id-ID', {
+          //   style: 'currency',
+          //   currency: 'IDR'
+          // }).format(pendapatan);
           yValues[index] = pendapatan;
         });
         // Perform any additional actions with the data
