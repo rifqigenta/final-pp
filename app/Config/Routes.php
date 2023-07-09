@@ -29,29 +29,68 @@ $routes->set404Override();
 
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
-$routes->get('/', 'Home::index');
+$routes->get('/login', 'Login::index');
+$routes->get('/', 'Login::index');
+$routes->get('/test', 'Admin\Home::getHarian');
+
 
 // ROUTES TAMPILAN KASIR
-$routes->get('kasir', 'Kasir\Home::index');
-$routes->get('kasir/pembayaran', 'Kasir\Home::payment');
-$routes->get('kasir/login', 'Kasir\Home::loginKasir');
+$routes->get('kasir/menu_utama', 'Kasir\Home::index', ['filter' => 'AuthKasir']);
+$routes->get('kasir/menu_utama/cek', 'Kasir\ProdukMenu::cek', ['filter' => 'AuthKasir']);
+$routes->get('kasir/pembayaran', 'Kasir\Home::payment', ['filter' => 'AuthKasir']);
+$routes->get('kasir/checkout', 'Kasir\Home::payment', ['filter' => 'AuthKasir']);
+$routes->get('kasir/cek', 'Kasir\ProdukMenu::cek', ['filter' => 'AuthKasir']);
+$routes->get('kasir/komplain', 'Kasir\Home::komplain', ['filter' => 'AuthKasir']);
+$routes->get('kasir/tes', 'Kasir\Pembayaran::tes', ['filter' => 'AuthKasir']);
+
+
+
+// $routes->get('kasir/login', 'Kasir\Home::login');
 
 // ROUTES TAMPILAN ADMIN
-$routes->get('admin', 'Admin\Home::index');
-$routes->get('admin/info-toko', 'Admin\Home::infoToko');
-$routes->get('admin/karyawan', 'Admin\Home::karyawan');
-$routes->get('admin/produk', 'Admin\Home::produk');
-$routes->get('admin/promo', 'Admin\Home::promo');
-$routes->get('admin/laporan', 'Admin\Home::laporan');
-$routes->get('admin/laporan/penjualan', 'Admin\Home::laporanPenjualan');
-$routes->get('admin/laporan/stok', 'Admin\Home::laporanStok');
-$routes->get('admin/komplain', 'Admin\Home::komplain');
-$routes->get('admin/kategori', 'Admin\Home::kategori');
+$routes->get('admin', 'Admin\Home::index', ['filter' => 'AuthAdmin']);
+$routes->get('admin/info-toko', 'Admin\Home::infoToko', ['filter' => 'AuthAdmin']);
+$routes->get('admin/karyawan', 'Admin\Home::karyawan', ['filter' => 'AuthAdmin']);
+$routes->get('admin/produk', 'Admin\Home::produk', ['filter' => 'AuthAdmin']);
+$routes->get('admin/promo', 'Admin\Home::promo', ['filter' => 'AuthAdmin']);
+$routes->get('admin/laporan', 'Admin\Home::laporan', ['filter' => 'AuthAdmin']);
+$routes->get('admin/laporan/penjualan', 'Admin\Home::laporanPenjualan', ['filter' => 'AuthAdmin']);
+$routes->get('admin/laporan/stok', 'Admin\Home::laporanStok', ['filter' => 'AuthAdmin']);
+$routes->get('admin/komplain', 'Admin\Home::komplain', ['filter' => 'AuthAdmin']);
+$routes->get('admin/kategori', 'Admin\Home::kategori', ['filter' => 'AuthAdmin']);
+$routes->get('admin/restock', 'Admin\Home::restock', ['filter' => 'AuthAdmin']);
+$routes->get('admin/download/laporan-penjualan', 'Admin\Home::downloadLaporanPenjualan', ['filter' => 'AuthAdmin']);
+
 
 
 // ROUTES PROSES KASIR
+$routes->POST('kasir/checkout', 'Kasir\Pembayaran::bayar', ['filter' => 'AuthKasir']);
+$routes->get('kasir/keranjang/clear', 'Kasir\ProdukMenu::clear', ['filter' => 'AuthKasir']);
+$routes->POST('kasir/keranjang/tambah', 'Kasir\ProdukMenu::add', ['filter' => 'AuthKasir']);
+$routes->POST('kasir/pembayaran/bayar', 'Kasir\ProdukMenu::bayar', ['filter' => 'AuthKasir']);
+$routes->POST('kasir/proses/tambah-komplain', 'Kasir\KomplainProses::tambah', ['filter' => 'AuthKasir']);
+$routes->POST('kasir/promo/cek', 'Kasir\Pembayaran::cekPromo', ['filter' => 'AuthKasir']);
 
 // ROUTES PROSES ADMIN
+$routes->GET('admin/proses/detail-transaksi/(:num)', 'Admin\ProsesLaporan::detailTransaksi/$1', ['filter' => 'AuthAdmin']);
+$routes->POST('admin/proses/karyawan/tambah', 'Admin\ProsesKaryawan::tambah', ['filter' => 'AuthAdmin']);
+$routes->POST('admin/proses/karyawan/update', 'Admin\ProsesKaryawan::update', ['filter' => 'AuthAdmin']);
+$routes->POST('admin/proses/kategori/tambah', 'Admin\ProsesKategori::tambah', ['filter' => 'AuthAdmin']);
+$routes->POST('admin/proses/kategori/update', 'Admin\ProsesKategori::update', ['filter' => 'AuthAdmin']);
+$routes->POST('admin/proses/promo/tambah', 'Admin\ProsesPromo::tambah', ['filter' => 'AuthAdmin']);
+$routes->POST('admin/proses/promo/update', 'Admin\ProsesPromo::update', ['filter' => 'AuthAdmin']);
+$routes->POST('admin/proses/info-situs/update', 'Admin\ProsesInfoToko::update', ['filter' => 'AuthAdmin']);
+$routes->POST('admin/proses/info-situs/update-gambar', 'Admin\ProsesInfoToko::updateGambar', ['filter' => 'AuthAdmin']);
+$routes->POST('admin/proses/produk/tambah', 'Admin\ProsesProduk::tambah', ['filter' => 'AuthAdmin']);
+$routes->POST('admin/proses/produk/update', 'Admin\ProsesProduk::update', ['filter' => 'AuthAdmin']);
+$routes->POST('admin/proses/restock/tambah', 'Admin\ProsesRestock::tambah', ['filter' => 'AuthAdmin']);
+$routes->POST('admin/proses/restock/delete', 'Admin\ProsesRestock::delete', ['filter' => 'AuthAdmin']);
+
+
+
+// ROUTES PROSES LOGIN
+$routes->POST('login/proses', 'LoginProcess::login');
+$routes->GET('login/logout', 'LoginProcess::logout');
 
 /*
  * --------------------------------------------------------------------
